@@ -13,6 +13,21 @@
         android:theme="@style/Theme.LanGroup"
         tools:targetApi="31">
         <activity
+            android:name=".MisEstadisticasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SolicitarRolInstructorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarInstructorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EliminarInstructorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearGrupoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
