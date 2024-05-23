@@ -30,7 +30,7 @@
                 android:id="@+id/button_regresar"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:src="@drawable/flecha_regresar"
+                android:src="@drawable/chevron_left"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/transparente"
@@ -65,7 +65,7 @@
                 android:layout_marginLeft="140dp"
                 android:layout_marginRight="140dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/azul"
+                android:backgroundTint="@color/azul3"
                 />
 
             <Button
@@ -78,7 +78,7 @@
                 android:layout_marginLeft="140dp"
                 android:layout_marginRight="140dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/rojo"
+                android:backgroundTint="@color/rojoClaro"
                 />
 
             <Button
