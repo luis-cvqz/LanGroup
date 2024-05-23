@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LanGroup</string>
+    <string name="lbl_edit_post">Editar publicación</string>
+    <string name="lbl_new_post">Nueva publicación</string>
+    <string name="lbl_title">Título</string>
+    <string name="lbl_description">Descripción</string>
+    <string name="btn_post">Publicar</string>
+    <string name="lbl_post">Publicación</string>
+    <string name="btn_post_changes">Publicar cambios</string>
+    <string name="btn_delete_post">Eliminar publicación</string>
+    <string name="lbl_mod_group">Modificar grupo</string>
+    <string name="btn_save_changes">Guardar</string>
+    <string name="btn_delete_group">Eliminar grupo</string>
+    <string name="lbl_language">Idioma</string>
+    <string name="lbl_group_name">Nombre del grupo</string>
+    <string name="btn_edit">Personalizar</string>
+</resources>

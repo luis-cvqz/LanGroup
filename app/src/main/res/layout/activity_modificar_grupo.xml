@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".grupos.ModificarGrupoActivity">
+
+        <ImageView
+            android:id="@+id/view_header"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/header_langroup"
+            android:importantForAccessibility="no" />
+
+        <ImageButton
+            android:id="@+id/button_regresar"
+            android:layout_width="65dp"
+            android:layout_height="50dp"
+            android:src="@drawable/chevron_left"
+            android:background="@color/transparente" />
+
+        <TextView
+            android:id="@+id/lbl_modificar_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_mod_group"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="45dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/banner_placeholder">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true">
+            </ImageView>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/icon_edit"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/transparente"
+                android:textSize="12sp"
+                android:text="@string/btn_edit"
+                android:textStyle=""
+                android:textColor="@color/black"
+                tools:ignore="RelativeOverlap,SmallSp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/lbl_nombre_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_group_name"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="45dp" />
+
+        <EditText
+            android:id="@+id/edit_text_nombre_grupo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp" />
+
+        <TextView
+            android:id="@+id/lbl_idioma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_language"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="45dp" />
+
+        <Spinner
+            android:id="@+id/spinner_idiomas"
+            android:layout_width="190dp"
+            android:layout_height="30dp"
+
+            android:layout_marginStart="40dp" />
+
+        <TextView
+            android:id="@+id/lbl_descripcion_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_description"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="45dp" />
+
+        <EditText
+            android:id="@+id/edit_text_descripcion_grupo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:inputType="textMultiLine"
+            android:lines="7"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/button_guardar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_eliminar"
+                android:textSize="15sp"
+                android:text="@string/btn_save_changes"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/azul3"/>
+
+            <Button
+                android:id="@+id/button_eliminar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_guardar"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="15sp"
+                android:text="@string/btn_delete_group"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/rojoClaro" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>

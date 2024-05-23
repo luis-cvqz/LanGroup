@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">LanGroup</string>
+    <string name="lbl_new_post">New Post</string>
+    <string name="lbl_title">Title</string>
+    <string name="lbl_description">Description</string>
+    <string name="btn_post">Post</string>
+    <string name="lbl_post">Post</string>
+    <string name="lbl_edit_post">Edit post</string>
+    <string name="btn_post_changes">Post changes</string>
+    <string name="btn_delete_post">Delete post</string>
+    <string name="lbl_mod_group">Edit group</string>
+    <string name="btn_save_changes">Save</string>
+    <string name="btn_delete_group">Delete group</string>
+    <string name="lbl_language">Language</string>
+    <string name="lbl_group_name">Group name</string>
+    <string name="btn_edit">Edit</string>
 </resources>

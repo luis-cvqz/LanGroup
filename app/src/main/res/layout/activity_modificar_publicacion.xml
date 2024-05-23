@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".publicaciones.ModificarPublicacionActivity">
+
+        <ImageView
+            android:id="@+id/view_header"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/header_langroup"
+            android:importantForAccessibility="no" />
+
+        <ImageButton
+            android:id="@+id/button_regresar"
+            android:layout_width="65dp"
+            android:layout_height="55dp"
+            android:src="@drawable/chevron_left"
+            android:background="@color/transparente" />
+
+        <TextView
+            android:id="@+id/lbl_editar_publicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_edit_post"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="45dp" />
+
+        <TextView
+            android:id="@+id/txt_nombre_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[]"
+            tools:text="[Nombre grupo]"
+            android:textSize="18sp"
+            android:textColor="@color/azul3"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="45dp" />
+
+        <TextView
+            android:id="@+id/lbl_titulo_publicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_title"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="45dp" />
+
+        <EditText
+            android:id="@+id/edit_text_titulo_publicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/lbl_descripcion_publicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_description"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="45dp" />
+
+        <EditText
+            android:id="@+id/edit_text_descripcion_publicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp" />
+
+        <Button
+            android:id="@+id/button_guardar_cambios"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:text="@string/btn_post_changes"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/azul3" />
+
+        <Button
+            android:id="@+id/button_eliminar_publicacion"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:text="@string/btn_delete_post"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/rojoClaro" />
+
+    </LinearLayout>
+</layout>
