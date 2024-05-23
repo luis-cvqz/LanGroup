@@ -13,6 +13,21 @@
         android:theme="@style/Theme.LanGroup"
         tools:targetApi="31">
         <activity
+            android:name=".publicaciones.BuscarPublicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".grupos.ModificarGrupoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".publicaciones.ModificarPublicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarInteraccionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".publicaciones.AgregarPublicacionActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
