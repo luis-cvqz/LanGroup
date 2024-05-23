@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         tools:context=".EliminarInstructorActivity">
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -78,7 +78,7 @@
                 android:backgroundTint="@color/rojo"
                 />
 
-        </GridLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
