@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AgregarInstructorActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <View
+                android:id="@+id/view_imagen"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/header_langroup"
+                />
+
+            <ImageButton
+                android:id="@+id/button_regresar"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/flecha_regresar"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/transparente"
+                />
+
+            <TextView
+                android:id="@+id/txt_agregar_instructor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar instructor"
+                android:textSize="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="40dp"
+                />
+
+            <TableLayout
+                android:id="@+id/table_instructores"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <Button
+                android:id="@+id/button_aceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Aceptar"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginRight="140dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/azul"
+                />
+
+            <Button
+                android:id="@+id/button_rechazar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Rechazar"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginRight="140dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/rojo"
+                />
+
+            <Button
+                android:id="@+id/button_ver_solicitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Ver solicitud"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginRight="130dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/amarillo"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
