@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        >
+
+        <TextView
+            android:id="@+id/text_view_nombre_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de usuario"
+            />
+
+        <TextView
+            android:id="@+id/text_view_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grupo"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/text_view_nombre_usuario"
+            />
+
+        <TextView
+            android:id="@+id/text_view_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de publicación"
+            android:layout_toEndOf="@id/text_view_grupo"
+            android:layout_marginStart="10dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/text_view_titulo"
+            android:background="@drawable/baseline_arrow_right_24"
+            />
+
+    </RelativeLayout>
+
+</layout>

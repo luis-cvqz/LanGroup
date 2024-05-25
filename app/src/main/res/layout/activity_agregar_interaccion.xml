@@ -7,10 +7,135 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AgregarInteraccionActivity">
+        android:padding="16dp"
+        tools:context=".publicaciones.AgregarInteraccionActivity"
+        >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+            <ImageView
+                android:id="@+id/image_view_usuario"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/banner_placeholder"
+                />
+
+            <TextView
+                android:id="@+id/text_view_nombre_usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre de usuario"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_toEndOf="@id/image_view_usuario"
+                />
+
+            <TextView
+                android:id="@+id/text_view_idioma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Idioma"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="40dp"
+                android:layout_toEndOf="@id/text_view_nombre_usuario"
+                />
+
+            <TextView
+                android:id="@+id/text_view_grupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grupo"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/image_view_usuario"
+
+                />
+
+            <TextView
+                android:id="@+id/text_view_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre de publicación"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/text_view_grupo"
+                />
+
+            <TextView
+                android:id="@+id/text_view_descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/text_view_titulo"
+                />
+
+            <ScrollView
+                android:id="@+id/scroll_view_multimedia"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/text_view_descripcion"
+                >
+
+
+            </ScrollView>
+
+            <RatingBar
+                android:id="@+id/rating_bar_valoración"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/scroll_view_comentarios"
+                android:numStars="5"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/text_view_comentarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comentarios"
+                android:textSize="18dp"
+                android:layout_below="@id/scroll_view_multimedia"
+                />
+
+            <ScrollView
+                android:id="@+id/scroll_view_comentarios"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="1dp"
+                android:layout_below="@id/text_view_comentarios"
+                >
+
+
+            </ScrollView>
+
+            <EditText
+                android:id="@+id/edit_text_agregar_comentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/rating_bar_valoración"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enviar"
+                android:backgroundTint="@color/azul3"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/edit_text_agregar_comentario"
+                />
+        </RelativeLayout>
+    </ScrollView>
 </layout>

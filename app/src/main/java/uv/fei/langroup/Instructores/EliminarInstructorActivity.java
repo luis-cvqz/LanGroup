@@ -1,4 +1,4 @@
-package uv.fei.langroup;
+package uv.fei.langroup.Instructores;
 
 import android.os.Bundle;
 
@@ -8,11 +8,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class SolicitarRolInstructorActivity extends AppCompatActivity {
+import uv.fei.langroup.R;
+
+public class EliminarInstructorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solicitar_rol_instructor);
+        setContentView(R.layout.activity_eliminar_instructor);
     }
 }

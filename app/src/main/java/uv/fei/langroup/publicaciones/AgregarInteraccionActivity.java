@@ -1,8 +1,10 @@
-package uv.fei.langroup;
+package uv.fei.langroup.publicaciones;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import uv.fei.langroup.R;
 
 public class AgregarInteraccionActivity extends AppCompatActivity {
 
