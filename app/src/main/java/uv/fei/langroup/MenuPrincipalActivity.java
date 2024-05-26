@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import uv.fei.langroup.Instructores.AdministrarInstructoresFragment;
 import uv.fei.langroup.Instructores.SolicitarRolInstructorFragment;
 import uv.fei.langroup.publicaciones.AgregarInteraccionFragment;
 import uv.fei.langroup.publicaciones.BuscarPublicacionFragment;
@@ -73,7 +74,7 @@ public class MenuPrincipalActivity extends AppCompatActivity{
 
                 if(itemId == R.id.nav_admin_instructores){
                     Toast.makeText(MenuPrincipalActivity.this, "Admin Instructores Clicked", Toast.LENGTH_SHORT).show();
-
+                    replaceFragment(new AdministrarInstructoresFragment());
                 }
 
                 if(itemId == R.id.nav_logout){
