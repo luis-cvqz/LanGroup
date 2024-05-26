@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".publicaciones.MisEstadisticasFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+        <View
+            android:id="@+id/view_imagen"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/header_langroup"
+            />
+
+        <ImageButton
+            android:id="@+id/button_regresar"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/chevron_left"
+            android:background="@color/transparente"
+            />
+
+        <TextView
+            android:id="@+id/txt_mis_estadisticas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mis estadisticas"
+            android:textSize="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="40dp"
+            />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart_publicaciones"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginTop="10dp"
+            />
+
+    </LinearLayout>
+</layout>

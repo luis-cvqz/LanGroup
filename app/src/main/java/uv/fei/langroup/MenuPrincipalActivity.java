@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import uv.fei.langroup.publicaciones.PublicacionesFragment;
+import uv.fei.langroup.Instructores.SolicitarRolInstructorFragment;
+import uv.fei.langroup.publicaciones.BuscarPublicacionFragment;
+import uv.fei.langroup.publicaciones.MisEstadisticasFragment;
 
 public class MenuPrincipalActivity extends AppCompatActivity{
 
@@ -41,7 +43,7 @@ public class MenuPrincipalActivity extends AppCompatActivity{
             }
         });
 
-        replaceFragment(new PublicacionesFragment());
+        //replaceFragment(new BuscarPublicacionFragment());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -51,7 +53,7 @@ public class MenuPrincipalActivity extends AppCompatActivity{
 
                 if(itemId == R.id.nav_publicaciones){
                     Toast.makeText(MenuPrincipalActivity.this, "Publicaciones Clicked", Toast.LENGTH_SHORT).show();
-                    replaceFragment(new PublicacionesFragment());
+                    replaceFragment(new BuscarPublicacionFragment());
                 }
 
                 if(itemId == R.id.nav_idiomas){
@@ -61,21 +63,16 @@ public class MenuPrincipalActivity extends AppCompatActivity{
 
                 if(itemId == R.id.nav_ser_instructor){
                     Toast.makeText(MenuPrincipalActivity.this, "Ser instructor Clicked", Toast.LENGTH_SHORT).show();
-
+                    replaceFragment(new SolicitarRolInstructorFragment());
                 }
 
                 if(itemId == R.id.nav_estadisticas){
                     Toast.makeText(MenuPrincipalActivity.this, "Estadisticas Clicked", Toast.LENGTH_SHORT).show();
-
+                    replaceFragment(new MisEstadisticasFragment());
                 }
 
                 if(itemId == R.id.nav_admin_instructores){
                     Toast.makeText(MenuPrincipalActivity.this, "Admin Instructores Clicked", Toast.LENGTH_SHORT).show();
-
-                }
-
-                if(itemId == R.id.nav_admin_moderadores){
-                    Toast.makeText(MenuPrincipalActivity.this, "Admin Moderadores Clicked", Toast.LENGTH_SHORT).show();
 
                 }
 
