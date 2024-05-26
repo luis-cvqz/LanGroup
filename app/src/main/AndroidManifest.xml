@@ -19,6 +19,9 @@
             android:name=".CrearCuentaActivity"
             android:exported="false" />
         <activity
+            android:name=".RecuperarContraseniaActivity"
+            android:exported="false" />
+        <activity
             android:name=".publicaciones.BuscarPublicacionActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
             android:name=".publicaciones.ModificarPublicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".AgregarInteraccionActivity"
+            android:name=".publicaciones.AgregarInteraccionActivity"
             android:exported="false" />
         <activity
             android:name=".publicaciones.AgregarPublicacionActivity"
