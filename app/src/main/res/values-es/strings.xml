@@ -15,4 +15,6 @@
     <string name="lbl_language">Idioma</string>
     <string name="lbl_group_name">Nombre del grupo</string>
     <string name="btn_edit">Personalizar</string>
+    <string name="open_nav">Abrir navegación</string>
+    <string name="close_nav">Cerrar navegación</string>
 </resources>
