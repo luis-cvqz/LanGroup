@@ -6,52 +6,43 @@
 
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".Instructores.SolicitarRolInstructorFragment">
 
         <!-- TODO: Update blank fragment layout -->
-        <View
-            android:id="@+id/view_imagen"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@drawable/header_langroup"
-            />
-
-        <ImageButton
-            android:id="@+id/button_regresar"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/chevron_left"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:background="@color/transparente"
-            />
-
-        <TextView
-            android:id="@+id/txt_solicitar_rol_instructor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Solicitar rol de instructor"
-            android:textSize="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-
+            android:layout_height="match_parent"
             >
+
+            <View
+                android:id="@+id/view_imagen"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/header_langroup"
+                />
+
+            <TextView
+                android:id="@+id/txt_solicitar_rol_instructor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solicitar rol de instructor"
+                android:textSize="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/view_imagen"
+                android:layout_centerHorizontal="true"
+                />
+
             <Button
                 android:id="@+id/button_agregar_constancia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Agregar constancia"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                android:layout_below="@id/txt_solicitar_rol_instructor"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/gris"
                 />
@@ -60,99 +51,107 @@
                 android:id="@+id/spinner_idioma"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="40dp"
+                android:layout_toEndOf="@id/button_agregar_constancia"
+                android:layout_below="@id/txt_solicitar_rol_instructor"
                 />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/txt_nombre_archivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del archivo"
+                android:textSize="12dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_below="@id/button_agregar_constancia"
+                />
 
-        <TextView
-            android:id="@+id/txt_nombre_archivo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nombre del archivo"
-            android:textSize="12dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            />
+            <TextView
+                android:id="@+id/txt_profesion_actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profesion actual"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/txt_nombre_archivo"
+                android:layout_centerHorizontal="true"
+                />
 
-        <TextView
-            android:id="@+id/txt_profesion_actual"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Profesion actual"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            />
+            <EditText
+                android:id="@+id/edit_text_profesion_actual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_below="@id/txt_profesion_actual"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="5dp"
+                />
 
-        <EditText
-            android:id="@+id/edit_text_profesion_actual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            />
+            <TextView
+                android:id="@+id/txt_causa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explica, ¿Por qué quieres ser instructor?"
+                android:textSize="18dp"
+                android:layout_below="@id/edit_text_profesion_actual"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                />
 
-        <TextView
-            android:id="@+id/txt_causa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Explica, ¿Por qué quieres ser instructor?"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            />
+            <EditText
+                android:id="@+id/edit_text_causa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_below="@id/txt_causa"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                />
 
-        <EditText
-            android:id="@+id/edit_text_causa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:inputType="textMultiLine"
-            android:lines="3"
-            />
+            <TextView
+                android:id="@+id/txt_tipo_contenido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explica, ¿Qué tipo de contenido publicarás?"
+                android:textSize="18dp"
+                android:layout_below="@id/edit_text_causa"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                />
 
-        <TextView
-            android:id="@+id/txt_tipo_contenido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Explica, ¿Qué tipo de contenido publicarás?"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            />
+            <EditText
+                android:id="@+id/edit_text_tipo_contenido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_below="@id/txt_tipo_contenido"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                />
 
-        <EditText
-            android:id="@+id/edit_text_tipo_contenido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:inputType="textMultiLine"
-            android:lines="3"
-            />
+            <Button
+                android:id="@+id/button_guardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Guardar"
+                android:layout_below="@id/edit_text_tipo_contenido"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/azul3"
+                />
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/button_guardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="Guardar"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="140dp"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/azul3"
-            />
 
-    </LinearLayout>
+    </ScrollView>
 </layout>

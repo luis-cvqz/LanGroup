@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 import uv.fei.langroup.Instructores.SolicitarRolInstructorFragment;
+import uv.fei.langroup.publicaciones.AgregarInteraccionFragment;
 import uv.fei.langroup.publicaciones.BuscarPublicacionFragment;
 import uv.fei.langroup.publicaciones.MisEstadisticasFragment;
 
@@ -58,7 +59,6 @@ public class MenuPrincipalActivity extends AppCompatActivity{
 
                 if(itemId == R.id.nav_idiomas){
                     Toast.makeText(MenuPrincipalActivity.this, "Idiomas Clicked", Toast.LENGTH_SHORT).show();
-
                 }
 
                 if(itemId == R.id.nav_ser_instructor){

@@ -6,110 +6,117 @@
 
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".publicaciones.AgregarPublicacionFragment">
 
         <!-- TODO: Update blank fragment layout -->
-        <ImageView
-            android:id="@+id/view_header"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@drawable/header_langroup"
-            android:importantForAccessibility="no" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
-        <ImageButton
-            android:id="@+id/button_regresar"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/chevron_left"
-            android:background="@color/transparente" />
+            <ImageView
+                android:id="@+id/view_header"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/header_langroup"
+                android:importantForAccessibility="no" />
 
-        <TextView
-            android:id="@+id/lbl_editar_grupo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_new_post"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginTop="0dp"
-            android:layout_marginStart="45dp" />
+            <ImageButton
+                android:id="@+id/button_regresar"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/chevron_left"
+                android:background="@color/transparente" />
 
-        <TextView
-            android:id="@+id/txt_nombre_grupo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            tools:text="[Nombre grupo]"
-            android:textSize="18sp"
-            android:textColor="@color/azul3"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="45dp" />
+            <TextView
+                android:id="@+id/lbl_editar_grupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_new_post"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="45dp" />
 
-        <TextView
-            android:id="@+id/lbl_titulo_publicacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_title"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="45dp" />
+            <TextView
+                android:id="@+id/txt_nombre_grupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                tools:text="[Nombre grupo]"
+                android:textSize="18sp"
+                android:textColor="@color/azul3"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="45dp" />
 
-        <EditText
-            android:id="@+id/edit_text_titulo_publicacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp" />
+            <TextView
+                android:id="@+id/lbl_titulo_publicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_title"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="45dp" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="5dp">
-
-            <LinearLayout
+            <EditText
+                android:id="@+id/edit_text_titulo_publicacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:textSize="18sp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp" />
 
-            </LinearLayout>
-        </ScrollView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/lbl_descripcion_publicacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_description"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="45dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_text_descripcion_publicacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:inputType="textMultiLine"
-            android:lines="6"
-            android:layout_marginTop="0dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp" />
+                </LinearLayout>
+            </ScrollView>
 
-        <Button
-            android:id="@+id/button_publicar"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:text="@string/btn_post"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/azul3" />
+            <TextView
+                android:id="@+id/lbl_descripcion_publicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_description"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="45dp" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/edit_text_descripcion_publicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:inputType="textMultiLine"
+                android:lines="6"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp" />
+
+            <Button
+                android:id="@+id/button_publicar"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="@string/btn_post"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/azul3" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>
