@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <View
+                android:id="@+id/view_imagen"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/header_langroup"
+                />
+
+            <ImageButton
+                android:id="@+id/button_regresar"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/chevron_left"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparente"
+                />
+
+            <TextView
+                android:id="@+id/txt_solicitar_rol_instructor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nueva cuenta"
+                android:textSize="25sp"
+                android:layout_marginTop="-9dp"
+                android:layout_marginStart="40dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario"
+                android:textSize="18sp"
+                android:layout_marginStart="40dp"
+                />
+
+            <EditText
+                android:id="@+id/edt_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombres"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                />
+
+            <EditText
+                android:id="@+id/edt_nombres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellido(s)"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                />
+
+            <EditText
+                android:id="@+id/edit_apellidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correo"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                />
+
+            <EditText
+                android:id="@+id/edit_correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contraseña"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                />
+
+            <EditText
+                android:id="@+id/edit_contrasena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_profesion_actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmar Contraseña"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                />
+
+            <EditText
+                android:id="@+id/edit_confirmar_contrasena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <Button
+                android:id="@+id/btn_crear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Crear cuenta"
+                android:layout_marginStart="120dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/azul3"
+                />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

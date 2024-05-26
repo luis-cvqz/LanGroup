@@ -14,4 +14,6 @@
     <string name="lbl_language">Language</string>
     <string name="lbl_group_name">Group name</string>
     <string name="btn_edit">Edit</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
 </resources>
