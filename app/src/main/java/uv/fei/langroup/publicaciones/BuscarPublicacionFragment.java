@@ -3,12 +3,16 @@ package uv.fei.langroup.publicaciones;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import uv.fei.langroup.R;
+import uv.fei.langroup.grupos.CrearGrupoFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +65,31 @@ public class BuscarPublicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_buscar_publicacion, container, false);
+        View root = inflater.inflate(R.layout.fragment_buscar_publicacion, container, false);
+
+        final Button buttonAgregarPublicacion = root.findViewById(R.id.button_agregar_publicacion);
+        final Button buttonCrearGrupo = root.findViewById(R.id.button_crear_grupo);
+
+        buttonAgregarPublicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarPublicacionFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        buttonCrearGrupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new CrearGrupoFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        return root;
     }
 }

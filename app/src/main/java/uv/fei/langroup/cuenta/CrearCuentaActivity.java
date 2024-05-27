@@ -1,10 +1,11 @@
-package uv.fei.langroup;
+package uv.fei.langroup.cuenta;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import uv.fei.langroup.MainActivity;
 import uv.fei.langroup.databinding.ActivityCrearCuentaBinding;
 
 public class CrearCuentaActivity extends AppCompatActivity {

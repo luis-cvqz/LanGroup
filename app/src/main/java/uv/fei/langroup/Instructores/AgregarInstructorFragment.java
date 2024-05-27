@@ -3,10 +3,13 @@ package uv.fei.langroup.Instructores;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import uv.fei.langroup.R;
 
@@ -61,6 +64,20 @@ public class AgregarInstructorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_agregar_instructor, container, false);
+        View root = inflater.inflate(R.layout.fragment_agregar_instructor, container, false);
+
+        final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
+
+        buttonRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AdministrarInstructoresFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        return root;
     }
 }

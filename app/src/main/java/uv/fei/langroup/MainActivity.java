@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import uv.fei.langroup.cuenta.CrearCuentaActivity;
+import uv.fei.langroup.cuenta.RecuperarContraseniaActivity;
 import uv.fei.langroup.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnLogin.setOnClickListener(v->{
             Intent intent = new Intent(this, MenuPrincipalActivity.class);
+            startActivity(intent);
+        });
+
+        binding.txtRecuperarContrasenia.setOnClickListener(v->{
+            Intent intent = new Intent(this, RecuperarContraseniaActivity.class);
             startActivity(intent);
         });
     }

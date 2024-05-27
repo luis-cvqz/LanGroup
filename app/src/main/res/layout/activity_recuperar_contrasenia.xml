@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,10 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".RecuperarContraseniaFragment">
+        tools:context=".cuenta.RecuperarContraseniaActivity">
 
-        <!-- TODO: Update blank fragment layout -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -31,6 +31,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:src="@drawable/chevron_left"
+                android:layout_below="@id/view_imagen"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:background="@color/transparente"
@@ -42,8 +43,10 @@
                 android:layout_height="wrap_content"
                 android:text="Nueva contraseña"
                 android:textSize="25dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="40dp"
+                android:layout_below="@id/view_imagen"
+                android:layout_toEndOf="@id/button_regresar"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
                 />
 
             <TextView
@@ -52,19 +55,19 @@
                 android:layout_height="wrap_content"
                 android:text="Contraseña actual"
                 android:textSize="20dp"
+                android:layout_below="@id/button_regresar"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="40dp"
                 />
 
             <EditText
                 android:id="@+id/edit_text_contrasenia_actual"
-                android:layout_width="match_parent"
+                android:layout_width="331dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 android:textSize="18dp"
                 android:inputType="textPassword"
+                android:layout_below="@id/txt_contrasenia_actual"
+                android:layout_centerHorizontal="true"
                 />
 
             <TextView
@@ -73,19 +76,19 @@
                 android:layout_height="wrap_content"
                 android:text="Contraseña nueva"
                 android:textSize="20dp"
+                android:layout_below="@id/edit_text_contrasenia_actual"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="40dp"
                 />
 
             <EditText
                 android:id="@+id/edit_text_contrasenia_nueva"
-                android:layout_width="match_parent"
+                android:layout_width="331dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 android:textSize="18dp"
                 android:inputType="textPassword"
+                android:layout_below="@id/txt_contasenia_nueva"
+                android:layout_centerHorizontal="true"
                 />
 
             <TextView
@@ -94,19 +97,19 @@
                 android:layout_height="wrap_content"
                 android:text="Confirmar contraseña"
                 android:textSize="20dp"
+                android:layout_below="@id/edit_text_contrasenia_nueva"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="40dp"
                 />
 
             <EditText
                 android:id="@+id/edit_text_confirmar_contrasenia"
-                android:layout_width="match_parent"
+                android:layout_width="331dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 android:textSize="18dp"
                 android:inputType="textPassword"
+                android:layout_below="@id/txt_confirmar_contrasenia"
+                android:layout_centerHorizontal="true"
                 />
 
             <Button
@@ -115,13 +118,13 @@
                 android:layout_height="wrap_content"
                 android:text="Guardar"
                 android:textSize="18dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="140dp"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/azul3"
-
+                android:layout_below="@id/edit_text_confirmar_contrasenia"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
                 />
 
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </layout>

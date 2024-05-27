@@ -1,14 +1,20 @@
 package uv.fei.langroup.grupos;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import uv.fei.langroup.R;
+import uv.fei.langroup.publicaciones.AgregarPublicacionFragment;
+import uv.fei.langroup.publicaciones.BuscarPublicacionFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +67,20 @@ public class CrearGrupoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crear_grupo, container, false);
+        View root = inflater.inflate(R.layout.fragment_crear_grupo, container, false);
+
+        final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
+
+        buttonRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new BuscarPublicacionFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        return root;
     }
 }
