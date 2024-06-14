@@ -1,34 +1,37 @@
-package uv.fei.langroup.clases;
+package uv.fei.langroup.POJO;
 
 public class Colaborador {
-    private String idUsuario;
+    private String id;
     private String usuario;
     private String correo;
     private String contrasenia;
     private String nombre;
     private String apellido;
     private String descripcion;
-    private String rol;
     private String icono;
+    private String idRol;
 
-    public Colaborador(String idUsuario, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String rol, String icono) {
-        this.idUsuario = idUsuario;
+    public Colaborador(String id, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String idRol) {
+        this.id = id;
         this.usuario = usuario;
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.nombre = nombre;
         this.apellido = apellido;
         this.descripcion = descripcion;
-        this.rol = rol;
         this.icono = icono;
+        this.idRol = idRol;
+    }
+
+    public Colaborador() {
     }
 
     public String getIdUsuario() {
-        return idUsuario;
+        return id;
     }
 
     public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+        this.id = idUsuario;
     }
 
     public String getUsuario() {
@@ -79,19 +82,19 @@ public class Colaborador {
         this.descripcion = descripcion;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public String getIcono() {
         return icono;
     }
 
     public void setIcono(String icono) {
         this.icono = icono;
+    }
+
+    public String getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(String idRol) {
+        this.idRol = idRol;
     }
 }

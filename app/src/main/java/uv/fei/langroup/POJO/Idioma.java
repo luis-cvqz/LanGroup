@@ -1,20 +1,20 @@
-package uv.fei.langroup.clases;
+package uv.fei.langroup.POJO;
 
 public class Idioma {
-    private String idIdioma;
+    private String id;
     private String nombre;
 
-    public Idioma(String idIdioma, String nombre) {
-        this.idIdioma = idIdioma;
+    public Idioma(String id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
     }
 
     public String getIdIdioma() {
-        return idIdioma;
+        return id;
     }
 
     public void setIdIdioma(String idIdioma) {
-        this.idIdioma = idIdioma;
+        this.id = idIdioma;
     }
 
     public String getNombre() {
