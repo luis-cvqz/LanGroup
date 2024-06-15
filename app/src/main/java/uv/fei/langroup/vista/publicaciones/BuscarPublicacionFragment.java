@@ -1,6 +1,5 @@
-package uv.fei.langroup.grupos;
+package uv.fei.langroup.vista.publicaciones;
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,18 +9,17 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 import uv.fei.langroup.R;
-import uv.fei.langroup.publicaciones.AgregarPublicacionFragment;
-import uv.fei.langroup.publicaciones.BuscarPublicacionFragment;
+import uv.fei.langroup.vista.grupos.CrearGrupoFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CrearGrupoFragment#newInstance} factory method to
+ * Use the {@link BuscarPublicacionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CrearGrupoFragment extends Fragment {
+public class BuscarPublicacionFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +30,7 @@ public class CrearGrupoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CrearGrupoFragment() {
+    public BuscarPublicacionFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +40,11 @@ public class CrearGrupoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CrearGrupoFragment.
+     * @return A new instance of fragment BuscarPublicacionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CrearGrupoFragment newInstance(String param1, String param2) {
-        CrearGrupoFragment fragment = new CrearGrupoFragment();
+    public static BuscarPublicacionFragment newInstance(String param1, String param2) {
+        BuscarPublicacionFragment fragment = new BuscarPublicacionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,16 +65,27 @@ public class CrearGrupoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_crear_grupo, container, false);
+        View root = inflater.inflate(R.layout.fragment_buscar_publicacion, container, false);
 
-        final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
+        final Button buttonAgregarPublicacion = root.findViewById(R.id.button_agregar_publicacion);
+        final Button buttonCrearGrupo = root.findViewById(R.id.button_crear_grupo);
 
-        buttonRegresar.setOnClickListener(new View.OnClickListener() {
+        buttonAgregarPublicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new BuscarPublicacionFragment());
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarPublicacionFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        buttonCrearGrupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new CrearGrupoFragment());
                 fragmentTransaction.commit();
             }
         });

@@ -17,11 +17,10 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import uv.fei.langroup.Instructores.AdministrarInstructoresFragment;
-import uv.fei.langroup.Instructores.SolicitarRolInstructorFragment;
-import uv.fei.langroup.publicaciones.AgregarInteraccionFragment;
-import uv.fei.langroup.publicaciones.BuscarPublicacionFragment;
-import uv.fei.langroup.publicaciones.MisEstadisticasFragment;
+import uv.fei.langroup.vista.instructores.AdministrarInstructoresFragment;
+import uv.fei.langroup.vista.instructores.SolicitarRolInstructorFragment;
+import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
+import uv.fei.langroup.vista.publicaciones.MisEstadisticasFragment;
 
 public class MenuPrincipalActivity extends AppCompatActivity{
 

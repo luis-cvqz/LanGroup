@@ -1,4 +1,4 @@
-package uv.fei.langroup.Instructores;
+package uv.fei.langroup.vista.instructores;
 
 import android.os.Bundle;
 
@@ -9,16 +9,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 import uv.fei.langroup.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AgregarInstructorFragment#newInstance} factory method to
+ * Use the {@link AdministrarInstructoresFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AgregarInstructorFragment extends Fragment {
+public class AdministrarInstructoresFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +29,7 @@ public class AgregarInstructorFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AgregarInstructorFragment() {
+    public AdministrarInstructoresFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class AgregarInstructorFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AgregarInstructorFragment.
+     * @return A new instance of fragment AdministrarInstructoresFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AgregarInstructorFragment newInstance(String param1, String param2) {
-        AgregarInstructorFragment fragment = new AgregarInstructorFragment();
+    public static AdministrarInstructoresFragment newInstance(String param1, String param2) {
+        AdministrarInstructoresFragment fragment = new AdministrarInstructoresFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,17 +63,30 @@ public class AgregarInstructorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_agregar_instructor, container, false);
+        View root = inflater.inflate(R.layout.fragment_administrar_instructores, container, false);
 
-        final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
+        final Button buttonAgregarInstructores = root.findViewById(R.id.button_agregar_instructores);
+        final Button buttonEliminarInstructores = root.findViewById(R.id.button_eliminar_instructores);
 
-        buttonRegresar.setOnClickListener(new View.OnClickListener() {
+        buttonAgregarInstructores.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AdministrarInstructoresFragment());
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarInstructorFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        buttonEliminarInstructores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new EliminarInstructorFragment());
                 fragmentTransaction.commit();
             }
         });

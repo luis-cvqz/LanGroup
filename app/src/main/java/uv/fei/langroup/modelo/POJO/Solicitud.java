@@ -1,4 +1,4 @@
-package uv.fei.langroup.POJO;
+package uv.fei.langroup.modelo.POJO;
 
 public class Solicitud {
     private String id;

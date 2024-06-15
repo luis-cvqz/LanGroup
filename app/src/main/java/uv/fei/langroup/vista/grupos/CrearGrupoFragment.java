@@ -1,4 +1,4 @@
-package uv.fei.langroup.publicaciones;
+package uv.fei.langroup.vista.grupos;
 
 import android.os.Bundle;
 
@@ -11,15 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import uv.fei.langroup.Instructores.AdministrarInstructoresFragment;
 import uv.fei.langroup.R;
+import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AgregarInteraccionFragment#newInstance} factory method to
+ * Use the {@link CrearGrupoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AgregarInteraccionFragment extends Fragment {
+public class CrearGrupoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +30,7 @@ public class AgregarInteraccionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AgregarInteraccionFragment() {
+    public CrearGrupoFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class AgregarInteraccionFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AgregarInteraccionFragment.
+     * @return A new instance of fragment CrearGrupoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AgregarInteraccionFragment newInstance(String param1, String param2) {
-        AgregarInteraccionFragment fragment = new AgregarInteraccionFragment();
+    public static CrearGrupoFragment newInstance(String param1, String param2) {
+        CrearGrupoFragment fragment = new CrearGrupoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +65,7 @@ public class AgregarInteraccionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_agregar_instructor, container, false);
+        View root = inflater.inflate(R.layout.fragment_crear_grupo, container, false);
 
         final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
 

@@ -1,4 +1,4 @@
-package uv.fei.langroup.publicaciones;
+package uv.fei.langroup.vista.publicaciones;
 
 import android.os.Bundle;
 
@@ -9,17 +9,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import uv.fei.langroup.R;
-import uv.fei.langroup.grupos.CrearGrupoFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BuscarPublicacionFragment#newInstance} factory method to
+ * Use the {@link AgregarPublicacionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BuscarPublicacionFragment extends Fragment {
+public class AgregarPublicacionFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +29,7 @@ public class BuscarPublicacionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public BuscarPublicacionFragment() {
+    public AgregarPublicacionFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +39,11 @@ public class BuscarPublicacionFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BuscarPublicacionFragment.
+     * @return A new instance of fragment AgregarPublicacionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BuscarPublicacionFragment newInstance(String param1, String param2) {
-        BuscarPublicacionFragment fragment = new BuscarPublicacionFragment();
+    public static AgregarPublicacionFragment newInstance(String param1, String param2) {
+        AgregarPublicacionFragment fragment = new AgregarPublicacionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,27 +64,16 @@ public class BuscarPublicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_buscar_publicacion, container, false);
+        View root = inflater.inflate(R.layout.fragment_agregar_publicacion, container, false);
 
-        final Button buttonAgregarPublicacion = root.findViewById(R.id.button_agregar_publicacion);
-        final Button buttonCrearGrupo = root.findViewById(R.id.button_crear_grupo);
+        final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
 
-        buttonAgregarPublicacion.setOnClickListener(new View.OnClickListener() {
+        buttonRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarPublicacionFragment());
-                fragmentTransaction.commit();
-            }
-        });
-
-        buttonCrearGrupo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new CrearGrupoFragment());
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new BuscarPublicacionFragment());
                 fragmentTransaction.commit();
             }
         });

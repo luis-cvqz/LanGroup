@@ -13,13 +13,13 @@
         android:theme="@style/Theme.LanGroup"
         tools:targetApi="31">
         <activity
-            android:name=".cuenta.RecuperarContraseniaActivity"
+            android:name=".vista.cuenta.RecuperarContraseniaActivity"
             android:exported="false" />
         <activity
             android:name=".MenuPrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".cuenta.CrearCuentaActivity"
+            android:name=".vista.cuenta.CrearCuentaActivity"
             android:exported="false" />
         <activity
             android:name=".publicaciones.BuscarPublicacionActivity"

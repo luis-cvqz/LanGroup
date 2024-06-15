@@ -1,4 +1,4 @@
-package uv.fei.langroup.Instructores;
+package uv.fei.langroup.vista.grupos;
 
 import android.os.Bundle;
 
@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import uv.fei.langroup.R;
+import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EliminarInstructorFragment#newInstance} factory method to
+ * Use the {@link ModificarGrupoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EliminarInstructorFragment extends Fragment {
+public class ModificarGrupoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +30,7 @@ public class EliminarInstructorFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public EliminarInstructorFragment() {
+    public ModificarGrupoFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +40,11 @@ public class EliminarInstructorFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment EliminarInstructorFragment.
+     * @return A new instance of fragment ModificarGrupoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EliminarInstructorFragment newInstance(String param1, String param2) {
-        EliminarInstructorFragment fragment = new EliminarInstructorFragment();
+    public static ModificarGrupoFragment newInstance(String param1, String param2) {
+        ModificarGrupoFragment fragment = new ModificarGrupoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +65,7 @@ public class EliminarInstructorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_agregar_instructor, container, false);
+        View root = inflater.inflate(R.layout.fragment_modificar_grupo, container, false);
 
         final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
 
@@ -73,7 +74,7 @@ public class EliminarInstructorFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AdministrarInstructoresFragment());
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new BuscarPublicacionFragment());
                 fragmentTransaction.commit();
             }
         });

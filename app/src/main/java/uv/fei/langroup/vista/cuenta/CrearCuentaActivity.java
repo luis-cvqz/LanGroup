@@ -1,4 +1,4 @@
-package uv.fei.langroup.cuenta;
+package uv.fei.langroup.vista.cuenta;
 
 import android.content.Intent;
 import android.os.Bundle;
