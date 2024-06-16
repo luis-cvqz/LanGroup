@@ -1,4 +1,4 @@
-package uv.fei.langroup.vista;
+package uv.fei.langroup;
 
 
 import androidx.annotation.NonNull;
@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import uv.fei.langroup.MainActivity;
-import uv.fei.langroup.R;
 import uv.fei.langroup.vista.instructores.AdministrarInstructoresFragment;
 import uv.fei.langroup.vista.instructores.SolicitarRolInstructorFragment;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;

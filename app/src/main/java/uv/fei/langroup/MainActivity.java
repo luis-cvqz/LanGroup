@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import uv.fei.langroup.vista.MenuPrincipalActivity;
 import uv.fei.langroup.vista.cuenta.CrearCuentaActivity;
 import uv.fei.langroup.vista.cuenta.RecuperarContraseniaActivity;
 import uv.fei.langroup.databinding.ActivityMainBinding;
