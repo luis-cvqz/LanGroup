@@ -1,5 +1,6 @@
 package uv.fei.langroup.modelo.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public interface ColaboradorServicio {
     Call<Colaborador> obtenerColaboradorPorCorreo(@Path("correo") String correo);
 
     @GET("colaboradores?rol={rol}")
-    Call<List<Colaborador>> obtenerColaboradoresPorRol(@Path("rol") String rol);
+    Call<ArrayList<Colaborador>> obtenerColaboradoresPorRol(@Path("rol") String rol);
 
     @PUT("colaboradores/{id}")
     Call<Colaborador> actualizarColaborador(@Path("id") String colaboradorid, @Body Colaborador colaborador);

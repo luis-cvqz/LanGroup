@@ -1,5 +1,6 @@
 package uv.fei.langroup.modelo.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,7 +14,7 @@ import uv.fei.langroup.modelo.POJO.Interaccion;
 
 public interface InteraccionServicio {
     @GET("interacciones/{publicacionid}")
-    Call<List<Interaccion>> obtenerInteraccionesDePublicacion(@Path("publicacionid") String publicacionId);
+    Call<ArrayList<Interaccion>> obtenerInteraccionesDePublicacion(@Path("publicacionid") String publicacionId);
 
     @POST("interacciones")
     Call<Interaccion> crearInteraccion(@Body Interaccion interaccion);

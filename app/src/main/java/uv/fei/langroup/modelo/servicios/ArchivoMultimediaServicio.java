@@ -1,5 +1,6 @@
 package uv.fei.langroup.modelo.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,7 +13,7 @@ import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
 
 public interface ArchivoMultimediaServicio {
     @GET("archivosmultimedia")
-    Call<List<ArchivoMultimedia>> obtenerArchivosMultimedia();
+    Call<ArrayList<ArchivoMultimedia>> obtenerArchivosMultimedia();
 
     @GET("archivosmultimedia/{id}")
     Call<ArchivoMultimedia> obtenerArchivoMultimediaPorId(@Path("id") String archivoMultimediaId);

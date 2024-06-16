@@ -1,5 +1,6 @@
 package uv.fei.langroup.modelo.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,7 +14,7 @@ import uv.fei.langroup.modelo.POJO.Idioma;
 
 public interface IdiomaServicio {
     @GET("idiomas")
-    Call<List<Idioma>> obtenerIdiomas();
+    Call<ArrayList<Idioma>> obtenerIdiomas();
 
     @GET("idiomas/{id}")
     Call<Idioma> obtenerIdiomaPorId(@Path("id") String idiomaId);

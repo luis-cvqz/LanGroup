@@ -1,5 +1,6 @@
 package uv.fei.langroup.modelo.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.http.Body;
@@ -13,7 +14,7 @@ import retrofit2.Call;
 
 public interface PublicacionServicio {
     @GET("publicaciones/colaborador?={colaboradorid}")
-    Call<List<Publicacion>> obtenerPublicacionesPorColaborador(@Path("colaboradorid") String colaboradorid);
+    Call<ArrayList<Publicacion>> obtenerPublicacionesPorColaborador(@Path("colaboradorid") String colaboradorid);
 
     @GET("publicaciones/{id}")
     Call<Publicacion> obtenerPublicacionPorId(@Path("id") String publicacionId);
