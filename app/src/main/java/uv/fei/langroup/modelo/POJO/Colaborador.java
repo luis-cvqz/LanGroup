@@ -1,6 +1,11 @@
 package uv.fei.langroup.modelo.POJO;
 
-public class Colaborador {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Colaborador implements Parcelable {
     private String id;
     private String usuario;
     private String correo;
@@ -9,9 +14,9 @@ public class Colaborador {
     private String apellido;
     private String descripcion;
     private String icono;
-    private String idRol;
+    private String rol;
 
-    public Colaborador(String id, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String idRol) {
+    public Colaborador(String id, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String rol) {
         this.id = id;
         this.usuario = usuario;
         this.correo = correo;
@@ -20,7 +25,7 @@ public class Colaborador {
         this.apellido = apellido;
         this.descripcion = descripcion;
         this.icono = icono;
-        this.idRol = idRol;
+        this.rol = rol;
     }
 
     public Colaborador() {
@@ -90,11 +95,51 @@ public class Colaborador {
         this.icono = icono;
     }
 
-    public String getIdRol() {
-        return idRol;
+    public String getRol() {
+        return rol;
     }
 
-    public void setIdRol(String idRol) {
-        this.idRol = idRol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(usuario);
+        dest.writeString(correo);
+        dest.writeString(contrasenia);
+        dest.writeString(nombre);
+        dest.writeString(apellido);
+        dest.writeString(descripcion);
+        dest.writeString(rol);
+        dest.writeString(icono);
+    }
+
+    protected Colaborador(Parcel in){
+        usuario = in.readString();
+        correo = in.readString();
+        contrasenia = in.readString();
+        nombre = in.readString();
+        apellido = in.readString();
+        descripcion = in.readString();
+        rol = in.readString();
+        icono = in.readString();
+    }
+
+    public static final Creator<Colaborador> CREATOR = new Creator<Colaborador>() {
+        @Override
+        public Colaborador createFromParcel(Parcel in) {
+            return new Colaborador(in);
+        }
+
+        @Override
+        public Colaborador[] newArray(int size) {
+            return new Colaborador[size];
+        }
+    };
 }
