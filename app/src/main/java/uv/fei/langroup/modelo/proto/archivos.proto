@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_package = "com.proto.archivos";
+
+message DescargarArchivoRequest {
+
+  string nombre = 1;
+}
+
+message DescargarArchivoResponse {
+  oneof request {
+    string nombre = 1;
+    bytes archivo = 2;
+  }
+}
+
+service ArchivosService {
+  rpc descargarVideo (DescargarArchivoRequest) returns (stream DescargarArchivoResponse);
+  rpc subirVideo (stream DescargarArchivoResponse) returns (DescargarArchivoRequest);
+  rpc descargarConstancia (DescargarArchivoRequest) returns (stream DescargarArchivoResponse);
+  rpc subirConstancia (stream DescargarArchivoResponse) returns (DescargarArchivoRequest);
+}

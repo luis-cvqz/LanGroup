@@ -69,34 +69,12 @@
                 />
 
             <TextView
-                android:id="@+id/txt_profesion_actual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profesion actual"
-                android:textSize="18dp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/txt_nombre_archivo"
-                android:layout_centerHorizontal="true"
-                />
-
-            <EditText
-                android:id="@+id/edit_text_profesion_actual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:layout_below="@id/txt_profesion_actual"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
                 android:id="@+id/txt_causa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Explica, ¿Por qué quieres ser instructor?"
                 android:textSize="18dp"
-                android:layout_below="@id/edit_text_profesion_actual"
+                android:layout_below="@id/txt_nombre_archivo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 />
@@ -111,7 +89,8 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:inputType="textMultiLine"
-                android:lines="3"
+                android:lines="7"
+                android:maxLength="500"
                 />
 
             <TextView
@@ -135,7 +114,8 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:inputType="textMultiLine"
-                android:lines="3"
+                android:lines="7"
+                android:maxLength="500"
                 />
 
             <Button
@@ -151,7 +131,5 @@
                 android:backgroundTint="@color/azul3"
                 />
         </RelativeLayout>
-
-
     </ScrollView>
 </layout>
