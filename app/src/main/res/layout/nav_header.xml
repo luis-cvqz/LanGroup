@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:text="LanGroup"
+        android:fontFamily="@font/nunitoblack"
         android:textSize="45sp"
         android:textColor="@color/white"
         android:textStyle="bold"/>

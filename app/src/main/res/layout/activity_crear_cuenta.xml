@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nueva cuenta"
+                android:fontFamily="@font/nunitobold"
                 android:textSize="25sp"
                 android:layout_marginTop="-9dp"
                 android:layout_marginStart="40dp"
@@ -48,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Usuario"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="18sp"
                 android:layout_marginStart="40dp"
                 />
@@ -66,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombres"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="40dp"
@@ -85,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Apellido(s)"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="40dp"
@@ -104,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Correo"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="40dp"
@@ -123,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contraseña"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="40dp"
@@ -143,6 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Confirmar Contraseña"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="40dp"
@@ -163,12 +170,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:fontFamily="@font/nunitoblack"
                 android:text="Crear cuenta"
                 android:layout_marginStart="120dp"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/azul3"
                 />
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

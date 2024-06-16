@@ -26,6 +26,7 @@
             android:text="LanGroup"
             android:textSize="18sp"
             android:textColor="@color/azul2"
+            android:fontFamily="@font/nunitolight"
             />
     </LinearLayout>
 
@@ -38,11 +39,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunitoblack"
             android:gravity="center_horizontal"
             android:text="¡Bienvenido de nuevo!"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="25sp" />
+            android:textColor="@color/black"
+            android:textSize="25sp"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -66,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
+                android:fontFamily="@font/nunitobold"
                 android:text="Iniciar sesión"
                 android:textColor="@color/azul1"
                 android:textSize="30sp" />
@@ -91,6 +93,7 @@
                 android:layout_marginStart="80dp"
                 android:text="Usuario"
                 android:textColor="@color/azul1"
+                android:fontFamily="@font/nunitolight"
                 android:textSize="17sp" />
 
         </LinearLayout>
@@ -127,6 +130,7 @@
                 android:gravity="center_horizontal"
                 android:layout_marginStart="80dp"
                 android:text="Contraseña"
+                android:fontFamily="@font/nunitolight"
                 android:textColor="@color/azul1"
                 android:textSize="17sp" />
 
@@ -166,6 +170,7 @@
                 android:gravity="center_horizontal"
                 android:text="¿Olvidaste tu contraseña? Recupérala aquí"
                 android:textColor="@color/azul1"
+                android:fontFamily="@font/nunitobold"
                 android:textSize="17sp" />
         </LinearLayout>
 
@@ -182,6 +187,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="95dp"
                 android:backgroundTint="@color/azul1"
+                android:fontFamily="@font/nunitoblack"
                 android:text="Iniciar sesión"
                 android:textSize="20sp" />
 
@@ -199,6 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:gravity="center_horizontal"
+                android:fontFamily="@font/nunitobold"
                 android:text="¿No tienes cuenta?, Registrate"
                 android:textColor="@color/azul1"
                 android:textSize="17sp" />
