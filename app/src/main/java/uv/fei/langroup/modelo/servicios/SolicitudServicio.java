@@ -16,6 +16,9 @@ public interface SolicitudServicio {
     @GET("solicitudes")
     Call<ArrayList<Solicitud>> obtenerSolicitudes();
 
+    @GET("solicitudes/?colaboradorid={colaboradorid}")
+    Call<ArrayList<Solicitud>> obtenerSolicitudesPorColaboradorId(@Path("colaboradorid") String colaboradorId);
+
     @GET("solicitudes/{id}")
     Call<Solicitud> obtenerSolicitudPorId(@Path("id") String solicitudId);
 
@@ -23,7 +26,7 @@ public interface SolicitudServicio {
     Call<Solicitud> crearSolicitud(@Body Solicitud solicitud);
 
     @PUT("solicitudes/{id}")
-    Call<Solicitud> actualizarSolicitud(@Path("id") String solicitudId);
+    Call<Solicitud> actualizarSolicitud(@Path("id") String solicitudId, @Body Solicitud solicitud);
 
     @DELETE("solicitudes/{id}")
     Call<Void> eliminarSolicitud(@Path("id") String solicitudId);
