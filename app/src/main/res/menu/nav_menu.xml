@@ -10,37 +10,31 @@
         <item
             android:id="@+id/nav_publicaciones"
             android:icon="@drawable/publicaciones"
-            android:fontFamily="@font/nunitolight"
             android:title="Publicaciones"/>
 
         <item
             android:id="@+id/nav_idiomas"
             android:icon="@drawable/lenguajes"
-            android:fontFamily="@font/nunitolight"
             android:title="Mis idiomas"/>
 
         <item
             android:id="@+id/nav_ser_instructor"
             android:icon="@drawable/instructor"
-            android:fontFamily="@font/nunitolight"
             android:title="Quiero ser instructor"/>
 
         <item
             android:id="@+id/nav_estadisticas"
             android:icon="@drawable/estadisticas"
-            android:fontFamily="@font/nunitolight"
             android:title="Estadísticas"/>
 
         <item
             android:id="@+id/nav_admin_instructores"
             android:icon="@drawable/instructores"
-            android:fontFamily="@font/nunitolight"
             android:title="Administrar instructores"/>
 
         <item
             android:id="@+id/nav_admin_moderadores"
             android:icon="@drawable/moderadores"
-            android:fontFamily="@font/nunitolight"
             android:title="Administrar moderadores"/>
     </group>
     <item
@@ -50,7 +44,6 @@
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout"
-                android:fontFamily="@font/nunitolight"
                 android:title="Cerrar sesión"/>
         </menu>
 
