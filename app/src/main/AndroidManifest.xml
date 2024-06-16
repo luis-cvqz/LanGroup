@@ -20,7 +20,7 @@
             android:name=".vista.cuenta.RecuperarContraseniaActivity"
             android:exported="false" />
         <activity
-            android:name=".vista.MenuPrincipalActivity"
+            android:name=".MenuPrincipalActivity"
             android:exported="false" />
         <activity
             android:name=".vista.cuenta.CrearCuentaActivity"
