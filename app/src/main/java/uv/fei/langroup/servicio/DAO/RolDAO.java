@@ -1,4 +1,4 @@
-package uv.fei.langroup.modelo.DAO;
+package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
@@ -9,8 +9,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import uv.fei.langroup.modelo.POJO.Rol;
-import uv.fei.langroup.modelo.servicios.APIClient;
-import uv.fei.langroup.modelo.servicios.RolServicio;
+import uv.fei.langroup.servicio.servicios.APIClient;
+import uv.fei.langroup.servicio.servicios.RolServicio;
 
 public class RolDAO {
     public static void obtenerRolPorId(String rolId, final Callback<Rol> callback){

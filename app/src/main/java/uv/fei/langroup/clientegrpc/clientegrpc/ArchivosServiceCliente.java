@@ -1,4 +1,4 @@
-package uv.fei.langroup.modelo.clientegrpc;
+package uv.fei.langroup.clientegrpc.clientegrpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;

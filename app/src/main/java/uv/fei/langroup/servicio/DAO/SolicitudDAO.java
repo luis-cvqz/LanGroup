@@ -1,4 +1,4 @@
-package uv.fei.langroup.modelo.DAO;
+package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
@@ -8,8 +8,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import uv.fei.langroup.modelo.POJO.Solicitud;
-import uv.fei.langroup.modelo.servicios.APIClient;
-import uv.fei.langroup.modelo.servicios.SolicitudServicio;
+import uv.fei.langroup.servicio.servicios.APIClient;
+import uv.fei.langroup.servicio.servicios.SolicitudServicio;
 
 public class SolicitudDAO {
     public static void obtenerSolicitudesPorEstado(String estado, final Callback<ArrayList<Solicitud>> callback){
