@@ -1,4 +1,4 @@
-package uv.fei.langroup.modelo.DAO;
+package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
@@ -9,8 +9,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import uv.fei.langroup.modelo.POJO.Publicacion;
-import uv.fei.langroup.modelo.servicios.APIClient;
-import uv.fei.langroup.modelo.servicios.PublicacionServicio;
+import uv.fei.langroup.servicio.servicios.APIClient;
+import uv.fei.langroup.servicio.servicios.PublicacionServicio;
 
 public class PublicacionDAO {
     public static void obtenerPublicacionesPorColaborador(String colaboradorId, Callback<ArrayList<Publicacion>> callback){

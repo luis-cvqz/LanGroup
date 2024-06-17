@@ -13,7 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uv.fei.langroup.MainActivity;
 import uv.fei.langroup.databinding.ActivityCrearCuentaBinding;
-import uv.fei.langroup.modelo.DAO.ColaboradorDAO;
+import uv.fei.langroup.servicio.DAO.ColaboradorDAO;
 import uv.fei.langroup.modelo.POJO.Colaborador;
 
 public class CrearCuentaActivity extends AppCompatActivity {

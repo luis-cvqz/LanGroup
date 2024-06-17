@@ -1,4 +1,4 @@
-package uv.fei.langroup.modelo.servicios;
+package uv.fei.langroup.servicio.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
