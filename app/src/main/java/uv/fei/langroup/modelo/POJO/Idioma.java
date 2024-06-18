@@ -1,5 +1,7 @@
 package uv.fei.langroup.modelo.POJO;
 
+import androidx.annotation.NonNull;
+
 public class Idioma {
     private String id;
     private String nombre;
@@ -23,5 +25,11 @@ public class Idioma {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nombre;
     }
 }

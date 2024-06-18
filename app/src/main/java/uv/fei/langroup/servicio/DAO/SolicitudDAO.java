@@ -119,4 +119,29 @@ public class SolicitudDAO {
             }
         });
     }
+
+    public static void obtenerConstanciaPorSolicitudId(String solicitudId, final Callback<byte[]> callback){
+        Retrofit retrofit = APIClient.iniciarAPI();
+        SolicitudServicio solicitudServicio = retrofit.create(SolicitudServicio.class);
+
+        Call<byte[]> call = solicitudServicio.obtenerConstanciaPorSolicitudId(solicitudId);
+
+        call.enqueue(new Callback<byte[]>() {
+            @Override
+            public void onResponse(Call<byte[]> call, Response<byte[]> response) {
+                if(response.isSuccessful()){
+                    byte[] bytesConstancia = response.body();
+                    callback.onResponse(call, Response.success(bytesConstancia));
+                }else{
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<byte[]> call, Throwable t) {
+                Log.d("Constancia", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }

@@ -9,12 +9,13 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import uv.fei.langroup.modelo.POJO.Publicacion;
 import retrofit2.Call;
 
 public interface PublicacionServicio {
-    @GET("publicaciones/colaborador?={colaboradorid}")
-    Call<ArrayList<Publicacion>> obtenerPublicacionesPorColaborador(@Path("colaboradorid") String colaboradorid);
+    @GET("publicaciones")
+    Call<ArrayList<Publicacion>> obtenerPublicacionesPorColaborador(@Query("colaborador") String colaboradorid);
 
     @GET("publicaciones/{id}")
     Call<Publicacion> obtenerPublicacionPorId(@Path("id") String publicacionId);
