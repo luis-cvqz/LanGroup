@@ -6,12 +6,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uv.fei.langroup.R;
+import uv.fei.langroup.databinding.FragmentCrearGrupoBinding;
+import uv.fei.langroup.modelo.POJO.Idioma;
+import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
 
 /**
@@ -61,13 +73,17 @@ public class CrearGrupoFragment extends Fragment {
         }
     }
 
+    FragmentCrearGrupoBinding binding;
+    private ArrayList<Idioma> idiomas;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_crear_grupo, container, false);
+        binding = FragmentCrearGrupoBinding.inflate(getLayoutInflater());
+        View root = binding.getRoot();
 
-        final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
+        final ImageButton buttonRegresar = binding.buttonRegresar;
+        final Spinner spinnerIdiomas = binding.spinnerIdiomas;
+        final Button buttonGuardar = binding.buttonGuardar;
 
         buttonRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +95,39 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
+        IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    idiomas = response.body();
+                    llenarSpinner(spinnerIdiomas, idiomas);
+                } else {
+                    Log.e("CrearGrupoFragment", "Error en la respuesta:" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
+                Log.e("CrearGrupoFragment", "Error en la conexión: " + t.getMessage());
+            }
+        });
+
         return root;
+    }
+
+    private void llenarSpinner(Spinner spinner, ArrayList<Idioma> idiomas) {
+        ArrayAdapter<Idioma> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, idiomas);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private boolean camposVacios() {
+        return true;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
