@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_marginStart="80dp"
-                android:text="Usuario"
+                android:text="Correo"
                 android:textColor="@color/azul1"
                 android:textSize="17sp" />
 
@@ -108,12 +108,25 @@
                 android:src="@drawable/user" />
 
             <EditText
-                android:id="@+id/txt_user"
+                android:id="@+id/txt_Correo"
                 android:layout_width="242dp"
                 android:layout_height="40dp"
                 android:background="@color/gris"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:hint="ejemplo@gmail.com" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblCorreoError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="El correo debe tener el formato adecuado."
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:textColor="@color/rojoClaro"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,8 +163,21 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="63dp"
                 android:background="@color/gris"
+                android:inputType="textPassword"
                 android:textColor="#000000" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblContraseniaError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="La contraseña debe incluir al menos 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial."
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:textColor="@color/rojoClaro"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
