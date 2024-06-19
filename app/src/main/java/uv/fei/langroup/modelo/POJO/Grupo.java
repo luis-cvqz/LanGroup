@@ -1,14 +1,14 @@
 package uv.fei.langroup.modelo.POJO;
 
 public class Grupo {
-    private String id;
+    private String grupoId;
     private String nombre;
     private String descripcion;
     private String icono;
     private String idIdioma;
 
-    public Grupo(String id, String nombre, String descripcion, String icono, String idIdioma) {
-        this.id = id;
+    public Grupo(String grupoId, String nombre, String descripcion, String icono, String idIdioma) {
+        this.grupoId = grupoId;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.icono = icono;
@@ -19,11 +19,11 @@ public class Grupo {
     }
 
     public String getId() {
-        return id;
+        return grupoId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.grupoId = id;
     }
 
     public String getNombre() {

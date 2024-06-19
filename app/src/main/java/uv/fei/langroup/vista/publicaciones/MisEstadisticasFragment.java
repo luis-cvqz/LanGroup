@@ -30,6 +30,7 @@ import retrofit2.Response;
 import uv.fei.langroup.R;
 import uv.fei.langroup.modelo.POJO.Publicacion;
 import uv.fei.langroup.servicio.DAO.PublicacionDAO;
+import uv.fei.langroup.utilidades.SesionSingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,28 +87,15 @@ public class MisEstadisticasFragment extends Fragment {
 
         final BarChart barChartPublicaciones = root.findViewById(R.id.chart_publicaciones);
 
-        ArrayList<Publicacion> publicaciones = obtenerPublicaciones("TODO");
-
-        if(publicaciones != null && !publicaciones.isEmpty()){
-            llenarBarChart(publicaciones, barChartPublicaciones);
-        }else{
-            llenarBarChart(publicaciones, barChartPublicaciones);
-            Toast.makeText(getContext(), "No hay publicaciones", Toast.LENGTH_LONG);
-        }
-
-        return root;
-    }
-
-    private ArrayList<Publicacion> obtenerPublicaciones(String colaboradorId){
         ArrayList<Publicacion> publicaciones = new ArrayList<>();
 
-        PublicacionDAO.obtenerPublicacionesPorColaborador(colaboradorId, new Callback<ArrayList<Publicacion>>() {
+        PublicacionDAO.obtenerPublicacionesPorColaborador(SesionSingleton.getInstance().getColaborador().getId(), new Callback<ArrayList<Publicacion>>() {
             @Override
             public void onResponse(Call<ArrayList<Publicacion>> call, Response<ArrayList<Publicacion>> response) {
                 if(response.isSuccessful()){
-                    if(response.body() != null && !response.body().isEmpty()){
-                        publicaciones.addAll(response.body());
-                    }
+                    publicaciones.addAll(response.body());
+
+                    llenarBarChart(publicaciones, barChartPublicaciones);
                 }else{
                     Log.e("Publicacion", "Error en la respuesta: " + response.code());
                 }
@@ -119,7 +107,7 @@ public class MisEstadisticasFragment extends Fragment {
             }
         });
 
-        return publicaciones;
+        return root;
     }
 
     private void llenarBarChart(ArrayList<Publicacion> publicaciones, BarChart barChart){

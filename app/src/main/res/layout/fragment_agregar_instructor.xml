@@ -46,35 +46,13 @@
                 android:layout_marginTop="15dp"
                 />
 
-            <TableLayout
-                android:id="@+id/table_aprendices"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
+            <ListView
+                android:id="@+id/list_view_aprendices"
+                android:layout_width="350dp"
+                android:layout_height="450dp"
                 android:layout_below="@id/button_regresar"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                >
-
-                <TableRow
-                    android:id="@+id/table_row_titulos"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    >
-
-                    <TextView
-                        android:id="@+id/text_view_usuario"
-                        android:layout_width="140dp"
-                        android:textSize="18dp"
-                        android:text="Usuario" />
-
-                    <TextView
-                        android:id="@+id/text_view_correo"
-                        android:textSize="18dp"
-                        android:text="Correo"
-                        />
-                </TableRow>
-            </TableLayout>
+                android:layout_centerHorizontal="true"
+                />
 
             <Button
                 android:id="@+id/button_aceptar"
@@ -82,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
                 android:text="Aceptar"
-                android:layout_below="@id/table_aprendices"
+                android:layout_below="@id/list_view_aprendices"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"

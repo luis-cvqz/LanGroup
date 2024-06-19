@@ -45,47 +45,13 @@
                 android:layout_marginTop="15dp"
                 />
 
-            <TableLayout
-                android:id="@+id/table_instructores"
-                android:layout_width="350dp"
-                android:layout_height="450dp"
-                android:layout_below="@id/button_regresar"
-                android:layout_marginTop="40dp"
-                android:layout_centerHorizontal="true"
-                >
-
-                <TableRow
-                    android:id="@+id/table_row_titulos"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    >
-
-                    <TextView
-                        android:id="@+id/text_view_usuario"
-                        android:layout_width="140dp"
-                        android:textSize="18dp"
-                        android:text="Usuario" />
-
-                    <TextView
-                        android:id="@+id/text_view_correo"
-                        android:textSize="18dp"
-                        android:text="Correo"
-                        />
-                </TableRow>
-            </TableLayout>
-
-            <Button
-                android:id="@+id/button_eliminar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:text="Eliminar"
-                android:layout_below="@id/table_instructores"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/rojoClaro"
-                />
+           <ListView
+               android:id="@+id/list_view_instructores"
+               android:layout_width="350dp"
+               android:layout_height="500dp"
+               android:layout_centerHorizontal="true"
+               android:layout_below="@id/button_regresar"
+               />
 
         </RelativeLayout>
     </ScrollView>
