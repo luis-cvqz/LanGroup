@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,6 @@ public class CrearGrupoFragment extends Fragment {
     }
 
     FragmentCrearGrupoBinding binding;
-    private ArrayList<Idioma> idiomas;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,12 +95,24 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
+        ArrayList<Idioma> idiomas = obtenerIdiomas();
+        if (!idiomas.isEmpty()) {
+            llenarSpinner(spinnerIdiomas, idiomas);
+        } else {
+            Toast.makeText(getContext(), "No se encontradron idiomas", Toast.LENGTH_SHORT).show();
+        }
+
+        return root;
+    }
+
+    private ArrayList<Idioma> obtenerIdiomas() {
+        ArrayList<Idioma> idiomas = new ArrayList<>();
+
         IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
             @Override
             public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    idiomas = response.body();
-                    llenarSpinner(spinnerIdiomas, idiomas);
+                    idiomas.addAll(response.body());
                 } else {
                     Log.e("CrearGrupoFragment", "Error en la respuesta:" + response.code());
                 }
@@ -112,7 +124,7 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
-        return root;
+        return idiomas;
     }
 
     private void llenarSpinner(Spinner spinner, ArrayList<Idioma> idiomas) {
@@ -120,6 +132,8 @@ public class CrearGrupoFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
+
+    private void crearGrupo() {}
 
     private boolean camposVacios() {
         return true;
