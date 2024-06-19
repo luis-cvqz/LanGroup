@@ -2,6 +2,7 @@ package uv.fei.langroup.servicio.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,14 +17,11 @@ public interface GrupoServicio {
     @GET("grupos/{id}")
     Call<Grupo> obtenerGrupoPorId(@Path("id") String grupoId);
 
-    @GET("grupos/idioma/{idiomaId}")
-    Call<ArrayList<Grupo>> obtenerGruposPorIdIdioma(@Path("idiomaid") String idiomaId);
-
     @GET("grupos/idioma/{idiomaNombre}")
     Call<ArrayList<Grupo>> obtenerGruposPorNombreIdioma(@Path("idiomaNombre") String idiomaNombre);
 
     @POST("grupos")
-    Call<Grupo> crearGrupo(@Body Grupo grupo);
+    Call<Grupo> crearGrupo(@Body Map<String, Object> grupo);
 
     @PUT("grupos/{id}")
     Call<Grupo> actualizarGrupo(@Path("id") String grupoId, @Body Grupo grupo);
