@@ -17,7 +17,7 @@ public interface GrupoServicio {
     Call<Grupo> obtenerGrupoPorId(@Path("id") String grupoId);
 
     @GET("grupos/idioma/{idiomaId}")
-    Call<ArrayList<Grupo>> obtenerGruposPorIdIdioma(@Path("idiomaid") String idiomaId);
+    Call<ArrayList<Grupo>> obtenerGruposPorIdIdioma(@Path("idiomaId") String idiomaId);
 
     @GET("grupos/idioma/{idiomaNombre}")
     Call<ArrayList<Grupo>> obtenerGruposPorNombreIdioma(@Path("idiomaNombre") String idiomaNombre);

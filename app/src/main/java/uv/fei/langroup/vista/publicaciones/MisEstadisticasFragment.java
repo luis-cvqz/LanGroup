@@ -1,14 +1,35 @@
 package uv.fei.langroup.vista.publicaciones;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uv.fei.langroup.R;
+import uv.fei.langroup.modelo.POJO.Publicacion;
+import uv.fei.langroup.servicio.DAO.PublicacionDAO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +82,84 @@ public class MisEstadisticasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mis_estadisticas, container, false);
+        View root = inflater.inflate(R.layout.fragment_mis_estadisticas, container, false);
+
+        final BarChart barChartPublicaciones = root.findViewById(R.id.chart_publicaciones);
+
+        ArrayList<Publicacion> publicaciones = obtenerPublicaciones("TODO");
+
+        if(publicaciones != null && !publicaciones.isEmpty()){
+            llenarBarChart(publicaciones, barChartPublicaciones);
+        }else{
+            llenarBarChart(publicaciones, barChartPublicaciones);
+            Toast.makeText(getContext(), "No hay publicaciones", Toast.LENGTH_LONG);
+        }
+
+        return root;
+    }
+
+    private ArrayList<Publicacion> obtenerPublicaciones(String colaboradorId){
+        ArrayList<Publicacion> publicaciones = new ArrayList<>();
+
+        PublicacionDAO.obtenerPublicacionesPorColaborador(colaboradorId, new Callback<ArrayList<Publicacion>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Publicacion>> call, Response<ArrayList<Publicacion>> response) {
+                if(response.isSuccessful()){
+                    if(response.body() != null && !response.body().isEmpty()){
+                        publicaciones.addAll(response.body());
+                    }
+                }else{
+                    Log.e("Publicacion", "Error en la respuesta: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Publicacion>> call, Throwable t) {
+                Log.e("Publicacion", "Error en la conexión: " + t.getMessage());
+            }
+        });
+
+        return publicaciones;
+    }
+
+    private void llenarBarChart(ArrayList<Publicacion> publicaciones, BarChart barChart){
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+        List<Integer> publicacionesPorMes = new ArrayList<>(Collections.nCopies(12, 0));
+
+        Calendar calendar = Calendar.getInstance();
+
+        for(Publicacion publicacion : publicaciones){
+            calendar.setTime(publicacion.getFecha());
+            int mes = calendar.get(Calendar.MONTH);
+            publicacionesPorMes.set(mes, publicacionesPorMes.get(mes) + 1);
+        }
+
+        for(int i = 0; i < 12; i++){
+            entries.add(new BarEntry(i + 1, publicacionesPorMes.get(i)));
+        }
+
+        BarDataSet dataSet = new BarDataSet(entries, "Publicaciones por mes");
+        dataSet.setColor(Color.BLUE);
+        dataSet.setValueTextColor(Color.BLACK);
+
+        BarData barData = new BarData(dataSet);
+        barChart.setData(barData);
+
+        String[] meses = new DateFormatSymbols().getMonths();
+        IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(meses);
+        barChart.getXAxis().setValueFormatter(formatter);
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        barChart.getXAxis().setGranularity(1f);
+
+        barChart.getAxisLeft().setGranularity(1f);
+
+        barChart.getAxisRight().setEnabled(false);
+        barChart.getDescription().setEnabled(false);
+
+        barChart.animateY(2000);
+        barChart.setFitBars(true);
+
+        barChart.invalidate();
     }
 }

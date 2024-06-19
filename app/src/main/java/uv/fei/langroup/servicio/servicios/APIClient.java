@@ -22,7 +22,7 @@ public class APIClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-
+      
         return retrofit;
     }
 }
