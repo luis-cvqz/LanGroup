@@ -9,8 +9,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AuthInterceptor implements Interceptor {
-    private String token;
-
     public AuthInterceptor() {
     }
 
@@ -18,14 +16,23 @@ public class AuthInterceptor implements Interceptor {
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request originalRequest = chain.request();
+        String token = SesionSingleton.getInstance().getToken();
 
-        if (token != null && !token.isEmpty()) {
-            Request authorizedRequest = originalRequest.newBuilder()
-                    .header("Authorization", "Bearer " + token)
-                    .build();
-            return chain.proceed(authorizedRequest);
+        if (token == null) {
+            return chain.proceed(originalRequest);
         }
 
-        return chain.proceed(originalRequest);
+        Request newRequest = originalRequest.newBuilder()
+                .header("Authorization", "Bearer " + token)
+                .build();
+
+        Response response = chain.proceed(newRequest);
+
+        if (response.header("Set-Authorization") != null) {
+            String newToken = response.header("Set-Authorization");
+            SesionSingleton.getInstance().setToken(newToken);
+        }
+
+        return response;
     }
 }

@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
-                    showMessage("Ocurrió un problema. Intenta más tarde.");
+                    showMessage("No hay conexión con el servidor. Intenta más tarde.");
                 }
             }
         });
