@@ -31,12 +31,12 @@ public class Colaborador implements Parcelable {
     public Colaborador() {
     }
 
-    public String getIdUsuario() {
+    public String getId() {
         return id;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.id = idUsuario;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsuario() {
