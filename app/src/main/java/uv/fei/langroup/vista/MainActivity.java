@@ -1,4 +1,4 @@
-package uv.fei.langroup;
+package uv.fei.langroup.vista;
 
 import static uv.fei.langroup.utilidades.Validador.esContraseniaValida;
 import static uv.fei.langroup.utilidades.Validador.esCorreoValido;
@@ -7,33 +7,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import uv.fei.langroup.modelo.POJO.Auth;
 import uv.fei.langroup.modelo.POJO.Colaborador;
-import uv.fei.langroup.modelo.POJO.JsonResponse;
-import uv.fei.langroup.servicio.DAO.AuthDAO;
-import uv.fei.langroup.servicio.DAO.ColaboradorDAO;
 import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vista.cuenta.CrearCuentaActivity;
 import uv.fei.langroup.vista.cuenta.RecuperarContraseniaActivity;
 import uv.fei.langroup.databinding.ActivityMainBinding;
+import uv.fei.langroup.vistamodelo.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
+    private MainViewModel mainViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         binding.txtRegistro.setOnClickListener(v->{
             abrirCrearCuenta();
@@ -126,38 +126,61 @@ public class MainActivity extends AppCompatActivity {
         Auth auth = new Auth();
         auth.setCorreo(String.valueOf(binding.txtCorreo.getText()));
         auth.setContrasenia(String.valueOf(binding.txtPassword.getText()));
-        AuthDAO.iniciarSesion(auth, new Callback<JsonResponse>() {
-            @Override
-            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
-                JsonResponse jsonResponse = response.body();
-                if (jsonResponse != null && response.isSuccessful()) {
-                    SesionSingleton.getInstance().setToken(jsonResponse.getJwt());
+
+        mainViewModel.fetchIniciarSesion(auth);
+        observeIniciarSesionCodigo();
+    }
+
+    private void observeIniciarSesion() {
+        mainViewModel.getIniciarSesionResponse().observe(this, jsonResponse-> {
+            if (jsonResponse != null) {
+                SesionSingleton.getInstance().setToken(jsonResponse.getJwt());
+            } else {
+                showMessage("No hay conexión con el servidor. Intenta más tarde.");
+            }
+        });
+    }
+
+    private void observeIniciarSesionCodigo() {
+        mainViewModel.getAuthCodigo().observe(this, codigo-> {
+            if (codigo != null) {
+                if (esCodigoExitoso(codigo)) {
+                    observeIniciarSesion();
                     buscarColaborador();
                     abrirMenuPrincipal();
                 } else {
-                    Log.e("Colaborador", "Error en la respuesta: " + response.code());
-                    showMessage("Ocurrió un problema. Intenta más tarde.");
+                    manejarCodigoError(codigo);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<JsonResponse> call, Throwable t) {
-                String errorMensaje = t.getMessage();
-                Log.d("MainActivity", errorMensaje);
-
-                if (errorMensaje.contains("Error en la respuesta")) {
-                    String[] partes = errorMensaje.split(": ");
-                    if (partes.length == 2) {
-                        int codigoError = Integer.parseInt(partes[1]);
-                        manejarCodigoError(codigoError);
-                    }
-                } else {
-                    Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
-                    showMessage("No hay conexión con el servidor. Intenta más tarde.");
-                }
+            } else {
+                showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
         });
+    }
 
+    private void observeColaboradorCodigo() {
+        mainViewModel.getColaboradorCodigo().observe(this, codigo-> {
+            if (codigo != null) {
+                if (esCodigoExitoso(codigo)) {
+                    observeColaborador();
+                } else if (esCodigoErrorServidor(codigo)) {
+                    showMessage("No hay conexión con el servidor. Intenta más tarde.");
+                } else {
+                    showMessage("Ocurrió un problema. Intenta más tarde.");
+                }
+            } else {
+                showMessage("No hay conexión con el servidor. Intenta más tarde.");
+            }
+        });
+    }
+
+    private void observeColaborador() {
+        mainViewModel.getColaborador().observe(this, colaborador -> {
+            if (colaborador != null) {
+                guardarSingleton(colaborador);
+            } else {
+                showMessage("No hay conexión con el servidor. Intenta más tarde.");
+            }
+        });
     }
 
     private void showMessage(String msj){
@@ -173,12 +196,20 @@ public class MainActivity extends AppCompatActivity {
                 showMessage("Verifica tus credenciales.");
                 break;
             case 500:
-                showMessage("No hay conexión con el servidor. Intente más tarde.");
+                showMessage("No hay conexión con el servidor. Intenta más tarde.");
                 break;
             default:
-                showMessage("Ocurrió un problema. Intente más tarde.");
+                showMessage("Ocurrió un problema. Intenta más tarde.");
                 break;
         }
+    }
+
+    private boolean esCodigoExitoso(int code) {
+        return code >= 200 && code < 300;
+    }
+
+    private boolean esCodigoErrorServidor(int code) {
+        return code == 500;
     }
 
     private void guardarSingleton(Colaborador colaborador) {
@@ -187,22 +218,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void buscarColaborador() {
         String correo = String.valueOf(binding.txtCorreo.getText());
-        ColaboradorDAO.obtenerColaboradorPorCorreo(correo, new Callback<Colaborador>() {
-            @Override
-            public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Colaborador colaborador = response.body();
-                    guardarSingleton(colaborador);
-                } else {
-                    showMessage("Ocurrió un problema. Intenta más tarde.");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Colaborador> call, Throwable t) {
-                Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
-                showMessage("Ocurrió un problema. Intenta más tarde.");
-            }
-        });
+        mainViewModel.fetchColaborador(correo);
+        observeColaboradorCodigo();
     }
 }

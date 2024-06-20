@@ -3,13 +3,9 @@ package uv.fei.langroup.vista.cuenta;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import uv.fei.langroup.MainActivity;
+import uv.fei.langroup.vista.MainActivity;
 import uv.fei.langroup.R;
 import uv.fei.langroup.databinding.ActivityRecuperarContraseniaBinding;
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:openDrawer="start"
     android:id="@+id/drawerLayout"
-    tools:context=".MainActivity">
+    tools:context=".vista.MainActivity">
 
     <include
         layout="@layout/activity_menu_principal_content"/>
