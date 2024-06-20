@@ -16,17 +16,16 @@ import uv.fei.langroup.servicio.DAO.GrupoDAO;
 import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 
 public class CrearGrupoViewModel extends ViewModel {
-    private GrupoDAO grupoDAO;
-    private IdiomaDAO idiomaDAO;
     private MutableLiveData<ArrayList<Idioma>> idiomas;
+    private MutableLiveData<Integer> codigo;
 
     public CrearGrupoViewModel() {
-        grupoDAO = new GrupoDAO();
-        idiomaDAO = new IdiomaDAO();
         idiomas = new MutableLiveData<>();
+        codigo = new MutableLiveData<>();
     }
 
     public LiveData<ArrayList<Idioma>> getIdiomas() { return idiomas; }
+    public LiveData<Integer> getCodigo() { return codigo; }
 
     public void fetchIdiomas() {
         IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
@@ -34,13 +33,16 @@ public class CrearGrupoViewModel extends ViewModel {
             public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     idiomas.setValue(response.body());
+                    codigo.setValue(response.code());
                 } else {
+                    codigo.setValue(response.code());
                     Log.e("CrearGrupoFragment", "Error en la respuesta:" + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
+                codigo.setValue(500);
                 Log.e("CrearGrupoFragment", "Error en la conexión: " + t.getMessage());
             }
         });
