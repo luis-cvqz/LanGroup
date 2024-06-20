@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import uv.fei.langroup.databinding.FragmentCrearGrupoBinding;
 import uv.fei.langroup.modelo.POJO.Idioma;
 import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
+import uv.fei.langroup.vistamodelo.grupos.CrearGrupoViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,11 +78,14 @@ public class CrearGrupoFragment extends Fragment {
     }
 
     FragmentCrearGrupoBinding binding;
+    private CrearGrupoViewModel crearGrupoViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCrearGrupoBinding.inflate(getLayoutInflater());
         View root = binding.getRoot();
+
+        crearGrupoViewModel = new ViewModelProvider(this).get(CrearGrupoViewModel.class);
 
         final ImageButton buttonRegresar = binding.buttonRegresar;
         final Spinner spinnerIdiomas = binding.spinnerIdiomas;
@@ -95,36 +101,16 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
-        ArrayList<Idioma> idiomas = obtenerIdiomas();
-        if (!idiomas.isEmpty()) {
-            llenarSpinner(spinnerIdiomas, idiomas);
-        } else {
-            Toast.makeText(getContext(), "No se encontradron idiomas", Toast.LENGTH_SHORT).show();
-        }
-
-        return root;
-    }
-
-    private ArrayList<Idioma> obtenerIdiomas() {
-        ArrayList<Idioma> idiomas = new ArrayList<>();
-
-        IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
+        crearGrupoViewModel.getIdiomas().observe(getViewLifecycleOwner(), new Observer<ArrayList<Idioma>>() {
             @Override
-            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    idiomas.addAll(response.body());
-                } else {
-                    Log.e("CrearGrupoFragment", "Error en la respuesta:" + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
-                Log.e("CrearGrupoFragment", "Error en la conexión: " + t.getMessage());
+            public void onChanged(ArrayList<Idioma> idiomas) {
+                llenarSpinner(spinnerIdiomas, idiomas);
             }
         });
 
-        return idiomas;
+        crearGrupoViewModel.fetchIdiomas();
+
+        return root;
     }
 
     private void llenarSpinner(Spinner spinner, ArrayList<Idioma> idiomas) {
