@@ -2,6 +2,10 @@ package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
+import androidx.lifecycle.ViewModel;
+
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,6 +98,31 @@ public class ColaboradorDAO {
             @Override
             public void onFailure(Call<Colaborador> call, Throwable t) {
                 Log.d("Colaborador", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public static void obtenerColaboradorPorCorreo(String correo, final Callback<Colaborador> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        ColaboradorServicio colaboradorServicio = retrofit.create(ColaboradorServicio.class);
+
+        Call<Colaborador> call = colaboradorServicio.obtenerColaboradorPorCorreo(correo);
+
+        call.enqueue(new Callback<Colaborador>() {
+            @Override
+            public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
+                if (response.isSuccessful()) {
+                    Colaborador colaborador = response.body();
+                    callback.onResponse(call, Response.success(colaborador));
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Colaborador> call, Throwable t) {
+                Log.d("ColaboradorDAO", "Error en la conexión: " + t.getMessage());
                 callback.onFailure(call, t);
             }
         });
