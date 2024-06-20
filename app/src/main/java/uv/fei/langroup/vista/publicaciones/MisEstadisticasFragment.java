@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -89,6 +90,17 @@ public class MisEstadisticasFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Publicacion> publicaciones) {
                 llenarBarChart(publicaciones, barChartPublicaciones);
+            }
+        });
+
+        misEstadisticasViewModel.getCodigo().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer codigo) {
+                if(codigo >= 400 && codigo < 500){
+                    Toast.makeText(getContext(), "No tienes publicaciones.", Toast.LENGTH_LONG).show();
+                }else if(codigo >= 500){
+                    Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

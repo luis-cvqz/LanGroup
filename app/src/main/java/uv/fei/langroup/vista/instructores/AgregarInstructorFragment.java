@@ -108,6 +108,18 @@ public class AgregarInstructorFragment extends Fragment {
                 listViewAprendices.setAdapter(adapterAprendices);
             }
         });
+
+        agregarInstructorViewModel.getCodigo().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer codigo) {
+                if(codigo >= 400 && codigo < 500){
+                    Toast.makeText(getContext(), "No hay solicitudes pendientes.", Toast.LENGTH_LONG).show();
+                }else if(codigo >= 500){
+                    Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
 
         ArrayList<Solicitud> solicitudesPendientes = new ArrayList<>();
@@ -119,14 +131,12 @@ public class AgregarInstructorFragment extends Fragment {
                 if(response.isSuccessful()){
                     solicitudesPendientes.addAll(response.body());
                 }else{
-                    //TODO mostrar mensaje de conexión fallida
                     Log.e("Solicitud", "Error en la respuesta: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Solicitud>> call, Throwable t) {
-                //TODO mostrar mensaje de conexión fallida
                 Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
             }
         });
@@ -137,14 +147,12 @@ public class AgregarInstructorFragment extends Fragment {
                 if(response.isSuccessful()){
                     roles.addAll(response.body());
                 }else{
-                    //TODO mostrar mensaje de conexión fallida
                     Log.e("Rol", "Error en la respuesta: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
-                //TODO mostrar mensaje de conexión fallida
                 Log.e("Rol", "Error en la conexión: " + t.getMessage());
             }
         });
@@ -157,7 +165,10 @@ public class AgregarInstructorFragment extends Fragment {
                 buttonVerSolicitud.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO
+                        FragmentManager manager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                        FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new VerSolicitudFragment(colaborador));
+                        fragmentTransaction.commit();
                     }
                 });
 
@@ -183,41 +194,41 @@ public class AgregarInstructorFragment extends Fragment {
                                             @Override
                                             public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
                                                 if(response.isSuccessful()){
-                                                    String rolInstructorId = "";
+                                                    Colaborador colaboradorActualizar = new Colaborador();
 
                                                     for(Rol rol : roles){
                                                         if(rol.getNombre().equalsIgnoreCase("Instructor")){
-                                                            rolInstructorId = rol.getNombre();
+                                                            colaboradorActualizar.setRolId(rol.getId());
                                                             break;
                                                         }
                                                     }
 
-                                                    ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), rolInstructorId, new Callback<Colaborador>() {
+                                                    ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), colaboradorActualizar, new Callback<Colaborador>() {
                                                         @Override
                                                         public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                                             if(response.isSuccessful()){
-                                                                Toast.makeText(getContext(), "Se aceptó al aprendiz", Toast.LENGTH_LONG);
+                                                                Toast.makeText(getContext(), "Se aceptó al aprendiz", Toast.LENGTH_LONG).show();
                                                             }else{
-                                                                Toast.makeText(getContext(), "Algo salio mal", Toast.LENGTH_LONG);
+                                                                Toast.makeText(getContext(), "Algo salio mal.", Toast.LENGTH_LONG).show();
                                                                 Log.e("Colaborador", "Error en la respuesta: " + response.code());
                                                             }
                                                         }
 
                                                         @Override
                                                         public void onFailure(Call<Colaborador> call, Throwable t) {
-                                                            //TODO mostrar mensaje de conexión fallida
+                                                            Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
                                                             Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
                                                         }
                                                     });
                                                 }else{
-                                                    //TODO mostrar mensaje de conexión fallida
+                                                    Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
                                                     Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<Solicitud> call, Throwable t) {
-                                                //TODO mostrar mensaje de conexión fallida
+                                                Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
                                                 Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                             }
                                         });
@@ -258,17 +269,16 @@ public class AgregarInstructorFragment extends Fragment {
                                             @Override
                                             public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
                                                 if(response.isSuccessful()){
-                                                    Toast.makeText(getContext(), "Se rechazó al aprendiz", Toast.LENGTH_LONG);
+                                                    Toast.makeText(getContext(), "Se rechazó al aprendiz", Toast.LENGTH_LONG).show();
                                                 }else{
-                                                    //TODO mostrar mensaje de conexión fallida
-                                                    Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG);
+                                                    Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
                                                     Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<Solicitud> call, Throwable t) {
-                                                //TODO mostrar mensaje de conexión fallida
+                                                Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
                                                 Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                             }
                                         });

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".vista.instructores.VerSolicitudFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".vista.instructores.VerSolicitudFragment"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <View
+                    android:id="@+id/view_imagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@drawable/header_langroup"
+                    />
+
+                <ImageButton
+                    android:id="@+id/button_regresar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_imagen"
+                    android:src="@drawable/chevron_left"
+                    android:background="@color/transparente"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_solicitud_de"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solicitud de "
+                    android:textSize="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/view_imagen"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <Button
+                    android:id="@+id/button_descargar_constancia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descargar constancia"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_below="@id/button_regresar"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/gris"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_idioma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/button_descargar_constancia"
+                    android:layout_below="@id/button_regresar"
+                    android:text="Idioma"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_nombre_archivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="12dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_below="@id/button_descargar_constancia"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_causa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Explica, ¿Por qué quieres ser instructor?"
+                    android:textSize="18dp"
+                    android:layout_below="@id/txt_nombre_archivo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_motivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:layout_below="@id/txt_causa"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:inputType="textMultiLine"
+                    android:lines="7"
+                    android:maxLength="500"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_tipo_contenido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Explica, ¿Qué tipo de contenido publicarás?"
+                    android:textSize="18dp"
+                    android:layout_below="@id/txt_motivo"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_contenido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:layout_below="@id/txt_tipo_contenido"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:inputType="textMultiLine"
+                    android:lines="7"
+                    android:maxLength="500"
+                    />
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </FrameLayout>
+</layout>

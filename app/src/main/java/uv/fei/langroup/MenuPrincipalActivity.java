@@ -67,12 +67,10 @@ public class MenuPrincipalActivity extends AppCompatActivity{
                 }
 
                 if(itemId == R.id.nav_estadisticas){
-                    Toast.makeText(MenuPrincipalActivity.this, "Estadisticas Clicked", Toast.LENGTH_SHORT).show();
                     replaceFragment(new MisEstadisticasFragment());
                 }
 
                 if(itemId == R.id.nav_admin_instructores){
-                    Toast.makeText(MenuPrincipalActivity.this, "Admin Instructores Clicked", Toast.LENGTH_SHORT).show();
                     replaceFragment(new AdministrarInstructoresFragment());
                 }
 

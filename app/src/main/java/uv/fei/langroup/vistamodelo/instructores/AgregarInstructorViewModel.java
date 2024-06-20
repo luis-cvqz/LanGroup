@@ -18,15 +18,19 @@ import uv.fei.langroup.servicio.DAO.SolicitudDAO;
 
 public class AgregarInstructorViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Colaborador>> aprendicesConSolicitudPendiente;
-    private ColaboradorDAO colaboradorDAO;
+    private MutableLiveData<Integer> codigo;
 
     public AgregarInstructorViewModel(){
-        colaboradorDAO = new ColaboradorDAO();
         aprendicesConSolicitudPendiente = new MutableLiveData<>();
+        codigo = new MutableLiveData<>();
     }
 
     public LiveData<ArrayList<Colaborador>> getAprendicesConSolicitudPendiente(){
         return aprendicesConSolicitudPendiente;
+    }
+
+    public LiveData<Integer> getCodigo(){
+        return codigo;
     }
 
     public void fetchAprendicesConSolicitudPendiente(){
@@ -41,32 +45,37 @@ public class AgregarInstructorViewModel extends ViewModel {
                         public void onResponse(Call<ArrayList<Colaborador>> call, Response<ArrayList<Colaborador>> response) {
                             if(response.isSuccessful()){
                                 ArrayList<Colaborador> aprendicesConSolicitudPendienteApi = new ArrayList<>();
-                                for(Colaborador aprendiz :response.body()){
+                                for(Colaborador aprendiz : response.body()){
                                     for(Solicitud solicitud : solicitudesPendientes){
-                                        if(solicitud.getColaboradorId().equalsIgnoreCase(aprendiz.getId())){
+                                        if(solicitud.getColaborador().getId().equalsIgnoreCase(aprendiz.getId())){
                                             aprendicesConSolicitudPendienteApi.add(aprendiz);
                                         }
                                     }
                                 }
 
                                 aprendicesConSolicitudPendiente.setValue(aprendicesConSolicitudPendienteApi);
+                                codigo.setValue(response.code());
                             }else{
+                                codigo.setValue(response.code());
                                 Log.e("AgregarInstructorViewModel", "Error en la conexión: " + response.code());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ArrayList<Colaborador>> call, Throwable t) {
+                            codigo.setValue(500);
                             Log.e("AgregarInstructorViewModel", "Error en la conexión: " + t.getMessage());
                         }
                     });
                 }else{
+                    codigo.setValue(response.code());
                     Log.e("AgregarInstructorViewModel", "Error en la conexión: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Solicitud>> call, Throwable t) {
+                codigo.setValue(500);
                 Log.e("AgregarInstructorViewModel", "Error en la conexión: " + t.getMessage());
             }
         });

@@ -28,6 +28,6 @@ public interface ColaboradorServicio {
     @PUT("colaboradores/{id}")
     Call<Colaborador> actualizarColaborador(@Path("id") String colaboradorid, @Body Colaborador colaborador);
 
-    @PUT("colaboradores/{colaboradorid}/{rolid}")
-    Call<Colaborador> actualizarRolDeColaborador(@Path("colaboradorid") String colaboradorid, @Path("rolid") String rolid);
+    @PUT("colaboradores/{colaboradorid}/rol")
+    Call<Colaborador> actualizarRolDeColaborador(@Path("colaboradorid") String colaboradorid, @Body Colaborador colaborador);
 }

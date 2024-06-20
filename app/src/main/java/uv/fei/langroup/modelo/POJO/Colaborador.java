@@ -14,9 +14,9 @@ public class Colaborador implements Parcelable {
     private String apellido;
     private String descripcion;
     private String icono;
-    private String idRol;
+    private String rolid;
 
-    public Colaborador(String colaboradorId, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String idRol) {
+    public Colaborador(String colaboradorId, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String rolid) {
         this.colaboradorId = colaboradorId;
         this.usuario = usuario;
         this.correo = correo;
@@ -25,7 +25,7 @@ public class Colaborador implements Parcelable {
         this.apellido = apellido;
         this.descripcion = descripcion;
         this.icono = icono;
-        this.idRol = idRol;
+        this.rolid = rolid;
     }
 
     public Colaborador() {
@@ -95,12 +95,12 @@ public class Colaborador implements Parcelable {
         this.icono = icono;
     }
 
-    public String getRol() {
-        return idRol;
+    public String getRolId() {
+        return rolid;
     }
 
-    public void setRol(String idRol) {
-        this.idRol = idRol;
+    public void setRolId(String idRol) {
+        this.rolid = idRol;
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Colaborador implements Parcelable {
         dest.writeString(nombre);
         dest.writeString(apellido);
         dest.writeString(descripcion);
-        dest.writeString(idRol);
+        dest.writeString(rolid);
         dest.writeString(icono);
     }
 
@@ -127,7 +127,7 @@ public class Colaborador implements Parcelable {
         nombre = in.readString();
         apellido = in.readString();
         descripcion = in.readString();
-        idRol = in.readString();
+        rolid = in.readString();
         icono = in.readString();
     }
 

@@ -78,11 +78,11 @@ public class ColaboradorDAO {
         });
     }
 
-    public static void actualizarRolDeColaborador(String colaboradorId, String rolId, final Callback<Colaborador> callback){
+    public static void actualizarRolDeColaborador(String colaboradorId, Colaborador colaborador, final Callback<Colaborador> callback){
         Retrofit retrofit = APIClient.iniciarAPI();
         ColaboradorServicio colaboradorServicio = retrofit.create(ColaboradorServicio.class);
 
-        Call<Colaborador> call = colaboradorServicio.actualizarRolDeColaborador(colaboradorId, rolId);
+        Call<Colaborador> call = colaboradorServicio.actualizarRolDeColaborador(colaboradorId, colaborador);
 
         call.enqueue(new Callback<Colaborador>() {
             @Override
@@ -97,7 +97,7 @@ public class ColaboradorDAO {
 
             @Override
             public void onFailure(Call<Colaborador> call, Throwable t) {
-                Log.d("Colaborador", "Error en la conexión: " + t.getMessage());
+                Log.d("ColaboradorDAO", "Error en la conexión: " + t.getMessage());
                 callback.onFailure(call, t);
             }
         });
