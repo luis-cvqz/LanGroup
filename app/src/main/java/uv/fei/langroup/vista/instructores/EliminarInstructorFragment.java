@@ -98,6 +98,17 @@ public class EliminarInstructorFragment extends Fragment {
             }
         });
 
+        eliminarInstructorViewModel.getCodigo().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer codigo) {
+                if(codigo >= 400 && codigo < 500){
+                    Toast.makeText(getContext(), "No hay instructores activos.", Toast.LENGTH_LONG).show();
+                }else if(codigo >= 500){
+                    Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         eliminarInstructorViewModel.fetchInstructores();
 
         ArrayList<Rol> roles = new ArrayList<>();
@@ -107,14 +118,12 @@ public class EliminarInstructorFragment extends Fragment {
                 if (response.isSuccessful()) {
                     roles.addAll(response.body());
                 }else {
-                    //TODO mostrar mensaje de conexión fallida
                     Log.e("Rol", "Error en la respuesta: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
-                //TODO mostrar mensaje de conexión fallida
                 Log.e("Rol", "Error en la conexión: " + t.getMessage());
             }
         });
@@ -133,32 +142,31 @@ public class EliminarInstructorFragment extends Fragment {
 
                 AlertDialog confirmarEliminacion = new AlertDialog.Builder(getActivity())
                         .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            Colaborador colaboradorActualizar = new Colaborador();
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String rolAprendizId ="";
 
                                 for(Rol rol : roles){
                                     if(rol.getNombre().equalsIgnoreCase("Aprendiz")){
-                                        rolAprendizId = rol.getId();
+                                        colaboradorActualizar.setRolId(rol.getId());
                                         break;
                                     }
                                 }
 
-                                ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), rolAprendizId, new Callback<Colaborador>() {
+                                ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), colaboradorActualizar, new Callback<Colaborador>() {
                                     @Override
                                     public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                         if(response.isSuccessful()){
-                                            Toast.makeText(getContext(), "Se eliminó al instructor", Toast.LENGTH_LONG);
+                                            Toast.makeText(getContext(), "Se eliminó al instructor", Toast.LENGTH_LONG).show();
                                         }else{
-                                            //TODO mostrar mensaje de conexión fallida
-                                            Toast.makeText(getContext(), "Algo salio mal", Toast.LENGTH_LONG);
+                                            Toast.makeText(getContext(), "Algo salio mal", Toast.LENGTH_LONG).show();
                                             Log.e("Colaborador", "Error en la respuesta: " + response.code());
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<Colaborador> call, Throwable t) {
-                                        //TODO mostrar mensaje de conexión fallida
+                                        Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
                                         Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
                                     }
                                 });

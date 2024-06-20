@@ -16,15 +16,19 @@ import uv.fei.langroup.servicio.DAO.ColaboradorDAO;
 
 public class EliminarInstructorViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Colaborador>> instructores;
-    private ColaboradorDAO colaboradorDAO;
+    private MutableLiveData<Integer> codigo;
 
     public EliminarInstructorViewModel(){
-        colaboradorDAO = new ColaboradorDAO();
         instructores = new MutableLiveData<>();
+        codigo = new MutableLiveData<>();
     }
 
     public LiveData<ArrayList<Colaborador>> getInstructores(){
         return instructores;
+    }
+
+    public LiveData<Integer> getCodigo(){
+        return codigo;
     }
 
     public void fetchInstructores(){
@@ -33,13 +37,16 @@ public class EliminarInstructorViewModel extends ViewModel {
             public void onResponse(Call<ArrayList<Colaborador>> call, Response<ArrayList<Colaborador>> response) {
                 if(response.isSuccessful()){
                     instructores.setValue(response.body());
+                    codigo.setValue(response.code());
                 }else{
+                    codigo.setValue(response.code());
                     Log.e("EliminarInstructorViewModel", "Código: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Colaborador>> call, Throwable t) {
+                codigo.setValue(500);
                 Log.e("EliminarInstructorViewModel", "Error en la conexión: " + t.getMessage());
             }
         });

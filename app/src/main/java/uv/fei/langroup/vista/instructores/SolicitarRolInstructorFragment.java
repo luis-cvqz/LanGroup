@@ -105,6 +105,18 @@ public class SolicitarRolInstructorFragment extends Fragment {
                 spinnerIdiomas.setAdapter(adapterIdiomas);
             }
         });
+
+        solicitarRolInstructorViewModel.getCodigo().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer codigo) {
+                if(codigo >= 400 && codigo < 500){
+                    Toast.makeText(getContext(), "No hay idiomas registrados.", Toast.LENGTH_LONG).show();
+                }else if(codigo >= 500){
+                    Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         solicitarRolInstructorViewModel.fetchIdiomas();
 
         buttonGuardar.setOnClickListener(new View.OnClickListener() {
@@ -131,14 +143,14 @@ public class SolicitarRolInstructorFragment extends Fragment {
                                                 Toast.makeText(getContext(), "Se guardó la solicitud", Toast.LENGTH_LONG);
                                                 regresar();
                                             }else{
-                                                //TODO mostrar mensaje de conexión fallida
+                                                Toast.makeText(getContext(), "Algo salió mal.", Toast.LENGTH_LONG).show();
                                                 Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                             }
                                         }
 
                                         @Override
                                         public void onFailure(Call<Solicitud> call, Throwable t) {
-                                            //TODO mostrar mensaje de conexión fallida
+                                            Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
                                             Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                         }
                                     });
@@ -165,6 +177,7 @@ public class SolicitarRolInstructorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO
+                Toast.makeText(getContext(), "Función no disponible.", Toast.LENGTH_SHORT).show();
             }
         });
 
