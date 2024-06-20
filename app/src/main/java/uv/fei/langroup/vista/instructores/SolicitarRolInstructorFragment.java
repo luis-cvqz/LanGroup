@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 import uv.fei.langroup.servicio.DAO.SolicitudDAO;
 import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
+import uv.fei.langroup.vistamodelo.instructores.SolicitarRolInstructorViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +42,7 @@ import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
  * create an instance of this fragment.
  */
 public class SolicitarRolInstructorFragment extends Fragment {
+    private SolicitarRolInstructorViewModel solicitarRolInstructorViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,26 +97,15 @@ public class SolicitarRolInstructorFragment extends Fragment {
         final EditText editTextContenido = root.findViewById(R.id.edit_text_tipo_contenido);
         final TextView textViewNombreArchivo = root.findViewById(R.id.txt_nombre_archivo);
 
-        ArrayList<Idioma> idiomas = new ArrayList<>();
-
-        IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
+        solicitarRolInstructorViewModel = new ViewModelProvider(this).get(SolicitarRolInstructorViewModel.class);
+        solicitarRolInstructorViewModel.getIdiomas().observe(getViewLifecycleOwner(), new Observer<ArrayList<Idioma>>() {
             @Override
-            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
-                if(response.isSuccessful()){
-                    idiomas.addAll(response.body());
-
-                    ArrayAdapter<Idioma> adapterIdiomas = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, idiomas);
-                    spinnerIdiomas.setAdapter(adapterIdiomas);
-                }else{
-                    Log.e("Idioma", "Error en la respuesta: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
-                Log.e("Idioma", "Error en la conexión: " + t.getMessage());
+            public void onChanged(ArrayList<Idioma> idiomas) {
+                ArrayAdapter<Idioma> adapterIdiomas = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, idiomas);
+                spinnerIdiomas.setAdapter(adapterIdiomas);
             }
         });
+        solicitarRolInstructorViewModel.fetchIdiomas();
 
         buttonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,12 +131,14 @@ public class SolicitarRolInstructorFragment extends Fragment {
                                                 Toast.makeText(getContext(), "Se guardó la solicitud", Toast.LENGTH_LONG);
                                                 regresar();
                                             }else{
+                                                //TODO mostrar mensaje de conexión fallida
                                                 Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                             }
                                         }
 
                                         @Override
                                         public void onFailure(Call<Solicitud> call, Throwable t) {
+                                            //TODO mostrar mensaje de conexión fallida
                                             Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                         }
                                     });

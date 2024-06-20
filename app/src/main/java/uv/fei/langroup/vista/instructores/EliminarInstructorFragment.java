@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,17 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.common.collect.Table;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 
@@ -36,6 +30,7 @@ import uv.fei.langroup.modelo.POJO.Colaborador;
 import uv.fei.langroup.modelo.POJO.Rol;
 import uv.fei.langroup.servicio.DAO.ColaboradorDAO;
 import uv.fei.langroup.servicio.DAO.RolDAO;
+import uv.fei.langroup.vistamodelo.instructores.EliminarInstructorViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +38,7 @@ import uv.fei.langroup.servicio.DAO.RolDAO;
  * create an instance of this fragment.
  */
 public class EliminarInstructorFragment extends Fragment {
+    private EliminarInstructorViewModel eliminarInstructorViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,42 +89,33 @@ public class EliminarInstructorFragment extends Fragment {
         final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
         final ListView listViewInstructores = root.findViewById(R.id.list_view_instructores);
 
-        ArrayList<Colaborador> instructores = new ArrayList<>();
-        ArrayList<Rol> roles = new ArrayList<>();
-
-        ColaboradorDAO.obtenerColaboradoresPorNombreRol("Instructor", new Callback<ArrayList<Colaborador>>() {
+        eliminarInstructorViewModel = new ViewModelProvider(this).get(EliminarInstructorViewModel.class);
+        eliminarInstructorViewModel.getInstructores().observe(getViewLifecycleOwner(), new Observer<ArrayList<Colaborador>>() {
             @Override
-            public void onResponse(Call<ArrayList<Colaborador>> call, Response<ArrayList<Colaborador>> response) {
-                if(response.isSuccessful()){
-                    instructores.addAll(response.body());
+            public void onChanged(ArrayList<Colaborador> instructores) {
+                ArrayAdapter<Colaborador> adapterInstructores = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, instructores);
+                listViewInstructores.setAdapter(adapterInstructores);
+            }
+        });
 
-                    RolDAO.obtenerRoles(new Callback<ArrayList<Rol>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
-                            if (response.isSuccessful()) {
-                                roles.addAll(response.body());
+        eliminarInstructorViewModel.fetchInstructores();
 
-                                ArrayAdapter<Colaborador> adapterInstructores = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, instructores);
-                                listViewInstructores.setAdapter(adapterInstructores);
-
-                            }else {
-                                Log.e("Rol", "Error en la respuesta: " + response.code());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
-                            Log.e("Rol", "Error en la conexión: " + t.getMessage());
-                        }
-                    });
-                }else{
-                    Log.e("Colaborador", "Error en la respuesta: " + response.code());
+        ArrayList<Rol> roles = new ArrayList<>();
+        RolDAO.obtenerRoles(new Callback<ArrayList<Rol>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
+                if (response.isSuccessful()) {
+                    roles.addAll(response.body());
+                }else {
+                    //TODO mostrar mensaje de conexión fallida
+                    Log.e("Rol", "Error en la respuesta: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Colaborador>> call, Throwable t) {
-                Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
+            public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
+                //TODO mostrar mensaje de conexión fallida
+                Log.e("Rol", "Error en la conexión: " + t.getMessage());
             }
         });
 
@@ -163,6 +150,7 @@ public class EliminarInstructorFragment extends Fragment {
                                         if(response.isSuccessful()){
                                             Toast.makeText(getContext(), "Se eliminó al instructor", Toast.LENGTH_LONG);
                                         }else{
+                                            //TODO mostrar mensaje de conexión fallida
                                             Toast.makeText(getContext(), "Algo salio mal", Toast.LENGTH_LONG);
                                             Log.e("Colaborador", "Error en la respuesta: " + response.code());
                                         }
@@ -170,6 +158,7 @@ public class EliminarInstructorFragment extends Fragment {
 
                                     @Override
                                     public void onFailure(Call<Colaborador> call, Throwable t) {
+                                        //TODO mostrar mensaje de conexión fallida
                                         Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
                                     }
                                 });

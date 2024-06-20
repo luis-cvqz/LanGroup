@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ import uv.fei.langroup.modelo.POJO.Solicitud;
 import uv.fei.langroup.servicio.DAO.ColaboradorDAO;
 import uv.fei.langroup.servicio.DAO.RolDAO;
 import uv.fei.langroup.servicio.DAO.SolicitudDAO;
+import uv.fei.langroup.vistamodelo.instructores.AgregarInstructorViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +46,7 @@ import uv.fei.langroup.servicio.DAO.SolicitudDAO;
  * create an instance of this fragment.
  */
 public class AgregarInstructorFragment extends Fragment {
+    private AgregarInstructorViewModel agregarInstructorViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,8 +100,17 @@ public class AgregarInstructorFragment extends Fragment {
         final Button buttonRechazar = root.findViewById(R.id.button_rechazar);
         final ListView listViewAprendices = root.findViewById(R.id.list_view_aprendices);
 
+        agregarInstructorViewModel = new ViewModelProvider(this).get(AgregarInstructorViewModel.class);
+        agregarInstructorViewModel.getAprendicesConSolicitudPendiente().observe(getViewLifecycleOwner(), new Observer<ArrayList<Colaborador>>() {
+            @Override
+            public void onChanged(ArrayList<Colaborador> aprendices) {
+                ArrayAdapter<Colaborador> adapterAprendices = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, aprendices);
+                listViewAprendices.setAdapter(adapterAprendices);
+            }
+        });
+        agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
+
         ArrayList<Solicitud> solicitudesPendientes = new ArrayList<>();
-        ArrayList<Colaborador> aprendices = new ArrayList<>();
         ArrayList<Rol> roles = new ArrayList<>();
 
         SolicitudDAO.obtenerSolicitudesPorEstado("Pendiente", new Callback<ArrayList<Solicitud>>() {
@@ -105,55 +118,34 @@ public class AgregarInstructorFragment extends Fragment {
             public void onResponse(Call<ArrayList<Solicitud>> call, Response<ArrayList<Solicitud>> response) {
                 if(response.isSuccessful()){
                     solicitudesPendientes.addAll(response.body());
-
-                    ColaboradorDAO.obtenerColaboradoresPorNombreRol("Aprendiz", new Callback<ArrayList<Colaborador>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<Colaborador>> call, Response<ArrayList<Colaborador>> response) {
-                            if(response.isSuccessful()){
-                                for(Colaborador aprendiz : response.body()){
-                                    for(Solicitud solicitud : solicitudesPendientes){
-                                        if(solicitud.getColaborador().getId().equalsIgnoreCase(aprendiz.getId())){
-                                            aprendices.add(aprendiz);
-                                        }
-                                    }
-                                }
-
-                                ArrayAdapter<Colaborador> adapterAprendices = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, aprendices);
-                                listViewAprendices.setAdapter(adapterAprendices);
-
-                                RolDAO.obtenerRoles(new Callback<ArrayList<Rol>>() {
-                                    @Override
-                                    public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
-                                        if(response.isSuccessful()){
-                                            roles.addAll(response.body());
-                                        }else{
-                                            Log.e("Rol", "Error en la respuesta: " + response.code());
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
-                                        Log.e("Rol", "Error en la conexión: " + t.getMessage());
-                                    }
-                                });
-                            }else{
-                                Log.e("Colaborador", "Error en la respuesta: " + response.code());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayList<Colaborador>> call, Throwable t) {
-                            Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
-                        }
-                    });
                 }else{
-                    Log.e("Colaborador", "Error en la respuesta: " + response.code());
+                    //TODO mostrar mensaje de conexión fallida
+                    Log.e("Solicitud", "Error en la respuesta: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Solicitud>> call, Throwable t) {
-                Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
+                //TODO mostrar mensaje de conexión fallida
+                Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
+            }
+        });
+
+        RolDAO.obtenerRoles(new Callback<ArrayList<Rol>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
+                if(response.isSuccessful()){
+                    roles.addAll(response.body());
+                }else{
+                    //TODO mostrar mensaje de conexión fallida
+                    Log.e("Rol", "Error en la respuesta: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
+                //TODO mostrar mensaje de conexión fallida
+                Log.e("Rol", "Error en la conexión: " + t.getMessage());
             }
         });
 
@@ -213,16 +205,19 @@ public class AgregarInstructorFragment extends Fragment {
 
                                                         @Override
                                                         public void onFailure(Call<Colaborador> call, Throwable t) {
+                                                            //TODO mostrar mensaje de conexión fallida
                                                             Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
                                                         }
                                                     });
                                                 }else{
+                                                    //TODO mostrar mensaje de conexión fallida
                                                     Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<Solicitud> call, Throwable t) {
+                                                //TODO mostrar mensaje de conexión fallida
                                                 Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                             }
                                         });
@@ -265,6 +260,7 @@ public class AgregarInstructorFragment extends Fragment {
                                                 if(response.isSuccessful()){
                                                     Toast.makeText(getContext(), "Se rechazó al aprendiz", Toast.LENGTH_LONG);
                                                 }else{
+                                                    //TODO mostrar mensaje de conexión fallida
                                                     Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG);
                                                     Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                                 }
@@ -272,6 +268,7 @@ public class AgregarInstructorFragment extends Fragment {
 
                                             @Override
                                             public void onFailure(Call<Solicitud> call, Throwable t) {
+                                                //TODO mostrar mensaje de conexión fallida
                                                 Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                             }
                                         });
@@ -299,8 +296,6 @@ public class AgregarInstructorFragment extends Fragment {
                 regresar();
             }
         });
-
-
 
         return root;
     }
