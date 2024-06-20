@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Colaborador implements Parcelable {
-    private String id;
+    private String colaboradorId;
     private String usuario;
     private String correo;
     private String contrasenia;
@@ -16,8 +16,8 @@ public class Colaborador implements Parcelable {
     private String icono;
     private String idRol;
 
-    public Colaborador(String id, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String idRol) {
-        this.id = id;
+    public Colaborador(String colaboradorId, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String idRol) {
+        this.colaboradorId = colaboradorId;
         this.usuario = usuario;
         this.correo = correo;
         this.contrasenia = contrasenia;
@@ -32,11 +32,11 @@ public class Colaborador implements Parcelable {
     }
 
     public String getId() {
-        return id;
+        return colaboradorId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String colaboradorId) {
+        this.colaboradorId = colaboradorId;
     }
 
     public String getUsuario() {
@@ -142,4 +142,10 @@ public class Colaborador implements Parcelable {
             return new Colaborador[size];
         }
     };
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.usuario + " | " + this.correo;
+    }
 }

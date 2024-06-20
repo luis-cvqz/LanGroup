@@ -1,35 +1,39 @@
 package uv.fei.langroup.modelo.POJO;
 
 public class Solicitud {
-    private String id;
+    private String solicitudId;
     private String contenido;
     private String motivo;
     private byte[] constancia;
     private String nombreArchivo;
     private String estado;
-    private String idColaborador;
-    private String idIdioma;
+    private String colaboradorId;
+    private String idiomaId;
+    private Colaborador colaborador;
+    private Idioma idioma;
 
-    public Solicitud(String id, String contenido, String motivo, byte[] constancia, String nombreArchivo, String estado, String idColaborador, String idIdioma) {
-        this.id = id;
+    public Solicitud() {
+    }
+
+    public Solicitud(String solicitudId, String contenido, String motivo, byte[] constancia, String nombreArchivo, String estado, String colaboradorId, String idiomaId, Colaborador colaborador, Idioma idioma) {
+        this.solicitudId = solicitudId;
         this.contenido = contenido;
         this.motivo = motivo;
         this.constancia = constancia;
         this.nombreArchivo = nombreArchivo;
         this.estado = estado;
-        this.idColaborador = idColaborador;
-        this.idIdioma = idIdioma;
+        this.colaboradorId = colaboradorId;
+        this.idiomaId = idiomaId;
+        this.colaborador = colaborador;
+        this.idioma = idioma;
     }
 
-    public Solicitud() {
+    public String getSolicitudId() {
+        return solicitudId;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setSolicitudId(String solicitudId) {
+        this.solicitudId = solicitudId;
     }
 
     public String getContenido() {
@@ -72,19 +76,35 @@ public class Solicitud {
         this.estado = estado;
     }
 
-    public String getIdColaborador() {
-        return idColaborador;
+    public String getColaboradorId() {
+        return colaboradorId;
     }
 
-    public void setIdColaborador(String idColaborador) {
-        this.idColaborador = idColaborador;
+    public void setColaboradorId(String colaboradorId) {
+        this.colaboradorId = colaboradorId;
     }
 
-    public String getIdIdioma() {
-        return idIdioma;
+    public String getIdiomaId() {
+        return idiomaId;
     }
 
-    public void setIdIdioma(String idIdioma) {
-        this.idIdioma = idIdioma;
+    public void setIdiomaId(String idiomaId) {
+        this.idiomaId = idiomaId;
+    }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
+    }
+
+    public Idioma getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(Idioma idioma) {
+        this.idioma = idioma;
     }
 }

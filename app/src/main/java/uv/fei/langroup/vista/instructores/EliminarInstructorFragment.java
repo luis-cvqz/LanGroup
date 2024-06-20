@@ -7,21 +7,18 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
-
-import com.google.common.collect.Table;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 
@@ -33,6 +30,7 @@ import uv.fei.langroup.modelo.POJO.Colaborador;
 import uv.fei.langroup.modelo.POJO.Rol;
 import uv.fei.langroup.servicio.DAO.ColaboradorDAO;
 import uv.fei.langroup.servicio.DAO.RolDAO;
+import uv.fei.langroup.vistamodelo.instructores.EliminarInstructorViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +38,7 @@ import uv.fei.langroup.servicio.DAO.RolDAO;
  * create an instance of this fragment.
  */
 public class EliminarInstructorFragment extends Fragment {
+    private EliminarInstructorViewModel eliminarInstructorViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,60 +87,38 @@ public class EliminarInstructorFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_eliminar_instructor, container, false);
 
         final ImageButton buttonRegresar = root.findViewById(R.id.button_regresar);
-        final Button buttonEliminar = root.findViewById(R.id.button_eliminar);
-        final TableLayout tableInstructores = root.findViewById(R.id.table_instructores);
+        final ListView listViewInstructores = root.findViewById(R.id.list_view_instructores);
 
-        ArrayList<Colaborador> instructores = obtenerInstructores();
-        ArrayList<Rol> roles = obtenerRoles();
-        String rolAprendizId = "";
-        final int[] indiceSeleccionado = {0};
+        eliminarInstructorViewModel = new ViewModelProvider(this).get(EliminarInstructorViewModel.class);
+        eliminarInstructorViewModel.getInstructores().observe(getViewLifecycleOwner(), new Observer<ArrayList<Colaborador>>() {
+            @Override
+            public void onChanged(ArrayList<Colaborador> instructores) {
+                ArrayAdapter<Colaborador> adapterInstructores = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, instructores);
+                listViewInstructores.setAdapter(adapterInstructores);
+            }
+        });
 
-        if(roles != null && !roles.isEmpty()){
-            for(Rol rol : roles){
-                if(rol.getNombre().equalsIgnoreCase("Aprendiz")){
-                    rolAprendizId = rol.getId();
-                    break;
+        eliminarInstructorViewModel.fetchInstructores();
+
+        ArrayList<Rol> roles = new ArrayList<>();
+        RolDAO.obtenerRoles(new Callback<ArrayList<Rol>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
+                if (response.isSuccessful()) {
+                    roles.addAll(response.body());
+                }else {
+                    //TODO mostrar mensaje de conexión fallida
+                    Log.e("Rol", "Error en la respuesta: " + response.code());
                 }
             }
-        }
 
-        if(!instructores.isEmpty()){
-            for(Colaborador instructor : instructores){
-                TableRow fila = new TableRow(this.getContext());
-                fila.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                TextView textViewUsuario = new TextView(this.getContext());
-                textViewUsuario.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                textViewUsuario.setTextSize(16);
-                textViewUsuario.setText(instructor.getUsuario());
-
-                fila.addView(textViewUsuario);
-
-                TextView textViewCorreo = new TextView(this.getContext());
-                textViewCorreo.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                textViewCorreo.setTextSize(16);
-                textViewCorreo.setText(instructor.getCorreo());
-
-                fila.addView(textViewCorreo);
-
-                tableInstructores.addView(fila);
+            @Override
+            public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
+                //TODO mostrar mensaje de conexión fallida
+                Log.e("Rol", "Error en la conexión: " + t.getMessage());
             }
+        });
 
-            for(int i = 0; i < tableInstructores.getChildCount(); i++){
-                final TableRow fila = (TableRow) tableInstructores.getChildAt(i);
-
-                fila.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int indiceFila = tableInstructores.indexOfChild(fila);
-
-                        indiceSeleccionado[0] = indiceFila;
-
-                        Toast.makeText(getContext(), "Indice seleccionado: " + indiceFila, Toast.LENGTH_SHORT);
-                    }
-                });
-            }
-        }
         buttonRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,20 +126,31 @@ public class EliminarInstructorFragment extends Fragment {
             }
         });
 
-        String finalRolAprendizId = rolAprendizId;
-        buttonEliminar.setOnClickListener(new View.OnClickListener() {
+        listViewInstructores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Colaborador colaborador = (Colaborador) parent.getItemAtPosition(position);
+
                 AlertDialog confirmarEliminacion = new AlertDialog.Builder(getActivity())
                         .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ColaboradorDAO.actualizarRolDeColaborador(instructores.get(indiceSeleccionado[0]).getId(), finalRolAprendizId, new Callback<Colaborador>() {
+                                String rolAprendizId ="";
+
+                                for(Rol rol : roles){
+                                    if(rol.getNombre().equalsIgnoreCase("Aprendiz")){
+                                        rolAprendizId = rol.getId();
+                                        break;
+                                    }
+                                }
+
+                                ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), rolAprendizId, new Callback<Colaborador>() {
                                     @Override
                                     public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                         if(response.isSuccessful()){
                                             Toast.makeText(getContext(), "Se eliminó al instructor", Toast.LENGTH_LONG);
                                         }else{
+                                            //TODO mostrar mensaje de conexión fallida
                                             Toast.makeText(getContext(), "Algo salio mal", Toast.LENGTH_LONG);
                                             Log.e("Colaborador", "Error en la respuesta: " + response.code());
                                         }
@@ -170,6 +158,7 @@ public class EliminarInstructorFragment extends Fragment {
 
                                     @Override
                                     public void onFailure(Call<Colaborador> call, Throwable t) {
+                                        //TODO mostrar mensaje de conexión fallida
                                         Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
                                     }
                                 });
@@ -182,7 +171,7 @@ public class EliminarInstructorFragment extends Fragment {
                             }
                         })
                         .setTitle("Eliminar instructor")
-                        .setMessage("¿Deseas eliminar a {} como instructor?")
+                        .setMessage("¿Deseas eliminar a " + colaborador.getUsuario() + " como instructor?")
                         .create();
 
                 confirmarEliminacion.show();
@@ -197,53 +186,5 @@ public class EliminarInstructorFragment extends Fragment {
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
         FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AdministrarInstructoresFragment());
         fragmentTransaction.commit();
-    }
-
-    private ArrayList<Colaborador> obtenerInstructores(){
-        ArrayList<Colaborador> instructores = new ArrayList<>();
-
-        ColaboradorDAO.obtenerColaboradoresPorNombreRol("Instructor", new Callback<ArrayList<Colaborador>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Colaborador>> call, Response<ArrayList<Colaborador>> response) {
-                if(response.isSuccessful()){
-                    if(response.body() != null && !response.body().isEmpty()){
-                        instructores.addAll(response.body());
-                    }
-                }else{
-                    Log.e("Colaborador", "Error en la respuesta: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Colaborador>> call, Throwable t) {
-                Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
-            }
-        });
-
-        return instructores;
-    }
-
-    private ArrayList<Rol> obtenerRoles(){
-        ArrayList<Rol> roles = new ArrayList<>();
-
-        RolDAO.obtenerRoles(new Callback<ArrayList<Rol>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
-                if(response.isSuccessful()){
-                    if(response.body() != null && !response.body().isEmpty()){
-                        roles.addAll(response.body());
-                    }else{
-                        Log.e("Rol", "Error en la respuesta: " + response.code());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Rol>> call, Throwable t) {
-                Log.e("Rol", "Error en la conexión: " + t.getMessage());
-            }
-        });
-
-        return roles;
     }
 }

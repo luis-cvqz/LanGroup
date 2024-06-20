@@ -4,12 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,12 +24,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import uv.fei.langroup.R;
 import uv.fei.langroup.modelo.POJO.Publicacion;
-import uv.fei.langroup.servicio.DAO.PublicacionDAO;
+import uv.fei.langroup.utilidades.SesionSingleton;
+import uv.fei.langroup.vistamodelo.publicaciones.MisEstadisticasViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +35,7 @@ import uv.fei.langroup.servicio.DAO.PublicacionDAO;
  * create an instance of this fragment.
  */
 public class MisEstadisticasFragment extends Fragment {
+    private MisEstadisticasViewModel misEstadisticasViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,43 +82,19 @@ public class MisEstadisticasFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_mis_estadisticas, container, false);
-
         final BarChart barChartPublicaciones = root.findViewById(R.id.chart_publicaciones);
 
-        ArrayList<Publicacion> publicaciones = obtenerPublicaciones("TODO");
-
-        if(publicaciones != null && !publicaciones.isEmpty()){
-            llenarBarChart(publicaciones, barChartPublicaciones);
-        }else{
-            llenarBarChart(publicaciones, barChartPublicaciones);
-            Toast.makeText(getContext(), "No hay publicaciones", Toast.LENGTH_LONG);
-        }
-
-        return root;
-    }
-
-    private ArrayList<Publicacion> obtenerPublicaciones(String colaboradorId){
-        ArrayList<Publicacion> publicaciones = new ArrayList<>();
-
-        PublicacionDAO.obtenerPublicacionesPorColaborador(colaboradorId, new Callback<ArrayList<Publicacion>>() {
+        misEstadisticasViewModel = new ViewModelProvider(this).get(MisEstadisticasViewModel.class);
+        misEstadisticasViewModel.getPublicaciones().observe(getViewLifecycleOwner(), new Observer<ArrayList<Publicacion>>() {
             @Override
-            public void onResponse(Call<ArrayList<Publicacion>> call, Response<ArrayList<Publicacion>> response) {
-                if(response.isSuccessful()){
-                    if(response.body() != null && !response.body().isEmpty()){
-                        publicaciones.addAll(response.body());
-                    }
-                }else{
-                    Log.e("Publicacion", "Error en la respuesta: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Publicacion>> call, Throwable t) {
-                Log.e("Publicacion", "Error en la conexión: " + t.getMessage());
+            public void onChanged(ArrayList<Publicacion> publicaciones) {
+                llenarBarChart(publicaciones, barChartPublicaciones);
             }
         });
 
-        return publicaciones;
+        misEstadisticasViewModel.fetchPublicaciones(SesionSingleton.getInstance().getColaborador().getId());
+
+        return root;
     }
 
     private void llenarBarChart(ArrayList<Publicacion> publicaciones, BarChart barChart){

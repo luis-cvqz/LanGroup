@@ -1,25 +1,25 @@
 package uv.fei.langroup.modelo.POJO;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Publicacion {
     private String id;
     private String titulo;
     private String descripcion;
     private Date fecha;
-    private String idColaborador;
-    private String idGrupo;
+    private Colaborador colaborador;
+    private Grupo grupo;
 
-    public Publicacion(String id, String titulo, String descripcion, Date fecha, String idColaborador, String idGrupo) {
+    public Publicacion() {
+    }
+
+    public Publicacion(String id, String titulo, String descripcion, Date fecha, Colaborador colaborador, Grupo grupo) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fecha = fecha;
-        this.idColaborador = idColaborador;
-        this.idGrupo = idGrupo;
-    }
-
-    public Publicacion() {
+        this.colaborador = colaborador;
+        this.grupo = grupo;
     }
 
     public String getId() {
@@ -54,19 +54,19 @@ public class Publicacion {
         this.fecha = fecha;
     }
 
-    public String getIdColaborador() {
-        return idColaborador;
+    public Colaborador getColaborador() {
+        return colaborador;
     }
 
-    public void setIdColaborador(String idColaborador) {
-        this.idColaborador = idColaborador;
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
     }
 
-    public String getIdGrupo() {
-        return idGrupo;
+    public Grupo getGrupo() {
+        return grupo;
     }
 
-    public void setIdGrupo(String idGrupo) {
-        this.idGrupo = idGrupo;
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 }

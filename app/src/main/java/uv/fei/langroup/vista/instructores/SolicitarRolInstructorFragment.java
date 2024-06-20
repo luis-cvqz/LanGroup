@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +32,9 @@ import uv.fei.langroup.modelo.POJO.Idioma;
 import uv.fei.langroup.modelo.POJO.Solicitud;
 import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 import uv.fei.langroup.servicio.DAO.SolicitudDAO;
+import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
+import uv.fei.langroup.vistamodelo.instructores.SolicitarRolInstructorViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +42,7 @@ import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
  * create an instance of this fragment.
  */
 public class SolicitarRolInstructorFragment extends Fragment {
+    private SolicitarRolInstructorViewModel solicitarRolInstructorViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,101 +97,78 @@ public class SolicitarRolInstructorFragment extends Fragment {
         final EditText editTextContenido = root.findViewById(R.id.edit_text_tipo_contenido);
         final TextView textViewNombreArchivo = root.findViewById(R.id.txt_nombre_archivo);
 
-        if(!tieneSolicitudPendiente("TODO")){
-            ArrayList<Idioma> idiomas = recuperarIdiomas();
-
-            if(idiomas != null && !idiomas.isEmpty()){
-                ArrayAdapter<Idioma> adapterIdiomas = new ArrayAdapter<Idioma>(getContext(), android.R.layout.simple_spinner_item, idiomas);
+        solicitarRolInstructorViewModel = new ViewModelProvider(this).get(SolicitarRolInstructorViewModel.class);
+        solicitarRolInstructorViewModel.getIdiomas().observe(getViewLifecycleOwner(), new Observer<ArrayList<Idioma>>() {
+            @Override
+            public void onChanged(ArrayList<Idioma> idiomas) {
+                ArrayAdapter<Idioma> adapterIdiomas = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, idiomas);
                 spinnerIdiomas.setAdapter(adapterIdiomas);
             }
+        });
+        solicitarRolInstructorViewModel.fetchIdiomas();
 
-            buttonGuardar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!editTextMotivo.getText().toString().isEmpty() && !editTextContenido.getText().toString().isEmpty()){
-                        AlertDialog confirmarGuardar = new AlertDialog.Builder(getActivity())
-                                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Solicitud solicitud = new Solicitud();
-                                        solicitud.setEstado("Pendiente");
-                                        solicitud.setMotivo(editTextMotivo.getText().toString());
-                                        solicitud.setContenido(editTextContenido.getText().toString());
-                                        solicitud.setNombreArchivo(textViewNombreArchivo.getText().toString());
-                                        Idioma idiomaSeleccionado = (Idioma) spinnerIdiomas.getSelectedItem();
-                                        solicitud.setIdIdioma(idiomaSeleccionado.getIdIdioma());
-                                        solicitud.setIdColaborador("TODO");
-
-                                        SolicitudDAO.crearSolicitud(solicitud, new Callback<Solicitud>() {
-                                            @Override
-                                            public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
-                                                if(response.isSuccessful()){
-                                                    Toast.makeText(getContext(), "Se guardó la solicitud", Toast.LENGTH_LONG);
-                                                    regresar();
-                                                }else{
-                                                    Log.e("Solicitud", "Error en la respuesta: " + response.code());
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<Solicitud> call, Throwable t) {
-                                                Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
-                                            }
-                                        });
-                                    }
-                                })
-                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setTitle("Guardar solicitud")
-                                .setMessage("¿Desea guardar la solicitud?")
-                                .create();
-
-                        confirmarGuardar.show();
-                    }else{
-                        Toast.makeText(getContext(), "Debe llenar todos los campos", Toast.LENGTH_LONG);
-                    }
-                }
-            });
-
-            buttonAgregarConstancia.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO
-                }
-            });
-        }else{
-            Toast.makeText(getContext(), "Ya tienes una solicitud pendiente", Toast.LENGTH_LONG);
-            regresar();
-        }
-
-        return root;
-    }
-
-    private ArrayList<Idioma> recuperarIdiomas(){
-        ArrayList<Idioma> idiomas = new ArrayList<>();
-        IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
+        buttonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
-                if(response.isSuccessful()){
-                    if(response.body() != null && !response.body().isEmpty()){
-                        idiomas.addAll(response.body());
-                    }
+            public void onClick(View v) {
+                if(!editTextMotivo.getText().toString().isEmpty() && !editTextContenido.getText().toString().isEmpty() /*&& !textViewNombreArchivo.getText().toString().isEmpty()*/){
+                    AlertDialog confirmarGuardar = new AlertDialog.Builder(getActivity())
+                            .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Solicitud solicitud = new Solicitud();
+                                    solicitud.setEstado("Pendiente");
+                                    solicitud.setMotivo(editTextMotivo.getText().toString());
+                                    solicitud.setContenido(editTextContenido.getText().toString());
+                                    solicitud.setNombreArchivo(textViewNombreArchivo.getText().toString());
+                                    Idioma idiomaSeleccionado = (Idioma) spinnerIdiomas.getSelectedItem();
+                                    solicitud.setIdiomaId(idiomaSeleccionado.getIdIdioma());
+                                    solicitud.setColaboradorId(SesionSingleton.getInstance().getColaborador().getId());
+
+                                    SolicitudDAO.crearSolicitud(solicitud, new Callback<Solicitud>() {
+                                        @Override
+                                        public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
+                                            if(response.isSuccessful()){
+                                                Toast.makeText(getContext(), "Se guardó la solicitud", Toast.LENGTH_LONG);
+                                                regresar();
+                                            }else{
+                                                //TODO mostrar mensaje de conexión fallida
+                                                Log.e("Solicitud", "Error en la respuesta: " + response.code());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Solicitud> call, Throwable t) {
+                                            //TODO mostrar mensaje de conexión fallida
+                                            Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setTitle("Guardar solicitud")
+                            .setMessage("¿Desea guardar la solicitud?")
+                            .create();
+
+                    confirmarGuardar.show();
                 }else{
-                    Log.e("Idioma", "Error en la respuesta: " + response.code());
+                    Toast.makeText(getContext(), "Debe llenar todos los campos", Toast.LENGTH_LONG);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
-                Log.e("Idioma", "Error en la conexión: " + t.getMessage());
             }
         });
 
-        return idiomas;
+        buttonAgregarConstancia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
+
+        return root;
     }
 
     private void regresar(){
