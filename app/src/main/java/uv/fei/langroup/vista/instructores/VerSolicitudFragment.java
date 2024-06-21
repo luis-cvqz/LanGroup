@@ -1,5 +1,7 @@
 package uv.fei.langroup.vista.instructores;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +10,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.protobuf.ByteString;
+import com.proto.archivos.Archivos;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import uv.fei.langroup.R;
+import uv.fei.langroup.clientegrpc.clientegrpc.ArchivosServiceCliente;
+import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
 import uv.fei.langroup.modelo.POJO.Colaborador;
 import uv.fei.langroup.modelo.POJO.Solicitud;
 import uv.fei.langroup.vistamodelo.instructores.VerSolicitudViewModel;
@@ -125,6 +140,9 @@ public class VerSolicitudFragment extends Fragment {
             public void onClick(View v) {
                 //TODO
                 Toast.makeText(getContext(), "Función no disponible.", Toast.LENGTH_SHORT).show();
+                /*ArchivosServiceCliente archivosServiceCliente = new ArchivosServiceCliente();
+                ArchivoMultimedia archivoMultimedia = archivosServiceCliente.descargarConstancia(textViewNombreArchivo.getText().toString());
+                guardarArchivo(ByteString.copyFrom(archivoMultimedia.getArchivo()), archivoMultimedia.getNombre());*/
             }
         });
 
@@ -136,5 +154,27 @@ public class VerSolicitudFragment extends Fragment {
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
         FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarInstructorFragment());
         fragmentTransaction.commit();
+    }
+
+    private void guardarArchivo(ByteString archivoBytes, String nombreArchivo) {
+        try {
+            File directorioDescargas = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File archivo = new File(directorioDescargas, nombreArchivo);
+            FileOutputStream outputStream = new FileOutputStream(archivo);
+            archivoBytes.writeTo(outputStream);
+            outputStream.close();
+
+            // Notificar a la galería para que escanee el archivo descargado
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(archivo);
+            mediaScanIntent.setData(contentUri);
+            getActivity().sendBroadcast(mediaScanIntent);
+
+            // Mostrar mensaje de éxito
+            Toast.makeText(getContext(), "Archivo descargado en: " + directorioDescargas.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(getContext(), "Error al descargar el archivo.", Toast.LENGTH_LONG).show();
+            Log.e("ClienteGrpc", "Error al guardar el archivo: " + e.getMessage());
+        }
     }
 }

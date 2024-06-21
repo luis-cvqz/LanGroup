@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.protobuf' version("0.9.4")
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 protobuf {
@@ -13,8 +13,17 @@ protobuf {
         }
     }
     generateProtoTasks {
-        all()*.plugins {
-            grpc {}
+        all().each { task ->
+            task.plugins {
+                grpc {
+                    option 'lite'
+                }
+            }
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
         }
     }
 }
@@ -43,17 +52,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding{
-        enabled = true;
+    dataBinding {
+        enabled = true
     }
 
-    buildFeatures{
-        viewBinding = true;
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -64,11 +72,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     runtimeOnly 'io.grpc:grpc-netty-shaded:1.62.2'
-    implementation 'io.grpc:grpc-protobuf:1.62.2'
     implementation 'io.grpc:grpc-stub:1.62.2'
+    implementation 'io.grpc:grpc-protobuf-lite:1.62.2'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }
