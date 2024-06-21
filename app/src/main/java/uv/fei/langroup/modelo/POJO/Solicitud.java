@@ -5,7 +5,7 @@ public class Solicitud {
     private String contenido;
     private String motivo;
     private byte[] constancia;
-    private String nombreArchivo;
+    private String nombrearchivo;
     private String estado;
     private String colaboradorId;
     private String idiomaId;
@@ -15,12 +15,12 @@ public class Solicitud {
     public Solicitud() {
     }
 
-    public Solicitud(String solicitudId, String contenido, String motivo, byte[] constancia, String nombreArchivo, String estado, String colaboradorId, String idiomaId, Colaborador colaborador, Idioma idioma) {
+    public Solicitud(String solicitudId, String contenido, String motivo, byte[] constancia, String nombrearchivo, String estado, String colaboradorId, String idiomaId, Colaborador colaborador, Idioma idioma) {
         this.solicitudId = solicitudId;
         this.contenido = contenido;
         this.motivo = motivo;
         this.constancia = constancia;
-        this.nombreArchivo = nombreArchivo;
+        this.nombrearchivo = nombrearchivo;
         this.estado = estado;
         this.colaboradorId = colaboradorId;
         this.idiomaId = idiomaId;
@@ -61,11 +61,11 @@ public class Solicitud {
     }
 
     public String getNombreArchivo() {
-        return nombreArchivo;
+        return nombrearchivo;
     }
 
-    public void setNombreArchivo(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
+    public void setNombreArchivo(String nombrearchivo) {
+        this.nombrearchivo = nombrearchivo;
     }
 
     public String getEstado() {

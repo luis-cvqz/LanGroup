@@ -1,46 +1,139 @@
 package uv.fei.langroup.clientegrpc.clientegrpc;
 
+import com.google.protobuf.ByteString;
+import com.proto.archivos.Archivos;
+import com.proto.archivos.Archivos.DescargarArchivoRequest;
+import com.proto.archivos.ArchivosServiceGrpc;
+
+import org.checkerframework.checker.units.qual.A;
+
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
+import uv.fei.langroup.servicio.servicios.APIClient;
 
 public class ArchivosServiceCliente {
-    private static final String GRPC_URL = "";
-    private ManagedChannel canal;
-    //private ArchivosServiceGrpc.ArchivosServiceStub archivosServiceStub;
+    private ArchivosServiceGrpc.ArchivosServiceBlockingStub blockingStub;
 
     public ArchivosServiceCliente(){
-        canal = ManagedChannelBuilder.forTarget(GRPC_URL).usePlaintext().build();
-        //archivosServiceStub = ArchivosServiceGrpc.newStub(canal);
+        ManagedChannel canal = APIClient.iniciarGrpc();
+        blockingStub = ArchivosServiceGrpc.newBlockingStub(canal);
     }
 
-    /*public void descargarVideo(String video, StreamObserver<DescargarArchivoResponse> responseObserver) {
+    public ArchivoMultimedia descargarVideo(String nombre) {
+        ArchivoMultimedia archivoMultimedia = new ArchivoMultimedia();
+
         DescargarArchivoRequest request = DescargarArchivoRequest.newBuilder()
-                .setNombre(video)
+                .setNombre(nombre)
                 .build();
+        StreamObserver<Archivos.DescargarArchivoResponse> responseObserver = new StreamObserver<Archivos.DescargarArchivoResponse>() {
+            @Override
+            public void onNext(Archivos.DescargarArchivoResponse response) {
+                if (response.hasArchivo()) {
+                    archivoMultimedia.setArchivo(response.getArchivo().toByteArray());
+                }
 
-        archivosServiceStub.descargarVideo(request, responseObserver);
+                if (response.hasNombre()){
+                    archivoMultimedia.setNombre(response.getNombre());
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("Error al descargar el video: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Descarga completada.");
+            }
+        };
+        blockingStub.descargarVideo(request);
+
+        return archivoMultimedia;
     }
 
-    public void subirVideo(StreamObserver<DescargarArchivoRequest> requestObserver) {
-        StreamObserver<DescargarArchivoResponse> responseObserver = archivosServiceStub.subirVideo(requestObserver);
-        // Implement logic to send responses to server if needed
-    }
+    /*public void subirVideo(byte[] archivo, String nombre) {
+        StreamObserver<DescargarArchivoResponse> requestObserver = asyncStub.subirVideo(new StreamObserver<DescargarArchivoRequest>() {
+            @Override
+            public void onNext(DescargarArchivoRequest value) {
+                System.out.println("Subida completada para el archivo: " + value.getNombre());
+            }
 
-    public void descargarConstancia(String constancia, StreamObserver<DescargarArchivoResponse> responseObserver) {
-        DescargarArchivoRequest request = DescargarArchivoRequest.newBuilder()
-                .setNombre(constancia)
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("Error al subir el video: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Subida completada.");
+            }
+        });
+
+        DescargarArchivoResponse response = DescargarArchivoResponse.newBuilder()
+                .setArchivo(ByteString.copyFrom(archivo))
+                .setNombre(nombre)
                 .build();
-
-        archivosServiceStub.descargarConstancia(request, responseObserver);
-    }
-
-    public void subirConstancia(StreamObserver<DescargarArchivoRequest> requestObserver) {
-        StreamObserver<DescargarArchivoResponse> responseObserver = archivosServiceStub.subirConstancia(requestObserver);
-        // Implement logic to send responses to server if needed
+        requestObserver.onNext(response);
+        requestObserver.onCompleted();
     }*/
 
-    public void shutdown() {
-        canal.shutdown();
+    public ArchivoMultimedia descargarConstancia(String nombre) {
+        ArchivoMultimedia archivoMultimedia = new ArchivoMultimedia();
+        DescargarArchivoRequest request = DescargarArchivoRequest.newBuilder()
+                .setNombre(nombre)
+                .build();
+        StreamObserver<Archivos.DescargarArchivoResponse> responseObserver = new StreamObserver<Archivos.DescargarArchivoResponse>() {
+            @Override
+            public void onNext(Archivos.DescargarArchivoResponse response) {
+                if (response.hasArchivo()) {
+                    archivoMultimedia.setArchivo(response.getArchivo().toByteArray());
+                }
+
+                if (response.hasNombre()){
+                    archivoMultimedia.setNombre(response.getNombre());
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("Error al descargar la constancia: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Descarga completada.");
+            }
+        };
+        blockingStub.descargarConstancia(request);
+
+        return archivoMultimedia;
     }
+
+    /*public void subirConstancia(byte[] archivo, String nombre) {
+        StreamObserver<DescargarArchivoResponse> requestObserver = asyncStub.subirConstancia(new StreamObserver<DescargarArchivoRequest>() {
+            @Override
+            public void onNext(DescargarArchivoRequest value) {
+                System.out.println("Subida completada para el archivo: " + value.getNombre());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("Error al subir la constancia: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Subida completada.");
+            }
+        });
+
+        DescargarArchivoResponse response = DescargarArchivoResponse.newBuilder()
+                .setArchivo(ByteString.copyFrom(archivo))
+                .setNombre(nombre)
+                .build();
+        requestObserver.onNext(response);
+        requestObserver.onCompleted();
+    }*/
 }
