@@ -2,6 +2,7 @@ package uv.fei.langroup.servicio.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,6 +19,9 @@ public interface IdiomaServicio {
 
     @GET("idiomas/{id}")
     Call<Idioma> obtenerIdiomaPorId(@Path("id") String idiomaId);
+
+    @POST("colaboradores/idiomas")
+    Call<Void> agregarIdiomaColaborador(@Body Map<String, String> body);
 
     @POST("idiomas")
     Call<Idioma> crearIdioma(@Body Idioma idioma);

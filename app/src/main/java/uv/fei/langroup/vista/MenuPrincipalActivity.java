@@ -38,6 +38,7 @@ public class MenuPrincipalActivity extends AppCompatActivity{
         drawerLayout = findViewById(R.id.drawerLayout);
         btnDrawerToggle = findViewById(R.id.btn_drawer_toggle);
         navigationView = findViewById(R.id.nav_view);
+        replaceFragment(new InicioFragment());
 
         btnDrawerToggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +54,11 @@ public class MenuPrincipalActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 int itemId = item.getItemId();
+
+                if(itemId == R.id.nav_inicio){
+                    Toast.makeText(MenuPrincipalActivity.this, "Inicio Clicked", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new InicioFragment());
+                }
 
                 if(itemId == R.id.nav_publicaciones){
                     Toast.makeText(MenuPrincipalActivity.this, "Publicaciones Clicked", Toast.LENGTH_SHORT).show();
