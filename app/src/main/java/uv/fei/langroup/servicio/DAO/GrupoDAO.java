@@ -2,6 +2,10 @@ package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import uv.fei.langroup.modelo.POJO.Grupo;
+import uv.fei.langroup.modelo.POJO.Publicacion;
 import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.GrupoServicio;
 
@@ -78,5 +83,30 @@ public class GrupoDAO {
         });
         return data;
 
+    }
+
+    public static void obtenerGruposPorNombreIdioma(String idiomaNombre, final Callback<ArrayList<Grupo>> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        GrupoServicio grupoServicio = retrofit.create(GrupoServicio.class);
+
+        Call<ArrayList<Grupo>> call = grupoServicio.obtenerGruposPorNombreIdioma(idiomaNombre);
+
+        call.enqueue(new Callback<ArrayList<Grupo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Grupo>> call, Response<ArrayList<Grupo>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<Grupo> grupos = response.body();
+                    callback.onResponse(call, Response.success(grupos));
+                }else{
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Grupo>> call, Throwable t) {
+                Log.d("GrupoDAO", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
     }
 }

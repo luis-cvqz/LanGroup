@@ -3,6 +3,7 @@ package uv.fei.langroup.modelo.POJO;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Publicacion {
     private String id;
@@ -70,5 +71,18 @@ public class Publicacion {
 
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Publicacion)) return false;
+        Publicacion that = (Publicacion) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getTitulo(), that.getTitulo()) && Objects.equals(getDescripcion(), that.getDescripcion()) && Objects.equals(getFecha(), that.getFecha()) && Objects.equals(getColaborador(), that.getColaborador()) && Objects.equals(getGrupo(), that.getGrupo());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitulo(), getDescripcion(), getFecha(), getColaborador(), getGrupo());
     }
 }
