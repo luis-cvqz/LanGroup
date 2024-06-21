@@ -1,4 +1,4 @@
-package uv.fei.langroup.vistamodelo.publicaciones;
+package uv.fei.langroup.vistamodelo;
 
 import android.util.Log;
 
@@ -16,13 +16,13 @@ import uv.fei.langroup.modelo.POJO.Publicacion;
 import uv.fei.langroup.servicio.DAO.GrupoDAO;
 import uv.fei.langroup.servicio.DAO.PublicacionDAO;
 
-public class BuscarPublicacionViewModel extends ViewModel {
+public class InicioViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Publicacion>> publicaciones;
     private MutableLiveData<ArrayList<Grupo>> grupos;
     private MutableLiveData<Integer> codigoPublicacion;
     private MutableLiveData<Integer> codigoGrupo;
 
-    public BuscarPublicacionViewModel() {
+    public InicioViewModel() {
         publicaciones = new MutableLiveData<>();
         codigoPublicacion = new MutableLiveData<>();
         grupos = new MutableLiveData<>();
@@ -54,14 +54,14 @@ public class BuscarPublicacionViewModel extends ViewModel {
                     codigoPublicacion.setValue(response.code());
                 }else{
                     codigoPublicacion.setValue(response.code());
-                    Log.e("BuscarPublicacionViewModel", "Código: " + response.code());
+                    Log.e("InicioViewModel", "Código: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Publicacion>> call, Throwable t) {
                 codigoPublicacion.setValue(500);
-                Log.e("BuscarPublicacionViewModel", "Error en la conexión: " + t.getMessage());
+                Log.e("InicioViewModel", "Error en la conexión: " + t.getMessage());
             }
         });
     }
@@ -75,14 +75,14 @@ public class BuscarPublicacionViewModel extends ViewModel {
                     codigoGrupo.setValue(response.code());
                 }else{
                     codigoGrupo.setValue(response.code());
-                    Log.e("BuscarPublicacionViewModel", "Código: " + response.code());
+                    Log.e("InicioViewModel", "Código: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Grupo>> call, Throwable t) {
                 codigoPublicacion.setValue(500);
-                Log.e("BuscarPublicacionViewModel", "Error en la conexión: " + t.getMessage());
+                Log.e("InicioViewModel", "Error en la conexión: " + t.getMessage());
             }
         });
     }

@@ -108,8 +108,9 @@ public class BuscarPublicacionFragment extends Fragment {
         binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         PublicacionAdapter adapter = new PublicacionAdapter();
         binding.eqRecycler.setAdapter(adapter);
+        String rol = "Administrador";
 
-        viewModel.fetchGrupos("Español");
+        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getId(), rol);
 
         viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
             ArrayList<Publicacion> publicaciones = new ArrayList<>();

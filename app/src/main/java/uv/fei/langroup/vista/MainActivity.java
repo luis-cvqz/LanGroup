@@ -3,6 +3,7 @@ package uv.fei.langroup.vista;
 import static uv.fei.langroup.utilidades.Validador.esContraseniaValida;
 import static uv.fei.langroup.utilidades.Validador.esCorreoValido;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -84,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
     private void cambiarVisibilidadErrorCorreo(int valor) {
         binding.lblCorreoError.setVisibility(valor);
     }
@@ -147,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                 if (esCodigoExitoso(codigo)) {
                     observeIniciarSesion();
                     buscarColaborador();
-                    abrirMenuPrincipal();
                 } else {
                     manejarCodigoError(codigo);
                 }
@@ -177,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getColaborador().observe(this, colaborador -> {
             if (colaborador != null) {
                 guardarSingleton(colaborador);
+                abrirMenuPrincipal();
             } else {
                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
