@@ -17,7 +17,7 @@ import uv.fei.langroup.modelo.POJO.Colaborador;
 public interface ColaboradorServicio {
 
     @POST("colaboradores")
-    Call<Colaborador> crearCuenta(@Body Map<String, Object> credentials);
+    Call<Colaborador> crearCuenta(@Body Colaborador colaborador);
 
     @GET("colaboradores/{correo}")
     Call<Colaborador> obtenerColaboradorPorCorreo(@Path("correo") String correo);

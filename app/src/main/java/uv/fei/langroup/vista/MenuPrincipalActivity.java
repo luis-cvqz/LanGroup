@@ -16,8 +16,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-
 import uv.fei.langroup.R;
+import uv.fei.langroup.vista.grupos.BuscarGruposFragment;
 import uv.fei.langroup.vista.instructores.AdministrarInstructoresFragment;
 import uv.fei.langroup.vista.instructores.SolicitarRolInstructorFragment;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
@@ -56,6 +56,11 @@ public class MenuPrincipalActivity extends AppCompatActivity{
                 if(itemId == R.id.nav_publicaciones){
                     Toast.makeText(MenuPrincipalActivity.this, "Publicaciones Clicked", Toast.LENGTH_SHORT).show();
                     replaceFragment(new BuscarPublicacionFragment());
+                }
+
+                if(itemId == R.id.nav_grupos){
+                    Toast.makeText(MenuPrincipalActivity.this, "Grupos Clicked", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new BuscarGruposFragment());
                 }
 
                 if(itemId == R.id.nav_idiomas){

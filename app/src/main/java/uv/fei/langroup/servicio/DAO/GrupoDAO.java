@@ -10,6 +10,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import java.util.ArrayList;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.GrupoServicio;
@@ -43,5 +46,37 @@ public class GrupoDAO {
                 callback.onFailure(call, t);
             }
         });
+    }
+
+    private GrupoServicio grupoServicio;
+
+    public GrupoDAO() {
+        grupoServicio = APIClient.iniciarAPI().create(GrupoServicio.class);
+    }
+
+    public LiveData<ArrayList<Grupo>> obtenerGrupos() {
+        final MutableLiveData<ArrayList<Grupo>> data = new MutableLiveData<>();
+        grupoServicio.obtenerGrupos().enqueue(new Callback<ArrayList<Grupo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Grupo>> call, Response<ArrayList<Grupo>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Verificar los datos obtenidos
+                    for (Grupo grupo : response.body()) {
+                        Log.d("GrupoDAO", "Grupo: " + grupo.getNombre() + ", IdiomaId: " + grupo.getIdIdioma());
+                    }
+                    data.setValue(response.body());
+                } else {
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Grupo>> call, Throwable t) {
+                Log.e("GrupoDAO", "Error al obtener grupos", t);
+                data.setValue(null);
+            }
+        });
+        return data;
+
     }
 }
