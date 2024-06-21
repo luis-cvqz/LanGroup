@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                 if (esCodigoExitoso(codigo)) {
                     observeIniciarSesion();
                     buscarColaborador();
-                    abrirMenuPrincipal();
                 } else {
                     manejarCodigoError(codigo);
                 }
@@ -184,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getColaborador().observe(this, colaborador -> {
             if (colaborador != null) {
                 guardarSingleton(colaborador);
+                abrirMenuPrincipal();
             } else {
                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
