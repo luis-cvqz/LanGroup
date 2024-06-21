@@ -15,12 +15,12 @@ import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.modelo.POJO.Idioma;
 import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 
-public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.GrupoViewHolder> {
+public class ConsultarGruposAdapter extends RecyclerView.Adapter<ConsultarGruposAdapter.GrupoViewHolder> {
 
     private ArrayList<Grupo> grupoList;
     private LifecycleOwner lifecycleOwner;
 
-    public GrupoAdapter(ArrayList<Grupo> grupoList, LifecycleOwner lifecycleOwner) {
+    public ConsultarGruposAdapter(ArrayList<Grupo> grupoList, LifecycleOwner lifecycleOwner) {
         this.grupoList = grupoList;
         this.lifecycleOwner = lifecycleOwner;
     }
@@ -32,14 +32,14 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.GrupoViewHol
 
     @NonNull
     @Override
-    public GrupoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ConsultarGruposAdapter.GrupoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_records_grupos, parent, false);
-        return new GrupoViewHolder(view);
+                .inflate(R.layout.item_records_consultar_grupos, parent, false);
+        return new ConsultarGruposAdapter.GrupoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GrupoViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ConsultarGruposAdapter.GrupoViewHolder holder, int position) {
         Grupo grupo = grupoList.get(position);
         holder.txtNombreGrupo.setText(grupo.getNombre());
 
