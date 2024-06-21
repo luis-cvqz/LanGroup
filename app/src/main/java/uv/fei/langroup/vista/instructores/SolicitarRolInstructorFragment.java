@@ -134,7 +134,7 @@ public class SolicitarRolInstructorFragment extends Fragment {
                                     solicitud.setNombreArchivo(textViewNombreArchivo.getText().toString());
                                     Idioma idiomaSeleccionado = (Idioma) spinnerIdiomas.getSelectedItem();
                                     solicitud.setIdiomaId(idiomaSeleccionado.getIdIdioma());
-                                    solicitud.setColaboradorId(SesionSingleton.getInstance().getColaborador().getId());
+                                    solicitud.setColaboradorId(SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
                                     SolicitudDAO.crearSolicitud(solicitud, new Callback<Solicitud>() {
                                         @Override

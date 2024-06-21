@@ -107,14 +107,14 @@ public class InicioFragment extends Fragment {
     }
 
     private void fetchAndObservePublicaciones(String rol, Set<Publicacion> publicacionesSet, PublicacionAdapter adapter) {
-        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getId(), rol);
+        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getColaboradorId(), rol);
 
         viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
             int totalGrupos = grupos.size();
             int[] gruposProcessed = {0};
 
             for (Grupo grupo : grupos) {
-                viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getId());
+                viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
                 viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
                     if (grupoPublicaciones != null) {

@@ -47,7 +47,7 @@ public class AgregarInstructorViewModel extends ViewModel {
                                 ArrayList<Colaborador> aprendicesConSolicitudPendienteApi = new ArrayList<>();
                                 for(Colaborador aprendiz : response.body()){
                                     for(Solicitud solicitud : solicitudesPendientes){
-                                        if(solicitud.getColaborador().getId().equalsIgnoreCase(aprendiz.getId())){
+                                        if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(aprendiz.getColaboradorId())){
                                             aprendicesConSolicitudPendienteApi.add(aprendiz);
                                         }
                                     }
