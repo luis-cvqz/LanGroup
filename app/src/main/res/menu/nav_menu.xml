@@ -13,6 +13,11 @@
             android:title="Publicaciones"/>
 
         <item
+            android:id="@+id/nav_grupos"
+            android:icon="@drawable/moderadores"
+            android:title="Grupos"/>
+
+        <item
             android:id="@+id/nav_idiomas"
             android:icon="@drawable/lenguajes"
             android:title="Mis idiomas"/>
@@ -32,10 +37,6 @@
             android:icon="@drawable/instructores"
             android:title="Administrar instructores"/>
 
-        <item
-            android:id="@+id/nav_admin_moderadores"
-            android:icon="@drawable/moderadores"
-            android:title="Administrar moderadores"/>
     </group>
     <item
         android:title="">

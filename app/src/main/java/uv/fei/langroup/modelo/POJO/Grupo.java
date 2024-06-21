@@ -1,10 +1,20 @@
 package uv.fei.langroup.modelo.POJO;
+import com.google.gson.annotations.SerializedName;
 
 public class Grupo {
+    @SerializedName("grupoId")
     private String grupoId;
+
+    @SerializedName("nombre")
     private String nombre;
+
+    @SerializedName("descripcion")
     private String descripcion;
+
+    @SerializedName("icono")
     private String icono;
+
+    @SerializedName("idiomaId")
     private String idIdioma;
 
     public Grupo(String grupoId, String nombre, String descripcion, String icono, String idIdioma) {
@@ -15,8 +25,7 @@ public class Grupo {
         this.idIdioma = idIdioma;
     }
 
-    public Grupo() {
-    }
+    public Grupo() {}
 
     public String getId() {
         return grupoId;

@@ -2,6 +2,9 @@ package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -13,6 +16,7 @@ import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.PublicacionServicio;
 
 public class PublicacionDAO {
+
     public static void obtenerPublicacionesPorColaborador(String colaboradorId, Callback<ArrayList<Publicacion>> callback){
         Retrofit retrofit = APIClient.iniciarAPI();
         PublicacionServicio publicacionServicio = retrofit.create(PublicacionServicio.class);

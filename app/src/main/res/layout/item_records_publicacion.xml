@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -7,49 +8,118 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/image_view_usuario"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            />
+            android:layout_width="361dp"
+            android:layout_height="226dp"
+            android:layout_marginBottom="8dp"
+            android:foreground="#56E39A"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/text_view_nombre_usuario"
+            android:id="@+id/txv_titulo_publicacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre de usuario"
-            android:layout_toEndOf="@id/image_view_usuario"
+            android:layout_alignStart="@+id/image_view_usuario"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="16dp"
+            android:text="Titulo de la publicación"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_view_grupo"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grupo"
-            android:textColor="@color/azul3"
-            android:layout_toEndOf="@id/image_view_usuario"
-            android:layout_below="@id/text_view_nombre_usuario"
+            android:layout_alignStart="@+id/image_view_usuario"
             android:layout_marginStart="20dp"
-
-            />
+            android:layout_marginTop="40dp"
+            android:text="Por:"
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/text_view_descripcion"
+            android:id="@+id/txv_titular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descripcion"
-            android:layout_below="@id/text_view_grupo"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/textView2"
+            android:text="Nombre"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/txv_titular"
+            android:text="Grupo:"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txv_nombre_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/textView3"
+            android:text="Nombre"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/txv_nombre_grupo"
+            android:text="Idioma:"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txv_nombre_idioma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/image_view_usuario"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="12dp"
+            android:layout_toEndOf="@+id/textView4"
+            android:text="Nombre"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/edit_text_descripcion_publicacion"
+            android:layout_width="337dp"
+            android:layout_height="105dp"
+            android:layout_below="@+id/textView3"
+            android:layout_alignStart="@+id/image_view_usuario"
+            android:layout_alignEnd="@+id/image_view_usuario"
+            android:layout_alignBottom="@+id/image_view_usuario"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/gris"
+            android:backgroundTint="@color/gris"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="20dp"
+            android:layout_height="19dp"
+            android:layout_alignTop="@+id/image_view_usuario"
+            android:layout_alignEnd="@+id/image_view_usuario"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="#00FFFFFF"
+            app:srcCompat="@drawable/baseline_arrow_right_24" />
 
     </RelativeLayout>
-
 </layout>

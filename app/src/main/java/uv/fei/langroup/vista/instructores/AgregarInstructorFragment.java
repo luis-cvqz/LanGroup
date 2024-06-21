@@ -198,7 +198,7 @@ public class AgregarInstructorFragment extends Fragment {
 
                                                     for(Rol rol : roles){
                                                         if(rol.getNombre().equalsIgnoreCase("Instructor")){
-                                                            colaboradorActualizar.setRolId(rol.getId());
+                                                            colaboradorActualizar.setRol(rol.getId());
                                                             break;
                                                         }
                                                     }
