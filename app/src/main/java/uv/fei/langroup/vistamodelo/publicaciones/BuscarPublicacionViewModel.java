@@ -66,8 +66,8 @@ public class BuscarPublicacionViewModel extends ViewModel {
         });
     }
 
-    public void fetchGrupos(String idioma) {
-        GrupoDAO.obtenerGruposPorNombreIdioma(idioma, new Callback<ArrayList<Grupo>>() {
+    public void fetchGrupos(String colaborador, String rol) {
+        GrupoDAO.obtenerGruposPorRolColaborador(colaborador, rol, new Callback<ArrayList<Grupo>>() {
             @Override
             public void onResponse(Call<ArrayList<Grupo>> call, Response<ArrayList<Grupo>> response) {
                 if(response.isSuccessful()){
