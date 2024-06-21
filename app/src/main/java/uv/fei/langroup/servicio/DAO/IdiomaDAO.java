@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,5 +78,33 @@ public class IdiomaDAO {
         }
 
         return data;
+    }
+
+    public static void agregarIdiomaColaborador(String colaboradorId, String nombresIdiomas, final Callback<Void> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        IdiomaServicio idiomaServicio = retrofit.create(IdiomaServicio.class);
+
+        Map<String, String> body = new HashMap<>();
+        body.put("colaboradorId", colaboradorId);
+        body.put("nombresIdiomas", nombresIdiomas);
+
+        Call<Void> call = idiomaServicio.agregarIdiomaColaborador(body);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("IdiomaDAO", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
     }
 }

@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import uv.fei.langroup.databinding.ActivityCrearCuentaBinding;
 import uv.fei.langroup.modelo.POJO.Colaborador;
+import uv.fei.langroup.vista.idiomas.SeleccionarIdiomaActivity;
 import uv.fei.langroup.vistamodelo.cuenta.CrearCuentaViewModel;
 import uv.fei.langroup.vista.MainActivity;
 
@@ -57,7 +58,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
                         apellidosCrear,
                         null, // descripción vacía por defecto
                         "icon_perfil_1.png", // icono por defecto
-                        "Aprendiz" // rol por defecto, asegúrate de cambiarlo si es necesario
+                        "Aprendiz" // rol por defecto
                 );
                 viewModel.crearCuenta(colaborador);
             }
@@ -69,7 +70,8 @@ public class CrearCuentaActivity extends AppCompatActivity {
             public void onChanged(Colaborador colaborador) {
                 if (colaborador != null) {
                     showMessage("Cuenta Creada exitosamente");
-                    Intent intent = new Intent(CrearCuentaActivity.this, MainActivity.class);
+                    Intent intent = new Intent(CrearCuentaActivity.this, SeleccionarIdiomaActivity.class);
+                    intent.putExtra("colaboradorId", colaborador.getId());
                     startActivity(intent);
                 }
             }

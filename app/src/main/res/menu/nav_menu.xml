@@ -8,13 +8,18 @@
         android:checkableBehavior="single">
 
         <item
+            android:id="@+id/nav_inicio"
+            android:icon="@drawable/inicio"
+            android:title="Inicio"/>
+
+        <item
             android:id="@+id/nav_publicaciones"
             android:icon="@drawable/publicaciones"
             android:title="Publicaciones"/>
 
         <item
             android:id="@+id/nav_grupos"
-            android:icon="@drawable/moderadores"
+            android:icon="@drawable/grupos"
             android:title="Grupos"/>
 
         <item
