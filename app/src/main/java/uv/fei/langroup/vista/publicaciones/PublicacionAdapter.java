@@ -25,7 +25,7 @@ public class PublicacionAdapter extends ListAdapter<Publicacion, PublicacionAdap
         }
     };
 
-    protected PublicacionAdapter() {
+    public PublicacionAdapter() {
         super(DIFF_CALLBACK);
     }
 
