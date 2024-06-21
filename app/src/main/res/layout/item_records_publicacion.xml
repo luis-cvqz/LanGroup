@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -7,49 +8,149 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/image_view_usuario"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            />
+            android:layout_width="375dp"
+            android:layout_height="355dp"
+            android:layout_marginBottom="8dp"
+            android:foreground="#DCF2F1"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/text_view_nombre_usuario"
+            android:id="@+id/txv_titulo_publicacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre de usuario"
-            android:layout_toEndOf="@id/image_view_usuario"
+            android:layout_alignStart="@+id/image_view_usuario"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="16dp"
+            android:text="Titulo de la publicación"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_view_grupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grupo"
-            android:textColor="@color/azul3"
-            android:layout_toEndOf="@id/image_view_usuario"
-            android:layout_below="@id/text_view_nombre_usuario"
+            android:layout_alignStart="@+id/image_view_usuario"
             android:layout_marginStart="20dp"
-
-            />
+            android:layout_marginTop="40dp"
+            android:text="Fecha: "
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/text_view_descripcion"
+            android:id="@+id/txv_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descripcion"
-            android:layout_below="@id/text_view_grupo"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_alignStart="@+id/image_view_usuario"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="40dp"
+            android:text="00/00/00"
+            android:textSize="12sp" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/image_view_usuario"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="60dp"
+            android:text="Por:"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txv_titular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="60dp"
+            android:layout_toEndOf="@+id/textView2"
+            android:text="Nombre"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:layout_toEndOf="@+id/txv_titular"
+            android:text="Grupo:"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txv_nombre_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="60dp"
+            android:layout_toEndOf="@+id/textView3"
+            android:text="Nombre"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/txv_fecha"
+            android:text="Idioma:"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txv_nombre_idioma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/image_view_usuario"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="12dp"
+            android:layout_toEndOf="@+id/textView4"
+            android:text="Nombre"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/edit_text_descripcion_publicacion"
+            android:layout_width="300dp"
+            android:layout_height="104dp"
+            android:layout_below="@+id/textView3"
+            android:layout_alignStart="@+id/image_view_usuario"
+            android:layout_alignEnd="@+id/image_view_usuario"
+            android:layout_alignBottom="@+id/image_view_usuario"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/gris"
+            android:backgroundTint="@color/gris"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_alignEnd="@+id/edit_text_descripcion_publicacion"
+            android:layout_alignBottom="@+id/edit_text_descripcion_publicacion"
+            android:layout_marginStart="-22dp"
+            android:layout_marginEnd="222dp"
+            android:layout_marginBottom="-31dp"
+            android:background="@color/transparente"
+            android:text="Ver comentarios"
+            android:textColor="@color/black"
+            android:textSize="10dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="20dp"
+            android:layout_height="19dp"
+            android:layout_alignTop="@+id/image_view_usuario"
+            android:layout_alignEnd="@+id/image_view_usuario"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="#00FFFFFF"
+            app:srcCompat="@drawable/baseline_close_24" />
     </RelativeLayout>
-
 </layout>

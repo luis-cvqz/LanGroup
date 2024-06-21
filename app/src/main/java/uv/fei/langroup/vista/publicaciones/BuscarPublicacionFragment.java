@@ -5,14 +5,25 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import uv.fei.langroup.R;
+import uv.fei.langroup.databinding.FragmentBuscarPublicacionBinding;
+import uv.fei.langroup.modelo.POJO.Grupo;
+import uv.fei.langroup.modelo.POJO.Publicacion;
+import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vista.grupos.CrearGrupoFragment;
+import uv.fei.langroup.vistamodelo.MainViewModel;
+import uv.fei.langroup.vistamodelo.publicaciones.BuscarPublicacionViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,35 +72,87 @@ public class BuscarPublicacionFragment extends Fragment {
         }
     }
 
+    private BuscarPublicacionViewModel viewModel;
+    private FragmentBuscarPublicacionBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_buscar_publicacion, container, false);
+        binding = FragmentBuscarPublicacionBinding.inflate(getLayoutInflater());
+        View root = binding.getRoot();
+        viewModel = new ViewModelProvider(this).get(BuscarPublicacionViewModel.class);
 
-        final Button buttonAgregarPublicacion = root.findViewById(R.id.button_agregar_publicacion);
-        final Button buttonCrearGrupo = root.findViewById(R.id.button_crear_grupo);
+        final Button buttonAgregarPublicacion = binding.buttonAgregarPublicacion;
+        final Button buttonCrearGrupo = binding.buttonCrearGrupo;
 
-        buttonAgregarPublicacion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarPublicacionFragment());
-                fragmentTransaction.commit();
-            }
+        buttonAgregarPublicacion.setOnClickListener(v -> {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new AgregarPublicacionFragment());
+            fragmentTransaction.commit();
         });
 
-        buttonCrearGrupo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new CrearGrupoFragment());
-                fragmentTransaction.commit();
-            }
+        buttonCrearGrupo.setOnClickListener(v -> {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new CrearGrupoFragment());
+            fragmentTransaction.commit();
         });
+
+        mostrarPublicaciones();
 
         return root;
+    }
+
+    private void mostrarPublicaciones() {
+        binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        PublicacionAdapter adapter = new PublicacionAdapter();
+        binding.eqRecycler.setAdapter(adapter);
+
+        viewModel.fetchGrupos("Español");
+
+        viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
+            ArrayList<Publicacion> publicaciones = new ArrayList<>();
+            int totalGrupos = grupos.size();
+            int[] gruposProcessed = {0};
+
+            for (Grupo grupo : grupos) {
+                viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getId());
+
+                viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
+                    if (grupoPublicaciones != null) {
+
+                        publicaciones.addAll(grupoPublicaciones);
+                    }
+
+                    gruposProcessed[0]++;
+                    if (gruposProcessed[0] == totalGrupos) {
+                        if (!publicaciones.isEmpty()) {
+                            adapter.submitList(publicaciones);
+                        } else {
+                            binding.txvMensajeError.setText("Por el momento no hay publicaciones.");
+                            binding.txvMensajeError.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+
+        viewModel.getCodigoGrupo().observe(getViewLifecycleOwner(), codigo -> {
+            if (codigo != null) {
+                if (!esCodigoExitoso(codigo)) {
+                    showMessage("No hay conexión con el servidor. Intenta más tarde.");
+                }
+            } else {
+                showMessage("No hay conexión con el servidor. Intenta más tarde.");
+            }
+        });
+    }
+    private void showMessage(String msj){
+        Toast.makeText(getContext(), msj, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean esCodigoExitoso(int code) {
+        return code >= 200 && code < 300;
     }
 }

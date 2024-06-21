@@ -14,6 +14,8 @@ import retrofit2.http.Path;
 import uv.fei.langroup.modelo.POJO.Grupo;
 
 public interface GrupoServicio {
+    @GET("grupos")
+    Call<ArrayList<Grupo>> obtenerGrupos();
     @GET("grupos/{id}")
     Call<Grupo> obtenerGrupoPorId(@Path("id") String grupoId);
 
