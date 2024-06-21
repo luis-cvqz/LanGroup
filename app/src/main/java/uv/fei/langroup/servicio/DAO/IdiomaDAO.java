@@ -2,6 +2,9 @@ package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -13,6 +16,13 @@ import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.IdiomaServicio;
 
 public class IdiomaDAO {
+
+    private IdiomaServicio idiomaServicio;
+
+    public IdiomaDAO() {
+        idiomaServicio = APIClient.iniciarAPI().create(IdiomaServicio.class);
+    }
+
     public static void obtenerIdiomas(final Callback<ArrayList<Idioma>> callback){
         Retrofit retrofit = APIClient.iniciarAPI();
         IdiomaServicio idiomaServicio = retrofit.create(IdiomaServicio.class);
@@ -36,5 +46,35 @@ public class IdiomaDAO {
                 callback.onFailure(call, t);
             }
         });
+    }
+
+    public LiveData<Idioma> obtenerIdiomaPorId(String idiomaId) {
+        final MutableLiveData<Idioma> data = new MutableLiveData<>();
+
+        // Añadir logging para depuración
+        Log.d("IdiomaDAO", "obtenerIdiomaPorId: idiomaId = " + idiomaId);
+
+        if (idiomaId != null) {
+            idiomaServicio.obtenerIdiomaPorId(idiomaId).enqueue(new Callback<Idioma>() {
+                @Override
+                public void onResponse(Call<Idioma> call, Response<Idioma> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        data.setValue(response.body());
+                    } else {
+                        data.setValue(null);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Idioma> call, Throwable t) {
+                    Log.e("IdiomaDAO", "Error al obtener idioma", t);
+                    data.setValue(null);
+                }
+            });
+        } else {
+            data.setValue(null);
+        }
+
+        return data;
     }
 }

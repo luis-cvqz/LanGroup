@@ -148,7 +148,7 @@ public class EliminarInstructorFragment extends Fragment {
 
                                 for(Rol rol : roles){
                                     if(rol.getNombre().equalsIgnoreCase("Aprendiz")){
-                                        colaboradorActualizar.setRolId(rol.getId());
+                                        colaboradorActualizar.setRol(rol.getId());
                                         break;
                                     }
                                 }

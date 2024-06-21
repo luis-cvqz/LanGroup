@@ -80,6 +80,7 @@
             android:textSize="12sp" />
 
         <TextView
+
             android:id="@+id/txv_nombre_grupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,3 +155,4 @@
             app:srcCompat="@drawable/baseline_close_24" />
     </RelativeLayout>
 </layout>
+
