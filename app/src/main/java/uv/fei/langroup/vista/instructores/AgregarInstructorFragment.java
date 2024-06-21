@@ -182,7 +182,7 @@ public class AgregarInstructorFragment extends Fragment {
                                         Solicitud solicitudActualizar = new Solicitud();
 
                                         for(Solicitud solicitud : solicitudesPendientes){
-                                            if(solicitud.getColaborador().getId().equalsIgnoreCase(colaborador.getId())){
+                                            if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaborador.getColaboradorId())){
                                                 solicitudActualizar = solicitud;
                                                 break;
                                             }
@@ -203,7 +203,7 @@ public class AgregarInstructorFragment extends Fragment {
                                                         }
                                                     }
 
-                                                    ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), colaboradorActualizar, new Callback<Colaborador>() {
+                                                    ColaboradorDAO.actualizarRolDeColaborador(colaborador.getColaboradorId(), colaboradorActualizar, new Callback<Colaborador>() {
                                                         @Override
                                                         public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                                             if(response.isSuccessful()){
@@ -257,7 +257,7 @@ public class AgregarInstructorFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Solicitud solicitudActualizar = new Solicitud();
                                         for(Solicitud solicitud : solicitudesPendientes){
-                                            if(solicitud.getColaborador().getId().equalsIgnoreCase(colaborador.getId())){
+                                            if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaborador.getColaboradorId())){
                                                 solicitudActualizar = solicitud;
                                                 break;
                                             }

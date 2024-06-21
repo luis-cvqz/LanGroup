@@ -110,7 +110,7 @@ public class BuscarPublicacionFragment extends Fragment {
         binding.eqRecycler.setAdapter(adapter);
         String rol = "Administrador";
 
-        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getId(), rol);
+        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getColaboradorId(), rol);
 
         viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
             ArrayList<Publicacion> publicaciones = new ArrayList<>();
@@ -118,7 +118,7 @@ public class BuscarPublicacionFragment extends Fragment {
             int[] gruposProcessed = {0};
 
             for (Grupo grupo : grupos) {
-                viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getId());
+                viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
                 viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
                     if (grupoPublicaciones != null) {

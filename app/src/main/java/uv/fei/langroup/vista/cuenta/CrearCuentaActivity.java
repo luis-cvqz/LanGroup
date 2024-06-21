@@ -71,7 +71,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
                 if (colaborador != null) {
                     showMessage("Cuenta Creada exitosamente");
                     Intent intent = new Intent(CrearCuentaActivity.this, SeleccionarIdiomaActivity.class);
-                    intent.putExtra("colaboradorId", colaborador.getId());
+                    intent.putExtra("colaboradorId", colaborador.getColaboradorId());
                     startActivity(intent);
                 }
             }

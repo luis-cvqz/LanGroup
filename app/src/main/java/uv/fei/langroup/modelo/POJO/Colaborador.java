@@ -15,6 +15,23 @@ public class Colaborador implements Parcelable {
     private String descripcion;
     private String icono;
     private String rol;
+    private String rolid;
+
+    public Colaborador() {
+    }
+
+    public Colaborador(String colaboradorId, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String rol, String rolid) {
+        this.colaboradorId = colaboradorId;
+        this.usuario = usuario;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.descripcion = descripcion;
+        this.icono = icono;
+        this.rol = rol;
+        this.rolid = rolid;
+    }
 
     public Colaborador(String colaboradorId, String usuario, String correo, String contrasenia, String nombre, String apellido, String descripcion, String icono, String rol) {
         this.colaboradorId = colaboradorId;
@@ -28,17 +45,21 @@ public class Colaborador implements Parcelable {
         this.rol = rol;
     }
 
-    public Colaborador() {
-    }
-
-    public String getId() {
+    public String getColaboradorId() {
         return colaboradorId;
     }
 
-    public void setId(String colaboradorId) {
+    public void setColaboradorId(String colaboradorId) {
         this.colaboradorId = colaboradorId;
     }
 
+    public String getRolid() {
+        return rolid;
+    }
+
+    public void setRolid(String rolid) {
+        this.rolid = rolid;
+    }
     public String getUsuario() {
         return usuario;
     }

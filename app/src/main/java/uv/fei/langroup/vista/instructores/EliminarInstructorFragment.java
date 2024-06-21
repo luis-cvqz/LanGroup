@@ -153,7 +153,7 @@ public class EliminarInstructorFragment extends Fragment {
                                     }
                                 }
 
-                                ColaboradorDAO.actualizarRolDeColaborador(colaborador.getId(), colaboradorActualizar, new Callback<Colaborador>() {
+                                ColaboradorDAO.actualizarRolDeColaborador(colaborador.getColaboradorId(), colaboradorActualizar, new Callback<Colaborador>() {
                                     @Override
                                     public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                         if(response.isSuccessful()){

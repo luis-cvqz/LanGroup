@@ -126,7 +126,7 @@ public class VerSolicitudFragment extends Fragment {
             }
         });
 
-        verSolicitudViewModel.fetchSolicitud(colaborador.getId());
+        verSolicitudViewModel.fetchSolicitud(colaborador.getColaboradorId());
 
         buttonRegresar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -104,7 +104,7 @@ public class MisEstadisticasFragment extends Fragment {
             }
         });
 
-        misEstadisticasViewModel.fetchPublicaciones(SesionSingleton.getInstance().getColaborador().getId());
+        misEstadisticasViewModel.fetchPublicaciones(SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
         return root;
     }
