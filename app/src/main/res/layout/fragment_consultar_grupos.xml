@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".vista.grupos.BuscarGrupo">
+        tools:context=".vista.grupos.ConsultarGrupos">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,26 +23,15 @@
                 android:background="@drawable/header_langroup"
                 android:importantForAccessibility="no" />
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Elige el grupo. de tu interés"
+                android:text="Grupos"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="(Puede ser más de uno)"
-                android:textColor="@color/black"
-                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,7 +42,7 @@
                     android:id="@+id/eq_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_records_grupos"/>
+                    tools:listitem="@layout/item_records_consultar_grupos"/>
             </LinearLayout>
         </LinearLayout>
 
