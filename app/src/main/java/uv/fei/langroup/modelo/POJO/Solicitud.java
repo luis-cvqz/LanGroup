@@ -9,13 +9,16 @@ public class Solicitud {
     private String estado;
     private String colaboradorId;
     private String idiomaId;
+    private String colaboradorid;
+    private String idiomaid;
+
     private Colaborador colaborador;
     private Idioma idioma;
 
     public Solicitud() {
     }
 
-    public Solicitud(String solicitudId, String contenido, String motivo, byte[] constancia, String nombrearchivo, String estado, String colaboradorId, String idiomaId, Colaborador colaborador, Idioma idioma) {
+    public Solicitud(String solicitudId, String contenido, String motivo, byte[] constancia, String nombrearchivo, String estado, String colaboradorId, String idiomaId, String colaboradorid, String idiomaid, Colaborador colaborador, Idioma idioma) {
         this.solicitudId = solicitudId;
         this.contenido = contenido;
         this.motivo = motivo;
@@ -24,8 +27,34 @@ public class Solicitud {
         this.estado = estado;
         this.colaboradorId = colaboradorId;
         this.idiomaId = idiomaId;
+        this.colaboradorid = colaboradorid;
+        this.idiomaid = idiomaid;
         this.colaborador = colaborador;
         this.idioma = idioma;
+    }
+
+    public String getNombrearchivo() {
+        return nombrearchivo;
+    }
+
+    public void setNombrearchivo(String nombrearchivo) {
+        this.nombrearchivo = nombrearchivo;
+    }
+
+    public String getColaboradorid() {
+        return colaboradorid;
+    }
+
+    public void setColaboradorid(String colaboradorid) {
+        this.colaboradorid = colaboradorid;
+    }
+
+    public String getIdiomaid() {
+        return idiomaid;
+    }
+
+    public void setIdiomaid(String idiomaid) {
+        this.idiomaid = idiomaid;
     }
 
     public String getSolicitudId() {

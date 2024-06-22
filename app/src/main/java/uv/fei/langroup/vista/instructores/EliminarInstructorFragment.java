@@ -157,6 +157,7 @@ public class EliminarInstructorFragment extends Fragment {
                                     @Override
                                     public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                         if(response.isSuccessful()){
+                                            eliminarInstructorViewModel.fetchInstructores();
                                             Toast.makeText(getContext(), "Se eliminó al instructor", Toast.LENGTH_LONG).show();
                                         }else{
                                             Toast.makeText(getContext(), "Algo salio mal", Toast.LENGTH_LONG).show();
