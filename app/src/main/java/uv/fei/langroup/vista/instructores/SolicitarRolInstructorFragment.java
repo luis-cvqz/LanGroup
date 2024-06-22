@@ -133,15 +133,18 @@ public class SolicitarRolInstructorFragment extends Fragment {
                                     solicitud.setContenido(editTextContenido.getText().toString());
                                     solicitud.setNombreArchivo(textViewNombreArchivo.getText().toString());
                                     Idioma idiomaSeleccionado = (Idioma) spinnerIdiomas.getSelectedItem();
-                                    solicitud.setIdiomaId(idiomaSeleccionado.getIdIdioma());
-                                    solicitud.setColaboradorId(SesionSingleton.getInstance().getColaborador().getColaboradorId());
+                                    solicitud.setIdiomaid(idiomaSeleccionado.getIdiomaId());
+                                    solicitud.setColaboradorid(SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
                                     SolicitudDAO.crearSolicitud(solicitud, new Callback<Solicitud>() {
                                         @Override
                                         public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
                                             if(response.isSuccessful()){
-                                                Toast.makeText(getContext(), "Se guardó la solicitud", Toast.LENGTH_LONG);
+                                                Toast.makeText(getContext(), "Se guardó la solicitud", Toast.LENGTH_LONG).show();
                                                 regresar();
+                                            }else if(response.code() == 500){
+                                                Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                                                Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                             }else{
                                                 Toast.makeText(getContext(), "Algo salió mal.", Toast.LENGTH_LONG).show();
                                                 Log.e("Solicitud", "Error en la respuesta: " + response.code());
@@ -150,7 +153,7 @@ public class SolicitarRolInstructorFragment extends Fragment {
 
                                         @Override
                                         public void onFailure(Call<Solicitud> call, Throwable t) {
-                                            Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getContext(), "Algo salió mal.", Toast.LENGTH_LONG).show();
                                             Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                         }
                                     });

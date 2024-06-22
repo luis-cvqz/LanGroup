@@ -3,20 +3,20 @@ package uv.fei.langroup.modelo.POJO;
 import androidx.annotation.NonNull;
 
 public class Idioma {
-    private String id;
+    private String idiomaId;
     private String nombre;
 
-    public Idioma(String id, String nombre) {
-        this.id = id;
+    public Idioma(String idiomaId, String nombre) {
+        this.idiomaId = idiomaId;
         this.nombre = nombre;
     }
 
-    public String getIdIdioma() {
-        return id;
+    public String getIdiomaId() {
+        return idiomaId;
     }
 
-    public void setIdIdioma(String idIdioma) {
-        this.id = idIdioma;
+    public void setIdiomaId(String idiomaId) {
+        this.idiomaId = idiomaId;
     }
 
     public String getNombre() {

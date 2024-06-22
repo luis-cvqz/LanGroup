@@ -198,7 +198,7 @@ public class AgregarInstructorFragment extends Fragment {
 
                                                     for(Rol rol : roles){
                                                         if(rol.getNombre().equalsIgnoreCase("Instructor")){
-                                                            colaboradorActualizar.setRol(rol.getId());
+                                                            colaboradorActualizar.setRolid(rol.getId());
                                                             break;
                                                         }
                                                     }
@@ -207,6 +207,7 @@ public class AgregarInstructorFragment extends Fragment {
                                                         @Override
                                                         public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                                                             if(response.isSuccessful()){
+                                                                agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
                                                                 Toast.makeText(getContext(), "Se aceptó al aprendiz", Toast.LENGTH_LONG).show();
                                                             }else{
                                                                 Toast.makeText(getContext(), "Algo salio mal.", Toast.LENGTH_LONG).show();
@@ -269,6 +270,7 @@ public class AgregarInstructorFragment extends Fragment {
                                             @Override
                                             public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
                                                 if(response.isSuccessful()){
+                                                    agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
                                                     Toast.makeText(getContext(), "Se rechazó al aprendiz", Toast.LENGTH_LONG).show();
                                                 }else{
                                                     Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
