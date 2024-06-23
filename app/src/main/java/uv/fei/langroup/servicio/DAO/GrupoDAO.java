@@ -134,4 +134,32 @@ public class GrupoDAO {
             }
         });
     }
+
+    public static void unirseAGrupo(String colaboradorId, String grupoid, String rol, Callback<Void> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        GrupoServicio grupoServicio = retrofit.create(GrupoServicio.class);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("colaboradorid", colaboradorId);
+        data.put("grupoid", grupoid);
+        data.put("rol", rol);
+
+        Call<Void> call = grupoServicio.unirseAGrupo(data);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("GrupoDAO", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }

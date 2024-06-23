@@ -36,4 +36,7 @@ public interface GrupoServicio {
 
     @DELETE("grupos/{id}")
     Call<Void> eliminarGrupo(@Path("id") String grupoId);
+
+    @POST("grupos/colaboradores")
+    Call<Void> unirseAGrupo(@Body Map<String, Object> data);
 }

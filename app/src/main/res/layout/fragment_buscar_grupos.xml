@@ -30,7 +30,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Elige el grupo. de tu interés"
+                android:text="Elige el grupo de tu interés"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

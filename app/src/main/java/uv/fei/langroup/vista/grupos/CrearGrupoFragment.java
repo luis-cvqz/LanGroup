@@ -157,7 +157,7 @@ public class CrearGrupoFragment extends Fragment {
     private void crearGrupo(String nombreGrupo, Idioma idioma, String descripcion) {
         Grupo nuevoGrupo = new Grupo();
         nuevoGrupo.setNombre(nombreGrupo);
-        nuevoGrupo.setIdIdioma(idioma.getIdIdioma());
+        nuevoGrupo.setIdIdioma(idioma.getIdiomaId());
         nuevoGrupo.setDescripcion(descripcion);
         GrupoDAO.crearGrupo(nuevoGrupo, new Callback<Grupo>() {
             @Override
