@@ -45,8 +45,8 @@ public class InicioViewModel extends ViewModel {
         return grupos;
     }
 
-    public void fetchPublicaciones(String idGrupo, String idColaborador) {
-        PublicacionDAO.obtenerPublicacionesPorGrupoColaborador(idGrupo, idColaborador, new Callback<ArrayList<Publicacion>>() {
+    public void fetchPublicaciones(String idGrupo) {
+        PublicacionDAO.obtenerPublicacionesPorGrupo(idGrupo, new Callback<ArrayList<Publicacion>>() {
             @Override
             public void onResponse(Call<ArrayList<Publicacion>> call, Response<ArrayList<Publicacion>> response) {
                 if(response.isSuccessful()){
@@ -66,8 +66,8 @@ public class InicioViewModel extends ViewModel {
         });
     }
 
-    public void fetchGrupos(String colaborador, String rol) {
-        GrupoDAO.obtenerGruposPorRolColaborador(colaborador, rol, new Callback<ArrayList<Grupo>>() {
+    public void fetchGrupos(String colaborador) {
+        GrupoDAO.obtenerGruposPorColaborador(colaborador, new Callback<ArrayList<Grupo>>() {
             @Override
             public void onResponse(Call<ArrayList<Grupo>> call, Response<ArrayList<Grupo>> response) {
                 if(response.isSuccessful()){

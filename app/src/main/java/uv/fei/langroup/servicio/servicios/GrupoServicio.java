@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.modelo.POJO.Idioma;
 
@@ -19,8 +20,11 @@ public interface GrupoServicio {
     @GET("grupos")
     Call<ArrayList<Grupo>> obtenerGrupos();
 
-    @GET("grupos/{colaboradorid}/{rolnombre}")
-    Call<ArrayList<Grupo>> obtenerGruposPorRolColaborador(@Path("colaboradorid") String colaboradorId, @Path("rolnombre") String rolNombre);
+    @GET("grupos")
+    Call<ArrayList<Grupo>> obtenerGruposPorRolColaborador(@Query("colaboradorid") String colaboradorId, @Query("rol") String rolNombre);
+
+    @GET("grupos")
+    Call<ArrayList<Grupo>> obtenerGruposPorColaborador(@Query("colaboradorid") String colaboradorId);
 
     @GET("grupos/{id}")
     Call<Grupo> obtenerGrupoPorId(@Path("id") String grupoId);

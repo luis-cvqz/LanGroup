@@ -117,12 +117,16 @@ public class BuscarPublicacionFragment extends Fragment {
             int totalGrupos = grupos.size();
             int[] gruposProcessed = {0};
 
+            if (grupos.size() == 0) {
+                binding.txvMensajeError.setText("No has realizado publicaciones.");
+                binding.txvMensajeError.setVisibility(View.VISIBLE);
+            }
+
             for (Grupo grupo : grupos) {
                 viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
                 viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
                     if (grupoPublicaciones != null) {
-
                         publicaciones.addAll(grupoPublicaciones);
                     }
 
@@ -131,7 +135,7 @@ public class BuscarPublicacionFragment extends Fragment {
                         if (!publicaciones.isEmpty()) {
                             adapter.submitList(publicaciones);
                         } else {
-                            binding.txvMensajeError.setText("Por el momento no hay publicaciones.");
+                            binding.txvMensajeError.setText("No has realizado publicaciones.");
                             binding.txvMensajeError.setVisibility(View.VISIBLE);
                         }
                     }

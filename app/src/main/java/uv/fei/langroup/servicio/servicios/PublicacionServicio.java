@@ -20,6 +20,9 @@ public interface PublicacionServicio {
     @GET("publicaciones")
     Call <ArrayList<Publicacion>> obtenerPublicacionesPorGrupoColaborador(@Query("grupo") String grupoid, @Query("colaborador") String colaboradorid);
 
+    @GET("publicaciones")
+    Call <ArrayList<Publicacion>> obtenerPublicacionesPorGrupo(@Query("grupo") String grupoid);
+
     @GET("publicaciones/{id}")
     Call<Publicacion> obtenerPublicacionPorId(@Path("id") String publicacionId);
 

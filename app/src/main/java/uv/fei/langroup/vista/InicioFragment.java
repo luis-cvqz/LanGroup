@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,10 +91,38 @@ public class InicioFragment extends Fragment {
         PublicacionAdapter adapter = new PublicacionAdapter();
         binding.eqRecycler.setAdapter(adapter);
 
-        Set<Publicacion> publicacionesSet = new HashSet<>();
+        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
-        fetchAndObservePublicaciones("Administrador", publicacionesSet, adapter);
-        fetchAndObservePublicaciones("Participante", publicacionesSet, adapter);
+        viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
+            ArrayList<Publicacion> publicaciones = new ArrayList<>();
+            int totalGrupos = grupos.size();
+            int[] gruposProcessed = {0};
+
+            if (grupos.size() == 0) {
+                binding.txvMensajeError.setText("Necesitas unirte a un grupo para ver publicaciones.");
+                binding.txvMensajeError.setVisibility(View.VISIBLE);
+            }
+
+            for (Grupo grupo : grupos) {
+                viewModel.fetchPublicaciones(grupo.getId());
+
+                viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
+                    if (grupoPublicaciones != null) {
+                        publicaciones.addAll(grupoPublicaciones);
+                    }
+
+                    gruposProcessed[0]++;
+                    if (gruposProcessed[0] == totalGrupos) {
+                        if (!publicaciones.isEmpty()) {
+                            adapter.submitList(publicaciones);
+                        } else {
+                            binding.txvMensajeError.setText("Por el momento no hay publicaciones.");
+                            binding.txvMensajeError.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+        });
 
         viewModel.getCodigoGrupo().observe(getViewLifecycleOwner(), codigo -> {
             if (codigo != null) {
@@ -105,37 +134,7 @@ public class InicioFragment extends Fragment {
             }
         });
     }
-
-    private void fetchAndObservePublicaciones(String rol, Set<Publicacion> publicacionesSet, PublicacionAdapter adapter) {
-        viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getColaboradorId(), rol);
-
-        viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
-            int totalGrupos = grupos.size();
-            int[] gruposProcessed = {0};
-
-            for (Grupo grupo : grupos) {
-                viewModel.fetchPublicaciones(grupo.getId(), SesionSingleton.getInstance().getColaborador().getColaboradorId());
-
-                viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
-                    if (grupoPublicaciones != null) {
-                        publicacionesSet.addAll(grupoPublicaciones);
-                    }
-
-                    gruposProcessed[0]++;
-                    if (gruposProcessed[0] == totalGrupos) {
-                        if (!publicacionesSet.isEmpty()) {
-                            adapter.submitList(new ArrayList<>(publicacionesSet));
-                        } else {
-                            binding.txvMensajeError.setText("Por el momento no hay publicaciones.");
-                            binding.txvMensajeError.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    private void showMessage(String msj) {
+    private void showMessage(String msj){
         Toast.makeText(getContext(), msj, Toast.LENGTH_SHORT).show();
     }
 
