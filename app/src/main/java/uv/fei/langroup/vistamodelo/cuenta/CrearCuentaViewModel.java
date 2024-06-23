@@ -29,7 +29,7 @@ public class CrearCuentaViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                 if (response.isSuccessful()) {
-                    colaboradorLiveData.setValue(response.body());
+                    obtenerColaboradorPorCorreo(colaborador.getCorreo());  // Llamar a obtener colaborador por correo
                 } else {
                     String errorMessage = "Error en la operación";
                     switch (response.code()) {
@@ -38,6 +38,34 @@ public class CrearCuentaViewModel extends ViewModel {
                             break;
                         case 404:
                             errorMessage = "Rol no encontrado";
+                            break;
+                        case 500:
+                            errorMessage = "Error interno del servidor";
+                            break;
+                    }
+                    errorMessageLiveData.setValue(errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Colaborador> call, Throwable t) {
+                t.printStackTrace();
+                errorMessageLiveData.setValue("Error en la conexión");
+            }
+        });
+    }
+
+    public void obtenerColaboradorPorCorreo(String correo) {
+        ColaboradorDAO.obtenerColaboradorPorCorreo(correo, new Callback<Colaborador>() {
+            @Override
+            public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
+                if (response.isSuccessful()) {
+                    colaboradorLiveData.setValue(response.body());
+                } else {
+                    String errorMessage = "Error al obtener el colaborador";
+                    switch (response.code()) {
+                        case 404:
+                            errorMessage = "Colaborador no encontrado";
                             break;
                         case 500:
                             errorMessage = "Error interno del servidor";

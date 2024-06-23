@@ -78,10 +78,10 @@
 
             <Spinner
                 android:id="@+id/spinner_idiomas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_width="146dp"
+                android:layout_height="37dp"
                 android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
 
                 />
 
@@ -98,14 +98,13 @@
             <EditText
                 android:id="@+id/edit_text_descripcion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="233dp"
                 android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="40dp"
                 android:inputType="textMultiLine"
                 android:lines="10"
-                />
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/button_guardar"

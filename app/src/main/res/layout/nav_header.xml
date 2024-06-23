@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:text="LanGroup"
-        android:textSize="45sp"
         android:textColor="@color/white"
-        android:textStyle="bold"/>
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

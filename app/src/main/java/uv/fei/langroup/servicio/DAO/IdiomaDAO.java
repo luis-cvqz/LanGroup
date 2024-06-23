@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -80,14 +81,19 @@ public class IdiomaDAO {
         return data;
     }
 
-    public static void agregarIdiomaColaborador(String colaboradorId, String nombresIdiomas, final Callback<Void> callback) {
+    public static void agregarIdiomaColaborador(String colaboradorId, List<String> idiomaIds, final Callback<Void> callback) {
         Retrofit retrofit = APIClient.iniciarAPI();
         IdiomaServicio idiomaServicio = retrofit.create(IdiomaServicio.class);
 
-        Map<String, String> body = new HashMap<>();
-        body.put("colaboradorId", colaboradorId);
-        body.put("nombresIdiomas", nombresIdiomas);
+        // Log para verificar que colaboradorId se está pasando correctamente
+        Log.d("IdiomaDAO", "Colaborador ID: " + colaboradorId);
 
+        // Crear un HashMap para el cuerpo de la solicitud
+        Map<String, Object> body = new HashMap<>();
+        body.put("colaboradorId", colaboradorId);
+        body.put("idiomaIds", idiomaIds); // Aquí asumimos que idiomaIds es una lista de strings de IDs
+
+        // Realizar la llamada al servicio
         Call<Void> call = idiomaServicio.agregarIdiomaColaborador(body);
 
         call.enqueue(new Callback<Void>() {

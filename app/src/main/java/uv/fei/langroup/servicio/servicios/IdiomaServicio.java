@@ -20,8 +20,8 @@ public interface IdiomaServicio {
     @GET("idiomas/{id}")
     Call<Idioma> obtenerIdiomaPorId(@Path("id") String idiomaId);
 
-    @POST("colaboradores/idiomas")
-    Call<Void> agregarIdiomaColaborador(@Body Map<String, String> body);
+    @POST("idiomas/colaboradores")
+    Call<Void> agregarIdiomaColaborador(@Body Map<String, Object> body);
 
     @POST("idiomas")
     Call<Idioma> crearIdioma(@Body Idioma idioma);
