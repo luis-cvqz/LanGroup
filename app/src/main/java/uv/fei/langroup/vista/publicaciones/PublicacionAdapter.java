@@ -1,8 +1,10 @@
 package uv.fei.langroup.vista.publicaciones;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -37,27 +39,49 @@ public class PublicacionAdapter extends ListAdapter<Publicacion, PublicacionAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PublicacionViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PublicacionViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Publicacion publicacion = getItem(position);
         holder.bind(publicacion);
+
+        if (onButtonEliminarVisibilityListener != null) {
+            boolean isVisible = onButtonEliminarVisibilityListener.setButtonEliminarVisibility(publicacion);
+            holder.setButtonAjustarVisibility(isVisible ? View.VISIBLE : View.GONE);
+        }
+
+        holder.buttonEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onButtonEliminarClickListener != null) {
+                    onButtonEliminarClickListener.onButtonEliminarClickListener(publicacion, position);
+                }
+            }
+        });
     }
 
-    private OnItemClickListener onItemClickListener;
+    private OnButtonEliminarClickListener onButtonEliminarClickListener;
 
-    interface OnItemClickListener {
-        void onItemClickListener(Publicacion publicacion);
+    public void setOnButtonEliminarClickListener(OnButtonEliminarClickListener onButtonEliminarClickListener) {
+        this.onButtonEliminarClickListener = onButtonEliminarClickListener;
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener = onItemClickListener;
+    public interface OnButtonEliminarVisibilityListener {
+        boolean setButtonEliminarVisibility(Publicacion publicacion);
+    }
+
+    private OnButtonEliminarVisibilityListener onButtonEliminarVisibilityListener;
+
+    public void setOnButtonEliminarVisibilityListener(OnButtonEliminarVisibilityListener onButtonEliminarVisibilityListener) {
+        this.onButtonEliminarVisibilityListener = onButtonEliminarVisibilityListener;
     }
 
     class PublicacionViewHolder extends RecyclerView.ViewHolder {
         private final ItemRecordsPublicacionBinding binding;
+        private final ImageButton buttonEliminar;
 
         public PublicacionViewHolder(@NonNull ItemRecordsPublicacionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.buttonEliminar = binding.buttonEliminar;
         }
 
         public void bind(Publicacion publicacion) {
@@ -68,5 +92,13 @@ public class PublicacionAdapter extends ListAdapter<Publicacion, PublicacionAdap
             binding.txvFecha.setText(publicacion.getFecha().toString());
             binding.editTextDescripcionPublicacion.setText(publicacion.getDescripcion());
         }
+
+        public void setButtonAjustarVisibility(int visibility) {
+            buttonEliminar.setVisibility(visibility);
+        }
+    }
+
+    public interface OnButtonEliminarClickListener {
+        void onButtonEliminarClickListener(Publicacion publicacion, int position);
     }
 }

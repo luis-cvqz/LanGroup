@@ -91,4 +91,28 @@ public class PublicacionDAO {
             }
         });
     }
+
+    public static void eliminarPublicacion (String publicacionId, final Callback<Void> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        PublicacionServicio publicacionServicio = retrofit.create(PublicacionServicio.class);
+
+        Call<Void> call = publicacionServicio.eliminarPublicacion(publicacionId);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("PublicacionDAO", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }
