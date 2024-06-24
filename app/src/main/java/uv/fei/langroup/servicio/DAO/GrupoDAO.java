@@ -13,12 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import java.util.ArrayList;
 import uv.fei.langroup.modelo.POJO.Grupo;
-import uv.fei.langroup.modelo.POJO.Publicacion;
 import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.GrupoServicio;
 
@@ -27,12 +22,14 @@ public class GrupoDAO {
         Retrofit retrofit = APIClient.iniciarAPI();
         GrupoServicio grupoServicio = retrofit.create(GrupoServicio.class);
 
+        /*
         Map<String, Object> grupo = new HashMap<>();
         grupo.put("nombre", nuevoGrupo.getNombre());
         grupo.put("descripcion", nuevoGrupo.getDescripcion());
         grupo.put("icono", "icono_grupo_1.png");
         grupo.put("idiomaid",nuevoGrupo.getIdIdioma());
-        Call<Grupo> call = grupoServicio.crearGrupo(grupo);
+        */
+        Call<Grupo> call = grupoServicio.crearGrupo(nuevoGrupo);
 
         call.enqueue(new Callback<Grupo>() {
             @Override
