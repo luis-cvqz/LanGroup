@@ -21,7 +21,7 @@ public class APIClient {
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("https://4811-2806-2f0-7581-e7c0-b01a-b523-506e-7355.ngrok-free.app/api/")
+                    .baseUrl("http://192.168.100.98:3000/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
@@ -33,7 +33,7 @@ public class APIClient {
     public static ManagedChannel iniciarGrpc(){
         if(grpcChannel == null){
             grpcChannel = ManagedChannelBuilder
-                    .forTarget("localhost:3300")
+                    .forAddress("192.168.100.98", 3300)
                     .usePlaintext()
                     .build();
         }

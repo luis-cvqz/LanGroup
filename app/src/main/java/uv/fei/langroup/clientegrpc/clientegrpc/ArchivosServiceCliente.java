@@ -1,22 +1,33 @@
 package uv.fei.langroup.clientegrpc.clientegrpc;
 
-import com.google.protobuf.ByteString;
+import android.util.Log;
+
 import com.proto.archivos.Archivos;
 import com.proto.archivos.Archivos.DescargarArchivoRequest;
 import com.proto.archivos.ArchivosServiceGrpc;
 
-import org.checkerframework.checker.units.qual.A;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
 import uv.fei.langroup.servicio.servicios.APIClient;
 
 public class ArchivosServiceCliente {
-    private ArchivosServiceGrpc.ArchivosServiceBlockingStub blockingStub;
+    private static ManagedChannel canal;
+    private static ArchivosServiceGrpc.ArchivosServiceBlockingStub blockingStub;
 
     public ArchivosServiceCliente(){
-        ManagedChannel canal = APIClient.iniciarGrpc();
+        canal = ManagedChannelBuilder
+                .forAddress("192.168.100.98", 3300)
+                .usePlaintext()
+                .build();
+
         blockingStub = ArchivosServiceGrpc.newBlockingStub(canal);
     }
 
@@ -79,36 +90,14 @@ public class ArchivosServiceCliente {
         requestObserver.onCompleted();
     }*/
 
-    public ArchivoMultimedia descargarConstancia(String nombre) {
-        ArchivoMultimedia archivoMultimedia = new ArchivoMultimedia();
+    public void descargarConstancia(String nombre) throws StatusRuntimeException {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
         DescargarArchivoRequest request = DescargarArchivoRequest.newBuilder()
                 .setNombre(nombre)
                 .build();
-        StreamObserver<Archivos.DescargarArchivoResponse> responseObserver = new StreamObserver<Archivos.DescargarArchivoResponse>() {
-            @Override
-            public void onNext(Archivos.DescargarArchivoResponse response) {
-                if (response.hasArchivo()) {
-                    archivoMultimedia.setArchivo(response.getArchivo().toByteArray());
-                }
 
-                if (response.hasNombre()){
-                    archivoMultimedia.setNombre(response.getNombre());
-                }
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                System.err.println("Error al descargar la constancia: " + t.getMessage());
-            }
-
-            @Override
-            public void onCompleted() {
-                System.out.println("Descarga completada.");
-            }
-        };
-        blockingStub.descargarConstancia(request);
-
-        return archivoMultimedia;
+        
     }
 
     /*public void subirConstancia(byte[] archivo, String nombre) {

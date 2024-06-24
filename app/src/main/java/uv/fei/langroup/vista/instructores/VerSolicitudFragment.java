@@ -29,11 +29,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import io.grpc.StatusRuntimeException;
 import uv.fei.langroup.R;
 import uv.fei.langroup.clientegrpc.clientegrpc.ArchivosServiceCliente;
 import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
 import uv.fei.langroup.modelo.POJO.Colaborador;
 import uv.fei.langroup.modelo.POJO.Solicitud;
+import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.vistamodelo.instructores.VerSolicitudViewModel;
 
 /**
@@ -138,11 +140,18 @@ public class VerSolicitudFragment extends Fragment {
         buttonDescargarConstancia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 Toast.makeText(getContext(), "Función no disponible.", Toast.LENGTH_SHORT).show();
-                /*ArchivosServiceCliente archivosServiceCliente = new ArchivosServiceCliente();
-                ArchivoMultimedia archivoMultimedia = archivosServiceCliente.descargarConstancia(textViewNombreArchivo.getText().toString());
-                guardarArchivo(ByteString.copyFrom(archivoMultimedia.getArchivo()), archivoMultimedia.getNombre());*/
+                /*try {
+                    ArchivosServiceCliente archivosServiceCliente = new ArchivosServiceCliente();
+                    archivosServiceCliente.descargarConstancia(textViewNombreArchivo.getText().toString());
+                }catch (NullPointerException e){
+                    Toast.makeText(getContext(), "No se pudo descargar la constancia.", Toast.LENGTH_LONG).show();
+                    Log.e("VerSolicitudFragment", "Null: " + e.getMessage());
+                }catch (StatusRuntimeException e){
+                    Toast.makeText(getContext(), "No se pudo descargar la constancia, tiempo agotado.", Toast.LENGTH_LONG).show();
+                    Log.e("VerSolicitudFragment", "Tiempo agotado: " + e.getStatus().getDescription());
+                    Log.e("", "Codigo grpc: " + e.getStatus().getCode());
+                }*/
             }
         });
 
