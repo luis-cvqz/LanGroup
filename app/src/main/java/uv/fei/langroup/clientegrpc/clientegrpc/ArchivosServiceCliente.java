@@ -1,7 +1,6 @@
 package uv.fei.langroup.clientegrpc.clientegrpc;
 
-import android.util.Log;
-
+import com.google.protobuf.ByteString;
 import com.proto.archivos.Archivos;
 import com.proto.archivos.Archivos.DescargarArchivoRequest;
 import com.proto.archivos.ArchivosServiceGrpc;
@@ -23,11 +22,7 @@ public class ArchivosServiceCliente {
     private static ArchivosServiceGrpc.ArchivosServiceBlockingStub blockingStub;
 
     public ArchivosServiceCliente(){
-        canal = ManagedChannelBuilder
-                .forAddress("192.168.100.98", 3300)
-                .usePlaintext()
-                .build();
-
+        canal = APIClient.iniciarGrpc();
         blockingStub = ArchivosServiceGrpc.newBlockingStub(canal);
     }
 
@@ -90,39 +85,30 @@ public class ArchivosServiceCliente {
         requestObserver.onCompleted();
     }*/
 
-    public void descargarConstancia(String nombre) throws StatusRuntimeException {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
+    public void descargarConstancia(String nombre) throws StatusRuntimeException, IOException {
         DescargarArchivoRequest request = DescargarArchivoRequest.newBuilder()
                 .setNombre(nombre)
                 .build();
 
-        
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
+            Iterator<Archivos.DescargarArchivoResponse> responses = blockingStub.withDeadlineAfter(30, TimeUnit.SECONDS).descargarConstancia(request);
+            while (responses.hasNext()) {
+                Archivos.DescargarArchivoResponse response = responses.next();
+                if (response.hasArchivo()) {
+                    stream.write(response.getArchivo().toByteArray());
+                }
+            }
+        } catch (StatusRuntimeException e) {
+            throw e;
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            stream.close();
+        }
     }
 
-    /*public void subirConstancia(byte[] archivo, String nombre) {
-        StreamObserver<DescargarArchivoResponse> requestObserver = asyncStub.subirConstancia(new StreamObserver<DescargarArchivoRequest>() {
-            @Override
-            public void onNext(DescargarArchivoRequest value) {
-                System.out.println("Subida completada para el archivo: " + value.getNombre());
-            }
+    public void subirConstancia(byte[] archivo, String nombre) {
 
-            @Override
-            public void onError(Throwable t) {
-                System.err.println("Error al subir la constancia: " + t.getMessage());
-            }
-
-            @Override
-            public void onCompleted() {
-                System.out.println("Subida completada.");
-            }
-        });
-
-        DescargarArchivoResponse response = DescargarArchivoResponse.newBuilder()
-                .setArchivo(ByteString.copyFrom(archivo))
-                .setNombre(nombre)
-                .build();
-        requestObserver.onNext(response);
-        requestObserver.onCompleted();
-    }*/
+    }
 }

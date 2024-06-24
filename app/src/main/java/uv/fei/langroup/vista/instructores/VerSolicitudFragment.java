@@ -1,7 +1,5 @@
 package uv.fei.langroup.vista.instructores;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +17,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.protobuf.ByteString;
-import com.proto.archivos.Archivos;
-
-import org.checkerframework.checker.units.qual.A;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import io.grpc.StatusRuntimeException;
 import uv.fei.langroup.R;
 import uv.fei.langroup.clientegrpc.clientegrpc.ArchivosServiceCliente;
-import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
 import uv.fei.langroup.modelo.POJO.Colaborador;
 import uv.fei.langroup.modelo.POJO.Solicitud;
 import uv.fei.langroup.servicio.servicios.APIClient;
@@ -46,6 +35,7 @@ import uv.fei.langroup.vistamodelo.instructores.VerSolicitudViewModel;
 public class VerSolicitudFragment extends Fragment {
     private VerSolicitudViewModel verSolicitudViewModel;
     private Colaborador colaborador;
+    private Solicitud solicituds;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -109,6 +99,7 @@ public class VerSolicitudFragment extends Fragment {
         verSolicitudViewModel.getSolicitud().observe(getViewLifecycleOwner(), new Observer<Solicitud>() {
             @Override
             public void onChanged(Solicitud solicitud) {
+                solicituds = solicitud;
                 textViewSolicitudDe.setText("Solicitud de " + colaborador.getUsuario());
                 textViewNombreArchivo.setText(solicitud.getNombreArchivo());
                 textViewIdioma.setText(solicitud.getIdioma().getNombre());
@@ -141,17 +132,8 @@ public class VerSolicitudFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Función no disponible.", Toast.LENGTH_SHORT).show();
-                /*try {
-                    ArchivosServiceCliente archivosServiceCliente = new ArchivosServiceCliente();
-                    archivosServiceCliente.descargarConstancia(textViewNombreArchivo.getText().toString());
-                }catch (NullPointerException e){
-                    Toast.makeText(getContext(), "No se pudo descargar la constancia.", Toast.LENGTH_LONG).show();
-                    Log.e("VerSolicitudFragment", "Null: " + e.getMessage());
-                }catch (StatusRuntimeException e){
-                    Toast.makeText(getContext(), "No se pudo descargar la constancia, tiempo agotado.", Toast.LENGTH_LONG).show();
-                    Log.e("VerSolicitudFragment", "Tiempo agotado: " + e.getStatus().getDescription());
-                    Log.e("", "Codigo grpc: " + e.getStatus().getCode());
-                }*/
+
+                descargarConstancia(solicituds.getNombreArchivo());
             }
         });
 
@@ -165,25 +147,21 @@ public class VerSolicitudFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private void guardarArchivo(ByteString archivoBytes, String nombreArchivo) {
+    private void descargarConstancia(String nombreArchivo){
         try {
-            File directorioDescargas = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File archivo = new File(directorioDescargas, nombreArchivo);
-            FileOutputStream outputStream = new FileOutputStream(archivo);
-            archivoBytes.writeTo(outputStream);
-            outputStream.close();
+            ArchivosServiceCliente clienteGrpc = new ArchivosServiceCliente();
+            System.out.println(nombreArchivo);
+            clienteGrpc.descargarConstancia(nombreArchivo);
+            APIClient.cerrarGrpc();
+            Toast.makeText(getContext(), "Constancia descargada.", Toast.LENGTH_LONG).show();
+        }catch (StatusRuntimeException e){
+            Toast.makeText(getContext(), "Error al descargar la constancia: Tiempo agotado.", Toast.LENGTH_LONG).show();
 
-            // Notificar a la galería para que escanee el archivo descargado
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri contentUri = Uri.fromFile(archivo);
-            mediaScanIntent.setData(contentUri);
-            getActivity().sendBroadcast(mediaScanIntent);
-
-            // Mostrar mensaje de éxito
-            Toast.makeText(getContext(), "Archivo descargado en: " + directorioDescargas.getAbsolutePath(), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Toast.makeText(getContext(), "Error al descargar el archivo.", Toast.LENGTH_LONG).show();
-            Log.e("ClienteGrpc", "Error al guardar el archivo: " + e.getMessage());
+            Log.e("VerSolicitudFragment", "Codigo gRPC: " + e.getStatus().getCode());
+            Log.e("VerSolicitudFragment", "Error al descargar la constancia: " + e.getMessage());
+        }catch (IOException e){
+            Toast.makeText(getContext(), "Error al descargar la constancia.", Toast.LENGTH_LONG).show();
+            Log.e("VerSolicitudFragment", "Error al descargar la constancia: " + e.getMessage());
         }
     }
 }
