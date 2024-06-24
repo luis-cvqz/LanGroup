@@ -42,9 +42,8 @@ public class ConsultarGruposAdapter extends RecyclerView.Adapter<ConsultarGrupos
     public void onBindViewHolder(@NonNull ConsultarGruposAdapter.GrupoViewHolder holder, int position) {
         Grupo grupo = grupoList.get(position);
         holder.txtNombreGrupo.setText(grupo.getNombre());
-
         // Obtener el nombre del idioma basado en el idiomaId
-        String idiomaId = grupo.getIdIdioma();
+        String idiomaId = grupo.getIdiomaid();
         Log.d("GrupoAdapter", "onBindViewHolder: idiomaId = " + idiomaId);
 
         if (idiomaId != null && !idiomaId.isEmpty()) {

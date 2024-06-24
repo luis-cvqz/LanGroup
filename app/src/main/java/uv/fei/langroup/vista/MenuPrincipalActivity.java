@@ -31,6 +31,7 @@ import uv.fei.langroup.servicio.DAO.RolDAO;
 import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vista.grupos.BuscarGruposFragment;
 import uv.fei.langroup.vista.grupos.ConsultarGruposFragment;
+import uv.fei.langroup.vista.idiomas.MisIdiomasFragment;
 import uv.fei.langroup.vista.instructores.AdministrarInstructoresFragment;
 import uv.fei.langroup.vista.instructores.SolicitarRolInstructorFragment;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
@@ -56,8 +57,6 @@ public class MenuPrincipalActivity extends AppCompatActivity{
         final MenuItem navEstadisticas = navigationView.getMenu().findItem(R.id.nav_estadisticas);
         final MenuItem navPublicaciones = navigationView.getMenu().findItem(R.id.nav_publicaciones);
         final MenuItem navIdiomas = navigationView.getMenu().findItem(R.id.nav_idiomas);
-
-        navIdiomas.setVisible(false);
 
         replaceFragment(new InicioFragment());
 
@@ -132,6 +131,7 @@ public class MenuPrincipalActivity extends AppCompatActivity{
 
                 if(itemId == R.id.nav_idiomas){
                     Toast.makeText(MenuPrincipalActivity.this, "Idiomas Clicked", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new MisIdiomasFragment());
                 }
 
                 if(itemId == R.id.nav_ser_instructor){

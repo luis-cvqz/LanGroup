@@ -20,7 +20,7 @@
         <item
             android:id="@+id/nav_grupos"
             android:icon="@drawable/grupos"
-            android:title="Grupos"/>
+            android:title=" Mis Grupos"/>
 
         <item
             android:id="@+id/nav_idiomas"

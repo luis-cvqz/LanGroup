@@ -30,4 +30,8 @@ public class GrupoViewModel extends ViewModel {
             }
         });
     }
+
+    public LiveData<ArrayList<Grupo>> getGruposColaborador(String colaboradorId) {
+        return grupoDAO.obtenerGruposColaborador(colaboradorId);
+    }
 }

@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import uv.fei.langroup.R;
 import uv.fei.langroup.modelo.POJO.Auth;
 import uv.fei.langroup.modelo.POJO.Colaborador;
 import uv.fei.langroup.utilidades.SesionSingleton;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MainViewModel mainViewModel;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
         binding.txtRegistro.setOnClickListener(v->{
             abrirCrearCuenta();
         });
 
         binding.btnLogin.setOnClickListener(v->{
             if (validarFormato()) {
+                progressBar.setVisibility(View.VISIBLE);
                 iniciarSesion();
             }
         });
@@ -119,13 +126,14 @@ public class MainActivity extends AppCompatActivity {
         if (!esCorreoValido(binding.txtCorreo.getText().toString())) {
             binding.lblCorreoError.setVisibility(View.VISIBLE);
             esValido = false;
+            progressBar.setVisibility(View.GONE);
         }
 
         if (!esContraseniaValida(binding.txtPassword.getText().toString())) {
             binding.lblContraseniaError.setVisibility(View.VISIBLE);
             esValido = false;
+            progressBar.setVisibility(View.GONE);
         }
-
         return esValido;
     }
 
@@ -145,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
+            progressBar.setVisibility(View.GONE);
         });
     }
 
@@ -160,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
+            progressBar.setVisibility(View.GONE);
         });
     }
 
@@ -176,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
+            progressBar.setVisibility(View.GONE);
         });
     }
 
@@ -187,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
             }
+            progressBar.setVisibility(View.GONE);
         });
     }
 
