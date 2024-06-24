@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import uv.fei.langroup.R;
 import uv.fei.langroup.modelo.POJO.Grupo;
+import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vistamodelo.grupos.BuscarGrupoAdapter;
 import uv.fei.langroup.vistamodelo.grupos.ConsultarGruposAdapter;
 import uv.fei.langroup.vistamodelo.grupos.GrupoViewModel;
@@ -40,7 +41,10 @@ public class ConsultarGruposFragment extends Fragment {
         recyclerView.setAdapter(consultarGruposAdapter);
 
         grupoViewModel = new ViewModelProvider(this).get(GrupoViewModel.class);
-        grupoViewModel.getGrupos().observe(getViewLifecycleOwner(), new Observer<ArrayList<Grupo>>() {
+        SesionSingleton sesion = SesionSingleton.getInstance();
+        String colaboradorId = SesionSingleton.getInstance().getColaborador().getColaboradorId();
+
+        grupoViewModel.getGruposColaborador(colaboradorId).observe(getViewLifecycleOwner(), new Observer<ArrayList<Grupo>>() {
             @Override
             public void onChanged(ArrayList<Grupo> grupos) {
                 if (grupos != null) {

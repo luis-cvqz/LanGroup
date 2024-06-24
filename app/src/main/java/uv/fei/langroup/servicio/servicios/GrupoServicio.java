@@ -18,6 +18,9 @@ public interface GrupoServicio {
     @GET("grupos")
     Call<ArrayList<Grupo>> obtenerGrupos();
 
+    @GET("grupos/colaborador/{colaboradorId}")
+    Call<ArrayList<Grupo>> obtenerGruposColaborador(@Path("colaboradorId") String colaboradorId);
+
     @GET("grupos")
     Call<ArrayList<Grupo>> obtenerGruposPorRolColaborador(@Query("colaboradorid") String colaboradorId, @Query("rol") String rolNombre);
 

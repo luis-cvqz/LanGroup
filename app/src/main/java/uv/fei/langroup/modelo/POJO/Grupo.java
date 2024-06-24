@@ -16,6 +16,10 @@ public class Grupo {
 
     @SerializedName("idiomaId")
     private String idIdioma;
+
+    @SerializedName("idiomaid")
+    private String idiomaid;
+
     private Idioma idioma;
 
     public Grupo(String grupoId, String nombre, String descripcion, String icono, String idIdioma) {
@@ -73,5 +77,13 @@ public class Grupo {
 
     public void setIdIdioma(String idIdioma) {
         this.idIdioma = idIdioma;
+    }
+
+    public String getIdiomaid() {
+        return idiomaid;
+    }
+
+    public void setIdiomaid(String idiomaid) {
+        this.idiomaid = idiomaid;
     }
 }

@@ -60,7 +60,7 @@ public class SeleccionarGruposAdapter extends RecyclerView.Adapter<SeleccionarGr
         holder.txtNombreGrupo.setText(grupo.getNombre());
 
         // Obtener el nombre del idioma basado en el idiomaId
-        String idiomaId = grupo.getIdIdioma();
+        String idiomaId = grupo.getIdiomaid();
         Log.d("GrupoAdapter", "onBindViewHolder: idiomaId = " + idiomaId);
 
         if (idiomaId != null && !idiomaId.isEmpty()) {
