@@ -34,7 +34,7 @@ public interface GrupoServicio {
     Call<ArrayList<Grupo>> obtenerGruposPorNombreIdioma(@Path("idiomaNombre") String idiomaNombre);
 
     @POST("grupos")
-    Call<Grupo> crearGrupo(@Body Grupo grupo);
+    Call<Grupo> crearGrupo(@Body Map<String, Object> grupo);
 
     @PUT("grupos/{id}")
     Call<Grupo> actualizarGrupo(@Path("id") String grupoId, @Body Grupo grupo);

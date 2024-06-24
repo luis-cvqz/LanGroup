@@ -22,14 +22,12 @@ public class GrupoDAO {
         Retrofit retrofit = APIClient.iniciarAPI();
         GrupoServicio grupoServicio = retrofit.create(GrupoServicio.class);
 
-        /*
         Map<String, Object> grupo = new HashMap<>();
         grupo.put("nombre", nuevoGrupo.getNombre());
         grupo.put("descripcion", nuevoGrupo.getDescripcion());
         grupo.put("icono", "icono_grupo_1.png");
         grupo.put("idiomaid",nuevoGrupo.getIdIdioma());
-        */
-        Call<Grupo> call = grupoServicio.crearGrupo(nuevoGrupo);
+        Call<Grupo> call = grupoServicio.crearGrupo(grupo);
 
         call.enqueue(new Callback<Grupo>() {
             @Override

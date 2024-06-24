@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import retrofit2.Response;
 import uv.fei.langroup.R;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.servicio.DAO.GrupoDAO;
+import uv.fei.langroup.vista.MainActivity;
+import uv.fei.langroup.vista.MenuPrincipalActivity;
 import uv.fei.langroup.vistamodelo.grupos.BuscarGrupoAdapter;
 import uv.fei.langroup.vistamodelo.grupos.GrupoViewModel;
 import uv.fei.langroup.vistamodelo.grupos.SeleccionarGruposAdapter;
@@ -35,6 +39,8 @@ public class SeleccionarGruposActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccionar_grupos);
 
+        Button btn_Continuar = findViewById(R.id.btn_continuar);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             colaboradorId = extras.getString("colaboradorId");
@@ -45,6 +51,11 @@ public class SeleccionarGruposActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        btn_Continuar.setOnClickListener(v->{
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
 
         recyclerView = findViewById(R.id.eq_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,5 +72,9 @@ public class SeleccionarGruposActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showMessage(String msj){
+        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
     }
 }

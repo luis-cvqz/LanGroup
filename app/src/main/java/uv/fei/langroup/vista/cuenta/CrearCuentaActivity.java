@@ -64,7 +64,6 @@ public class CrearCuentaActivity extends AppCompatActivity {
             }
         });
 
-        // Observa los cambios en los datos del colaborador
         viewModel.getColaboradorLiveData().observe(this, new Observer<Colaborador>() {
             @Override
             public void onChanged(Colaborador colaborador) {
@@ -77,7 +76,6 @@ public class CrearCuentaActivity extends AppCompatActivity {
             }
         });
 
-        // Observa los cambios en los mensajes de error
         viewModel.getErrorMessageLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errorMessage) {
