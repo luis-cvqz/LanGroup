@@ -90,8 +90,8 @@ public class IdiomaDAO {
 
         // Crear un HashMap para el cuerpo de la solicitud
         Map<String, Object> body = new HashMap<>();
-        body.put("colaboradorid", colaboradorId);
-        body.put("idiomaid", idiomaIds); // Aquí asumimos que idiomaIds es una lista de strings de IDs
+        body.put("colaboradorId", colaboradorId);
+        body.put("idiomaIds", idiomaIds);
 
         // Realizar la llamada al servicio
         Call<Void> call = idiomaServicio.agregarIdiomaColaborador(body);
@@ -108,6 +108,31 @@ public class IdiomaDAO {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("IdiomaDAO", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public static void obtenerIdiomasPorColaborador(String colaboradorId, final Callback<ArrayList<Idioma>> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        IdiomaServicio idiomaServicio = retrofit.create(IdiomaServicio.class);
+
+        Call<ArrayList<Idioma>> call = idiomaServicio.obtenerIdiomasPorColaborador(colaboradorId);
+
+        call.enqueue(new Callback<ArrayList<Idioma>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<Idioma> idiomas = response.body();
+                    callback.onResponse(call, Response.success(idiomas));
+                }else{
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
                 Log.d("IdiomaDAO", "Error en la conexión: " + t.getMessage());
                 callback.onFailure(call, t);
             }

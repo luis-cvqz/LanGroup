@@ -1,7 +1,6 @@
 package uv.fei.langroup.servicio.servicios;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -13,12 +12,14 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import uv.fei.langroup.modelo.POJO.Grupo;
-import uv.fei.langroup.modelo.POJO.Idioma;
 
 public interface GrupoServicio {
 
     @GET("grupos")
     Call<ArrayList<Grupo>> obtenerGrupos();
+
+    @GET("grupos/colaborador/{colaboradorId}")
+    Call<ArrayList<Grupo>> obtenerGruposColaborador(@Path("colaboradorId") String colaboradorId);
 
     @GET("grupos")
     Call<ArrayList<Grupo>> obtenerGruposPorRolColaborador(@Query("colaboradorid") String colaboradorId, @Query("rol") String rolNombre);
