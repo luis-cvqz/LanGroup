@@ -62,10 +62,6 @@ public class GrupoDAO {
             @Override
             public void onResponse(Call<ArrayList<Grupo>> call, Response<ArrayList<Grupo>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Verificar los datos obtenidos
-                    for (Grupo grupo : response.body()) {
-                        Log.d("GrupoDAO", "Grupo: " + grupo.getNombre() + ", IdiomaId: " + grupo.getIdIdioma());
-                    }
                     data.setValue(response.body());
                 } else {
                     data.setValue(null);
@@ -79,7 +75,6 @@ public class GrupoDAO {
             }
         });
         return data;
-
     }
 
     public static void obtenerGruposPorNombreIdioma(String idiomaNombre, final Callback<ArrayList<Grupo>> callback) {
@@ -183,5 +178,26 @@ public class GrupoDAO {
                 callback.onFailure(call, t);
             }
         });
+    }
+
+    public LiveData<ArrayList<Grupo>> obtenerGruposColaborador(String colaboradorId) {
+        final MutableLiveData<ArrayList<Grupo>> data = new MutableLiveData<>();
+        grupoServicio.obtenerGruposColaborador(colaboradorId).enqueue(new Callback<ArrayList<Grupo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Grupo>> call, Response<ArrayList<Grupo>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    data.setValue(response.body());
+                } else {
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Grupo>> call, Throwable t) {
+                Log.e("GrupoDAO", "Error al obtener grupos por colaborador", t);
+                data.setValue(null);
+            }
+        });
+        return data;
     }
 }

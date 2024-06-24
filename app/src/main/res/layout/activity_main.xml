@@ -76,6 +76,16 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="50dp"
                 android:src="@drawable/ellipse" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="Widget.ProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="-220dp"
+                android:max="100"
+                android:progress="60" />
         </LinearLayout>
 
         <LinearLayout
