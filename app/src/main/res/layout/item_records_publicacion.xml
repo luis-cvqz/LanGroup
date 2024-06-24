@@ -144,7 +144,7 @@
             android:textSize="10dp" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/button_eliminar"
             android:layout_width="20dp"
             android:layout_height="19dp"
             android:layout_alignTop="@+id/image_view_usuario"

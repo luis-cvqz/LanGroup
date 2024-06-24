@@ -1,5 +1,7 @@
 package uv.fei.langroup.vista.publicaciones;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import uv.fei.langroup.R;
 import uv.fei.langroup.databinding.FragmentBuscarPublicacionBinding;
@@ -82,6 +85,35 @@ public class BuscarPublicacionFragment extends Fragment {
         View root = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(BuscarPublicacionViewModel.class);
 
+        binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        PublicacionAdapter adapter = new PublicacionAdapter();
+        binding.eqRecycler.setAdapter(adapter);
+        adapter.setOnButtonEliminarClickListener(new PublicacionAdapter.OnButtonEliminarClickListener() {
+            @Override
+            public void onButtonEliminarClickListener(Publicacion publicacion, int position) {
+                AlertDialog confirmacionEliminarPublicacion = new AlertDialog.Builder(getContext()).setTitle("Eliminar Publicación").setMessage("¿Estás seguro de que deseas eliminar esta publicación?").setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewModel.fetchEliminarPublicacion(publicacion.getId());
+
+                        viewModel.getCodigoEliminarPublicacion().observe(getViewLifecycleOwner(), codigo -> {
+                            if (esCodigoExitoso(codigo)) {
+                                showMessage("Publicación eliminada correctamente");
+
+                                List<Publicacion> currentList = new ArrayList<>(adapter.getCurrentList());
+                                currentList.remove(position);
+                                adapter.submitList(currentList);
+                            } else {
+                                showMessage("No hay conexión con el servidor. Intenta más tarde.");
+                            }
+                        });
+                    }
+                }).setNegativeButton("Cancelar", null).create();
+
+                confirmacionEliminarPublicacion.show();
+            }
+        });
+
         final Button buttonAgregarPublicacion = binding.buttonAgregarPublicacion;
         final Button buttonCrearGrupo = binding.buttonCrearGrupo;
 
@@ -99,15 +131,12 @@ public class BuscarPublicacionFragment extends Fragment {
             fragmentTransaction.commit();
         });
 
-        mostrarPublicaciones();
+        mostrarPublicaciones(adapter);
 
         return root;
     }
 
-    private void mostrarPublicaciones() {
-        binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        PublicacionAdapter adapter = new PublicacionAdapter();
-        binding.eqRecycler.setAdapter(adapter);
+    private void mostrarPublicaciones(PublicacionAdapter adapter) {
         String rol = "Administrador";
 
         viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getColaboradorId(), rol);
