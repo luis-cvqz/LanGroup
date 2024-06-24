@@ -71,7 +71,7 @@ public class InicioFragment extends Fragment {
 
         ajustarVisibilidad(adapter);
 
-        progressBar = root.findViewById(R.id.progressBar);
+        progressBar = binding.progressBar;
         progressBar.setVisibility(View.VISIBLE);
 
         mostrarPublicaciones(adapter);
