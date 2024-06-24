@@ -90,8 +90,8 @@ public class IdiomaDAO {
 
         // Crear un HashMap para el cuerpo de la solicitud
         Map<String, Object> body = new HashMap<>();
-        body.put("colaboradorid", colaboradorId);
-        body.put("idiomaid", idiomaIds); // Aquí asumimos que idiomaIds es una lista de strings de IDs
+        body.put("colaboradorId", colaboradorId);
+        body.put("idiomaIds", idiomaIds);
 
         // Realizar la llamada al servicio
         Call<Void> call = idiomaServicio.agregarIdiomaColaborador(body);
