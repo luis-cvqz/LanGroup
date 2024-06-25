@@ -40,53 +40,10 @@ import uv.fei.langroup.servicio.DAO.RolDAO;
 import uv.fei.langroup.servicio.DAO.SolicitudDAO;
 import uv.fei.langroup.vistamodelo.instructores.AgregarInstructorViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AgregarInstructorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AgregarInstructorFragment extends Fragment {
     private AgregarInstructorViewModel agregarInstructorViewModel;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AgregarInstructorFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AgregarInstructorFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AgregarInstructorFragment newInstance(String param1, String param2) {
-        AgregarInstructorFragment fragment = new AgregarInstructorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private Colaborador colaborador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -160,145 +117,145 @@ public class AgregarInstructorFragment extends Fragment {
         listViewAprendices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Colaborador colaborador = (Colaborador) parent.getItemAtPosition(position);
+                colaborador = (Colaborador) parent.getItemAtPosition(position);
+            }
+        });
 
-                buttonVerSolicitud.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FragmentManager manager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                        FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new VerSolicitudFragment(colaborador));
-                        fragmentTransaction.commit();
-                    }
-                });
+        buttonVerSolicitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                FragmentTransaction replace = fragmentTransaction.replace(R.id.frame_layout, new VerSolicitudFragment(colaborador));
+                fragmentTransaction.commit();
+            }
+        });
 
-                buttonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog confirmarAgregacion = new AlertDialog.Builder(getActivity())
-                                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+        buttonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog confirmarAgregacion = new AlertDialog.Builder(getActivity())
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Solicitud solicitudActualizar = new Solicitud();
+
+                                for(Solicitud solicitud : solicitudesPendientes){
+                                    if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaborador.getColaboradorId())){
+                                        solicitudActualizar = solicitud;
+                                        break;
+                                    }
+                                }
+
+                                solicitudActualizar.setEstado("Aceptado");
+
+                                SolicitudDAO.actualizarSolicitud(solicitudActualizar.getSolicitudId(), solicitudActualizar, new Callback<Solicitud>() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Solicitud solicitudActualizar = new Solicitud();
+                                    public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
+                                        if(response.isSuccessful()){
+                                            Colaborador colaboradorActualizar = new Colaborador();
 
-                                        for(Solicitud solicitud : solicitudesPendientes){
-                                            if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaborador.getColaboradorId())){
-                                                solicitudActualizar = solicitud;
-                                                break;
+                                            for(Rol rol : roles){
+                                                if(rol.getNombre().equalsIgnoreCase("Instructor")){
+                                                    colaboradorActualizar.setRolid(rol.getId());
+                                                    break;
+                                                }
                                             }
-                                        }
 
-                                        solicitudActualizar.setEstado("Aceptado");
-
-                                        SolicitudDAO.actualizarSolicitud(solicitudActualizar.getSolicitudId(), solicitudActualizar, new Callback<Solicitud>() {
-                                            @Override
-                                            public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
-                                                if(response.isSuccessful()){
-                                                    Colaborador colaboradorActualizar = new Colaborador();
-
-                                                    for(Rol rol : roles){
-                                                        if(rol.getNombre().equalsIgnoreCase("Instructor")){
-                                                            colaboradorActualizar.setRolid(rol.getId());
-                                                            break;
-                                                        }
+                                            ColaboradorDAO.actualizarRolDeColaborador(colaborador.getColaboradorId(), colaboradorActualizar, new Callback<Colaborador>() {
+                                                @Override
+                                                public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
+                                                    if(response.isSuccessful()){
+                                                        agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
+                                                        Toast.makeText(getContext(), "Se aceptó al aprendiz", Toast.LENGTH_LONG).show();
+                                                    }else{
+                                                        Toast.makeText(getContext(), "Algo salio mal.", Toast.LENGTH_LONG).show();
+                                                        Log.e("Colaborador", "Error en la respuesta: " + response.code());
                                                     }
-
-                                                    ColaboradorDAO.actualizarRolDeColaborador(colaborador.getColaboradorId(), colaboradorActualizar, new Callback<Colaborador>() {
-                                                        @Override
-                                                        public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
-                                                            if(response.isSuccessful()){
-                                                                agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
-                                                                Toast.makeText(getContext(), "Se aceptó al aprendiz", Toast.LENGTH_LONG).show();
-                                                            }else{
-                                                                Toast.makeText(getContext(), "Algo salio mal.", Toast.LENGTH_LONG).show();
-                                                                Log.e("Colaborador", "Error en la respuesta: " + response.code());
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onFailure(Call<Colaborador> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
-                                                            Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
-                                                        }
-                                                    });
-                                                }else{
-                                                    Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
-                                                    Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onFailure(Call<Solicitud> call, Throwable t) {
-                                                Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
-                                                Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
-                                            }
-                                        });
-                                    }
-                                })
-                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setTitle("Agregar instructor")
-                                .setMessage("¿Deseas agregar a " + colaborador.getUsuario() + " como instructor?")
-                                .create();
-
-                        confirmarAgregacion.show();
-                    }
-                });
-
-                buttonRechazar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog confirmarRechazo = new AlertDialog.Builder(getActivity())
-                                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Solicitud solicitudActualizar = new Solicitud();
-                                        for(Solicitud solicitud : solicitudesPendientes){
-                                            if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaborador.getColaboradorId())){
-                                                solicitudActualizar = solicitud;
-                                                break;
-                                            }
+                                                @Override
+                                                public void onFailure(Call<Colaborador> call, Throwable t) {
+                                                    Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                                                    Log.e("Colaborador", "Error en la conexión: " + t.getMessage());
+                                                }
+                                            });
+                                        }else{
+                                            Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
+                                            Log.e("Solicitud", "Error en la respuesta: " + response.code());
                                         }
-
-                                        solicitudActualizar.setEstado("Rechazado");
-
-                                        SolicitudDAO.actualizarSolicitud(solicitudActualizar.getSolicitudId(), solicitudActualizar, new Callback<Solicitud>() {
-                                            @Override
-                                            public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
-                                                if(response.isSuccessful()){
-                                                    agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
-                                                    Toast.makeText(getContext(), "Se rechazó al aprendiz", Toast.LENGTH_LONG).show();
-                                                }else{
-                                                    Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
-                                                    Log.e("Solicitud", "Error en la respuesta: " + response.code());
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<Solicitud> call, Throwable t) {
-                                                Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
-                                                Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
-                                            }
-                                        });
                                     }
-                                })
-                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
+                                    public void onFailure(Call<Solicitud> call, Throwable t) {
+                                        Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                                        Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
                                     }
-                                })
-                                .setTitle("Rechazar instructor")
-                                .setMessage("¿Deseas rechazar a " + colaborador.getUsuario() + " como instructor?")
-                                .create();
+                                });
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setTitle("Agregar instructor")
+                        .setMessage("¿Deseas agregar a " + colaborador.getUsuario() + " como instructor?")
+                        .create();
 
-                        confirmarRechazo.show();
-                    }
-                });
+                confirmarAgregacion.show();
+            }
+        });
+
+        buttonRechazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog confirmarRechazo = new AlertDialog.Builder(getActivity())
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Solicitud solicitudActualizar = new Solicitud();
+                                for(Solicitud solicitud : solicitudesPendientes){
+                                    if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaborador.getColaboradorId())){
+                                        solicitudActualizar = solicitud;
+                                        break;
+                                    }
+                                }
+
+                                solicitudActualizar.setEstado("Rechazado");
+
+                                SolicitudDAO.actualizarSolicitud(solicitudActualizar.getSolicitudId(), solicitudActualizar, new Callback<Solicitud>() {
+                                    @Override
+                                    public void onResponse(Call<Solicitud> call, Response<Solicitud> response) {
+                                        if(response.isSuccessful()){
+                                            agregarInstructorViewModel.fetchAprendicesConSolicitudPendiente();
+                                            Toast.makeText(getContext(), "Se rechazó al aprendiz", Toast.LENGTH_LONG).show();
+                                        }else{
+                                            Toast.makeText(getContext(), "Algo salió mal", Toast.LENGTH_LONG).show();
+                                            Log.e("Solicitud", "Error en la respuesta: " + response.code());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Solicitud> call, Throwable t) {
+                                        Toast.makeText(getContext(), "No hay conexión al servidor.", Toast.LENGTH_LONG).show();
+                                        Log.e("Solicitud", "Error en la conexión: " + t.getMessage());
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setTitle("Rechazar instructor")
+                        .setMessage("¿Deseas rechazar a " + colaborador.getUsuario() + " como instructor?")
+                        .create();
+
+                confirmarRechazo.show();
             }
         });
 
