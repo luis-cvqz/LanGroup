@@ -12,7 +12,6 @@
         android:orientation="vertical"
         tools:context=".vista.publicaciones.AgregarPublicacionFragment">
 
-        <!-- TODO: Update blank fragment layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,33 +25,44 @@
                 android:background="@drawable/header_langroup"
                 android:importantForAccessibility="no" />
 
-            <ImageButton
-                android:id="@+id/button_regresar"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:src="@drawable/chevron_left"
-                android:background="@color/transparente" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/button_regresar"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@drawable/chevron_left"
+                    android:background="@color/transparente" />
+
+                <TextView
+                    android:id="@+id/lbl_nueva_publicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="13dp"
+                    android:text="@string/lbl_new_post"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/lbl_editar_grupo"
+                android:id="@+id/lbl_grupo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_new_post"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginTop="0dp"
-                android:layout_marginStart="45dp" />
-
-            <TextView
-                android:id="@+id/txt_nombre_grupo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                tools:text="[Nombre grupo]"
+                android:text="Grupo"
                 android:textSize="18sp"
-                android:textColor="@color/azul3"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="45dp" />
+
+            <Spinner
+                android:id="@+id/spinner_grupos"
+                android:layout_marginStart="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/lbl_titulo_publicacion"
@@ -71,20 +81,35 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp" />
 
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/button_seleccionar_imagen"
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:backgroundTint="@color/azul3"
+                    android:text="Seleccionar imagen"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_view_archivo"
+                android:layout_width="wrap_content"
+                android:layout_height="145dp"
+                android:layout_gravity="center"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_marginTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-            </ScrollView>
+                android:background="@drawable/banner_placeholder"
+                tools:src="@drawable/banner_placeholder"
+                android:importantForAccessibility="no"
+                android:adjustViewBounds="true" />
 
             <TextView
                 android:id="@+id/lbl_descripcion_publicacion"
@@ -113,7 +138,6 @@
                 android:layout_gravity="center"
                 android:textSize="18sp"
                 android:text="@string/btn_post"
-                android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/azul3" />
 
