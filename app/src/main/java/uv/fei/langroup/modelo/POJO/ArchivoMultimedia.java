@@ -2,16 +2,16 @@ package uv.fei.langroup.modelo.POJO;
 
 public class ArchivoMultimedia {
     private String id;
-    private String idPublicacion;
+    private String publicacionid;
     private String nombre;
     private String mime;
     private int tamanio;
     private boolean enBaseDatos;
     private byte[] archivo;
 
-    public ArchivoMultimedia(String id, String idPublicacion, String nombre, String mime, int tamanio, boolean enBaseDatos, byte[] archivo) {
+    public ArchivoMultimedia(String id, String publicacionid, String nombre, String mime, int tamanio, boolean enBaseDatos, byte[] archivo) {
         this.id = id;
-        this.idPublicacion = idPublicacion;
+        this.publicacionid = publicacionid;
         this.nombre = nombre;
         this.mime = mime;
         this.tamanio = tamanio;
@@ -30,12 +30,12 @@ public class ArchivoMultimedia {
         this.id = id;
     }
 
-    public String getIdPublicacion() {
-        return idPublicacion;
+    public String getPublicacionid() {
+        return publicacionid;
     }
 
-    public void setIdPublicacion(String idPublicacion) {
-        this.idPublicacion = idPublicacion;
+    public void setPublicacionid(String publicacionid) {
+        this.publicacionid = publicacionid;
     }
 
     public String getNombre() {
