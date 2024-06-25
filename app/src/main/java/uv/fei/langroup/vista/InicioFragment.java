@@ -1,12 +1,13 @@
 package uv.fei.langroup.vista;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import uv.fei.langroup.R;
 import uv.fei.langroup.databinding.FragmentInicioBinding;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.modelo.POJO.Publicacion;
@@ -31,6 +30,8 @@ public class InicioFragment extends Fragment {
     private FragmentInicioBinding binding;
     private ProgressBar progressBar;
 
+    private PublicacionAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,19 +39,63 @@ public class InicioFragment extends Fragment {
         View root = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(InicioViewModel.class);
 
-        progressBar = root.findViewById(R.id.progressBar);
+        binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PublicacionAdapter();
+        adapter.setOnButtonEliminarClickListener(new PublicacionAdapter.OnButtonEliminarClickListener() {
+            @Override
+            public void onButtonEliminarClickListener(Publicacion publicacion, int position) {
+                AlertDialog confirmacionEliminarPublicacion = new AlertDialog.Builder(getContext()).setTitle("Eliminar Publicación").setMessage("¿Estás seguro de que deseas eliminar esta publicación?").setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewModel.fetchEliminarPublicacion(publicacion.getId());
+
+                        viewModel.getCodigoEliminarPublicacion().observe(getViewLifecycleOwner(), codigo -> {
+                            if (esCodigoExitoso(codigo)) {
+                                showMessage("Publicación eliminada correctamente");
+
+                                List<Publicacion> currentList = new ArrayList<>(adapter.getCurrentList());
+                                currentList.remove(position);
+                                adapter.submitList(currentList);
+                            } else {
+                                showMessage("No hay conexión con el servidor. Intenta más tarde.");
+                            }
+                        });
+                    }
+                }).setNegativeButton("Cancelar", null).create();
+
+                confirmacionEliminarPublicacion.show();
+            }
+        });
+
+        binding.eqRecycler.setAdapter(adapter);
+
+        ajustarVisibilidad(adapter);
+
+        progressBar = binding.progressBar;
         progressBar.setVisibility(View.VISIBLE);
 
-        mostrarPublicaciones();
+        mostrarPublicaciones(adapter);
 
         return root;
     }
 
-    private void mostrarPublicaciones() {
-        binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        PublicacionAdapter adapter = new PublicacionAdapter();
-        binding.eqRecycler.setAdapter(adapter);
+    private void ajustarVisibilidad (PublicacionAdapter adapter) {
+        viewModel.fetchRolColaborador(SesionSingleton.getInstance().getColaborador().getRolid());
 
+        viewModel.getRolColaborador().observe(getViewLifecycleOwner(), rol -> {
+            if (rol.getNombre().equals("Aprendiz") || rol.getNombre().equals("Instructor")) {
+                adapter.setOnButtonEliminarVisibilityListener(new PublicacionAdapter.OnButtonEliminarVisibilityListener() {
+                    @Override
+                    public boolean setButtonEliminarVisibility(Publicacion publicacion) {
+                        return false;
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void mostrarPublicaciones(PublicacionAdapter adapter) {
         viewModel.fetchGrupos(SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
         viewModel.getGrupos().observe(getViewLifecycleOwner(), grupos -> {
@@ -67,6 +112,20 @@ public class InicioFragment extends Fragment {
                 viewModel.fetchPublicaciones(grupo.getId());
 
                 viewModel.getPublicaciones().observe(getViewLifecycleOwner(), grupoPublicaciones -> {
+                    for (Publicacion publicacion : grupoPublicaciones) {
+                        String publicacionColaboradorId = publicacion.getColaborador().getColaboradorId();
+                        String colaboradorId = SesionSingleton.getInstance().getColaborador().getColaboradorId();
+
+                        if (publicacionColaboradorId.equals(colaboradorId)) {
+                            adapter.setOnButtonEliminarVisibilityListener(new PublicacionAdapter.OnButtonEliminarVisibilityListener() {
+                                @Override
+                                public boolean setButtonEliminarVisibility(Publicacion publicacion) {
+                                    return true;
+                                }
+                            });
+                        }
+                    }
+
                     if (grupoPublicaciones != null) {
                         publicaciones.addAll(grupoPublicaciones);
                     }
@@ -95,6 +154,7 @@ public class InicioFragment extends Fragment {
             }
         });
     }
+
     private void showMessage(String msj){
         Toast.makeText(getContext(), msj, Toast.LENGTH_SHORT).show();
     }

@@ -9,12 +9,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uv.fei.langroup.R;
+import uv.fei.langroup.modelo.POJO.Idioma;
 import uv.fei.langroup.servicio.DAO.IdiomaDAO;
 import uv.fei.langroup.vista.grupos.SeleccionarGruposActivity;
 
@@ -48,23 +51,58 @@ public class SeleccionarIdiomaActivity extends AppCompatActivity {
         CheckBox cbFrances = findViewById(R.id.cb_frances);
         Button btnGuardar = findViewById(R.id.btn_guardar);
 
+        // Recuperar los IDs de los idiomas y asignarlos a los CheckBox
+        recuperarIdiomas((idiomas) -> {
+            for (Idioma idioma : idiomas) {
+                switch (idioma.getNombre().toLowerCase()) {
+                    case "español":
+                        cbEspanol.setTag(idioma.getIdiomaId());
+                        break;
+                    case "inglés":
+                        cbIngles.setTag(idioma.getIdiomaId());
+                        break;
+                    case "francés":
+                        cbFrances.setTag(idioma.getIdiomaId());
+                        break;
+                }
+            }
+        });
+
         btnGuardar.setOnClickListener(v -> {
             List<String> idiomaIds = new ArrayList<>();
 
             if (cbEspanol.isChecked()) {
-                idiomaIds.add("91485633-6efa-4710-a5e6-04560868f761"); // ID del idioma español
+                idiomaIds.add((String) cbEspanol.getTag());
             }
             if (cbIngles.isChecked()) {
-                idiomaIds.add("0ba66cf4-1765-43ab-a762-141e28f034f8"); // ID del idioma inglés
+                idiomaIds.add((String) cbIngles.getTag());
             }
             if (cbFrances.isChecked()) {
-                idiomaIds.add("93aaa041-37a4-421b-9b8a-bb440fff7342"); // ID del idioma francés
+                idiomaIds.add((String) cbFrances.getTag());
             }
 
             if (!idiomaIds.isEmpty()) {
                 guardarIdiomas(colaboradorId, idiomaIds);
             } else {
                 showMessage("Seleccione al menos un idioma.");
+            }
+        });
+    }
+
+    private void recuperarIdiomas(final IdiomasCallback callback) {
+        IdiomaDAO.obtenerIdiomas(new Callback<ArrayList<Idioma>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onIdiomasRecibidos(response.body());
+                } else {
+                    showMessage("Error al recuperar los idiomas: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
+                showMessage("Error en la conexión: " + t.getMessage());
             }
         });
     }
@@ -92,5 +130,9 @@ public class SeleccionarIdiomaActivity extends AppCompatActivity {
 
     private void showMessage(String msj) {
         Toast.makeText(this, msj, Toast.LENGTH_SHORT).show();
+    }
+
+    private interface IdiomasCallback {
+        void onIdiomasRecibidos(List<Idioma> idiomas);
     }
 }

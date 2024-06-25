@@ -84,7 +84,7 @@
                 android:text="Español" />
 
             <CheckBox
-                android:id="@+id/cb_ingles"
+                android:id="@+id/cb_frances"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView4"
@@ -94,7 +94,7 @@
                 android:text="Francés" />
 
             <CheckBox
-                android:id="@+id/cb_frances"
+                android:id="@+id/cb_ingles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView3"

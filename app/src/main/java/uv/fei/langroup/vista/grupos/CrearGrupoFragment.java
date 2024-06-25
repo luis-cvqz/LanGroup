@@ -32,6 +32,7 @@ import uv.fei.langroup.databinding.FragmentCrearGrupoBinding;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.modelo.POJO.Idioma;
 import uv.fei.langroup.servicio.DAO.GrupoDAO;
+import uv.fei.langroup.utilidades.SesionSingleton;
 import uv.fei.langroup.vista.publicaciones.BuscarPublicacionFragment;
 import uv.fei.langroup.vistamodelo.grupos.CrearGrupoViewModel;
 public class CrearGrupoFragment extends Fragment {
@@ -114,14 +115,17 @@ public class CrearGrupoFragment extends Fragment {
         nuevoGrupo.setNombre(nombreGrupo);
         nuevoGrupo.setIdIdioma(idioma.getIdiomaId());
         nuevoGrupo.setDescripcion(descripcion);
-        GrupoDAO.crearGrupo(nuevoGrupo, new Callback<Grupo>() {
+
+        String colaboradorId = SesionSingleton.getInstance().getColaborador().getColaboradorId();
+
+        GrupoDAO.crearGrupo(nuevoGrupo, colaboradorId, new Callback<Grupo>() {
             @Override
             public void onResponse(Call<Grupo> call, Response<Grupo> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Se creó el grupo.", Toast.LENGTH_LONG).show();
                     regresar();
                 } else {
-                    Toast.makeText(getContext(), "Ocurrio un momento al crear el grupo.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Ocurrió un error al crear el grupo.", Toast.LENGTH_LONG).show();
                     Log.e("CrearGrupo","Error en la respuesta: " + response.message() + response.code());
                 }
             }

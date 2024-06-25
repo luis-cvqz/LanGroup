@@ -21,12 +21,14 @@ public class BuscarPublicacionViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Grupo>> grupos;
     private MutableLiveData<Integer> codigoPublicacion;
     private MutableLiveData<Integer> codigoGrupo;
+    private MutableLiveData<Integer> codigoEliminarPublicacion;
 
     public BuscarPublicacionViewModel() {
         publicaciones = new MutableLiveData<>();
         codigoPublicacion = new MutableLiveData<>();
         grupos = new MutableLiveData<>();
         codigoGrupo = new MutableLiveData<>();
+        codigoEliminarPublicacion = new MutableLiveData<>();
     }
 
     public LiveData<ArrayList<Publicacion>> getPublicaciones() {
@@ -43,6 +45,10 @@ public class BuscarPublicacionViewModel extends ViewModel {
 
     public LiveData<ArrayList<Grupo>> getGrupos() {
         return grupos;
+    }
+
+    public LiveData<Integer> getCodigoEliminarPublicacion() {
+        return codigoEliminarPublicacion;
     }
 
     public void fetchPublicaciones(String idGrupo, String idColaborador) {
@@ -83,6 +89,27 @@ public class BuscarPublicacionViewModel extends ViewModel {
             public void onFailure(Call<ArrayList<Grupo>> call, Throwable t) {
                 codigoPublicacion.setValue(500);
                 Log.e("BuscarPublicacionViewModel", "Error en la conexión: " + t.getMessage());
+            }
+        });
+    }
+
+    public void fetchEliminarPublicacion(String idPublicacion) {
+        PublicacionDAO.eliminarPublicacion(idPublicacion, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    codigoEliminarPublicacion.setValue(response.code());
+                }
+                else {
+                    codigoEliminarPublicacion.setValue(response.code());
+                    Log.e("InicioViewModel", "Código: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                codigoEliminarPublicacion.setValue(500);
+                Log.e("InicioViewModel", "Error en la conexión: " + t.getMessage());
             }
         });
     }

@@ -41,7 +41,6 @@ public class ConsultarGruposFragment extends Fragment {
         recyclerView.setAdapter(consultarGruposAdapter);
 
         grupoViewModel = new ViewModelProvider(this).get(GrupoViewModel.class);
-        SesionSingleton sesion = SesionSingleton.getInstance();
         String colaboradorId = SesionSingleton.getInstance().getColaborador().getColaboradorId();
 
         grupoViewModel.getGruposColaborador(colaboradorId).observe(getViewLifecycleOwner(), new Observer<ArrayList<Grupo>>() {
