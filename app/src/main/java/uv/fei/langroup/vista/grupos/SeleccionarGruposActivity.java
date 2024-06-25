@@ -53,6 +53,7 @@ public class SeleccionarGruposActivity extends AppCompatActivity {
         }
 
         btn_Continuar.setOnClickListener(v->{
+            showMessage("Inicie Sesión para continuar");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
