@@ -18,8 +18,12 @@ public interface IdiomaServicio {
 
     @GET("idiomas")
     Call<ArrayList<Idioma>> obtenerIdiomasPorColaborador(@Query("colaboradorid") String colaboradorId);
+
     @GET("idiomas")
     Call<ArrayList<Idioma>> obtenerIdiomas();
+
+    @GET("idiomas/nombre/{nombre}")
+    Call<ArrayList<Idioma>> obtenerIdiomasPorNombre(@Path("nombre") String nombre);
 
     @GET("idiomas/{id}")
     Call<Idioma> obtenerIdiomaPorId(@Path("id") String idiomaId);

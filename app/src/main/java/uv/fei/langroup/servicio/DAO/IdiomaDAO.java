@@ -138,4 +138,29 @@ public class IdiomaDAO {
             }
         });
     }
+
+    public static void obtenerIdiomasPorNombre(String nombre, final Callback<ArrayList<Idioma>> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        IdiomaServicio idiomaServicio = retrofit.create(IdiomaServicio.class);
+
+        Call<ArrayList<Idioma>> call = idiomaServicio.obtenerIdiomasPorNombre(nombre);
+
+        call.enqueue(new Callback<ArrayList<Idioma>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Idioma>> call, Response<ArrayList<Idioma>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Idioma> idiomas = response.body();
+                    callback.onResponse(call, Response.success(idiomas));
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Idioma>> call, Throwable t) {
+                Log.d("IdiomaDAO", "Error en la conexión: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }

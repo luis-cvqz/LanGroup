@@ -18,7 +18,7 @@ import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.GrupoServicio;
 
 public class GrupoDAO {
-    public static void crearGrupo(Grupo nuevoGrupo, final Callback<Grupo> callback) {
+    public static void crearGrupo(Grupo nuevoGrupo, String colaboradorId, final Callback<Grupo> callback) {
         Retrofit retrofit = APIClient.iniciarAPI();
         GrupoServicio grupoServicio = retrofit.create(GrupoServicio.class);
 
@@ -26,7 +26,10 @@ public class GrupoDAO {
         grupo.put("nombre", nuevoGrupo.getNombre());
         grupo.put("descripcion", nuevoGrupo.getDescripcion());
         grupo.put("icono", "icono_grupo_1.png");
-        grupo.put("idiomaid",nuevoGrupo.getIdIdioma());
+        grupo.put("idiomaid", nuevoGrupo.getIdIdioma());
+        grupo.put("colaboradorid", colaboradorId);  // Agregar colaboradorid
+        grupo.put("rol", "Administrador");  // Establecer el rol como "Administrador"
+
         Call<Grupo> call = grupoServicio.crearGrupo(grupo);
 
         call.enqueue(new Callback<Grupo>() {
