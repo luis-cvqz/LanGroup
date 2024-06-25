@@ -55,7 +55,13 @@ public class SolicitudDAO {
             @Override
             public void onResponse(Call<ArrayList<Solicitud>> call, Response<ArrayList<Solicitud>> response) {
                 if(response.isSuccessful()){
-                    ArrayList<Solicitud> solicitudes = response.body();
+                    ArrayList<Solicitud> solicitudes = new ArrayList<>();
+                    ArrayList<Solicitud> solicitudes1 = response.body();
+                    for(Solicitud solicitud : solicitudes1){
+                        if(solicitud.getColaborador().getColaboradorId().equalsIgnoreCase(colaboradorId)){
+                            solicitudes.add(solicitud);
+                        }
+                    }
                     callback.onResponse(call, Response.success(solicitudes));
                 }else{
                     callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));

@@ -96,6 +96,7 @@ public class VerSolicitudFragment extends Fragment {
         final TextView textViewContenido = root.findViewById(R.id.txt_contenido);
 
         verSolicitudViewModel = new ViewModelProvider(this).get(VerSolicitudViewModel.class);
+
         verSolicitudViewModel.getSolicitud().observe(getViewLifecycleOwner(), new Observer<Solicitud>() {
             @Override
             public void onChanged(Solicitud solicitud) {
