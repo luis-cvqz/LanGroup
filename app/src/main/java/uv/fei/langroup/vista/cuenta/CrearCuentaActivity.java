@@ -68,7 +68,7 @@ public class CrearCuentaActivity extends AppCompatActivity {
             @Override
             public void onChanged(Colaborador colaborador) {
                 if (colaborador != null) {
-                    showMessage("Cuenta Creada exitosamente");
+                    showMessage("Cuenta creada exitosamente");
                     Intent intent = new Intent(CrearCuentaActivity.this, SeleccionarIdiomaActivity.class);
                     intent.putExtra("colaboradorId", colaborador.getColaboradorId());
                     startActivity(intent);

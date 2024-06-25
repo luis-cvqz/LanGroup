@@ -4,7 +4,11 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,9 +33,9 @@ public class CrearCuentaViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
                 if (response.isSuccessful()) {
-                    obtenerColaboradorPorCorreo(colaborador.getCorreo());  // Llamar a obtener colaborador por correo
+                    obtenerColaboradorPorCorreo(colaborador.getCorreo());
                 } else {
-                    String errorMessage = "Error en la operación";
+                    String errorMessage = "Sin conexión al servidor";
                     switch (response.code()) {
                         case 400:
                             errorMessage = "Correo duplicado";
@@ -42,15 +46,24 @@ public class CrearCuentaViewModel extends ViewModel {
                         case 500:
                             errorMessage = "Error interno del servidor";
                             break;
+                        default:
                     }
                     errorMessageLiveData.setValue(errorMessage);
+                    Log.e("CrearCuentaViewModel", "Error en la respuesta: " + errorMessage);
                 }
             }
 
             @Override
             public void onFailure(Call<Colaborador> call, Throwable t) {
                 t.printStackTrace();
-                errorMessageLiveData.setValue("Error en la conexión");
+                String errorMessage;
+                if (t instanceof IOException) {
+                    errorMessage = "Sin conexión al servidor";
+                } else {
+                    errorMessage = "Error en la conexión: " + t.getMessage();
+                }
+                errorMessageLiveData.setValue(errorMessage);
+                Log.e("CrearCuentaViewModel", "Error en la conexión", t);
             }
         });
     }
@@ -78,7 +91,14 @@ public class CrearCuentaViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Colaborador> call, Throwable t) {
                 t.printStackTrace();
-                errorMessageLiveData.setValue("Error en la conexión");
+                String errorMessage;
+                if (t instanceof IOException) {
+                    errorMessage = "Sin conexión al servidor";
+                } else {
+                    errorMessage = "Error en la conexión: " + t.getMessage();
+                }
+                errorMessageLiveData.setValue(errorMessage);
+                Log.e("CrearCuentaViewModel", "Error en la conexión", t);
             }
         });
     }
