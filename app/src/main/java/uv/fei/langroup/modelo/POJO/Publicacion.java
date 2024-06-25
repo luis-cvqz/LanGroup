@@ -1,7 +1,5 @@
 package uv.fei.langroup.modelo.POJO;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,6 +10,9 @@ public class Publicacion {
     private Date fecha;
     private Colaborador colaborador;
     private Grupo grupo;
+    private String colaboradorid;
+    private String grupoid;
+
 
     public Publicacion() {
     }
@@ -73,16 +74,38 @@ public class Publicacion {
         this.grupo = grupo;
     }
 
+    public String getColaboradorId() {
+        return colaboradorid;
+    }
+
+    public void setColaboradorId(String colaboradorid) {
+        this.colaboradorid = colaboradorid;
+    }
+
+    public String getGrupoId() {
+        return grupoid;
+    }
+
+    public void setGrupoId(String grupoid) {
+        this.grupoid = grupoid;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Publicacion)) return false;
         Publicacion that = (Publicacion) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getTitulo(), that.getTitulo()) && Objects.equals(getDescripcion(), that.getDescripcion()) && Objects.equals(getFecha(), that.getFecha()) && Objects.equals(getColaborador(), that.getColaborador()) && Objects.equals(getGrupo(), that.getGrupo());
+        return Objects.equals(getId(), that.getId())
+                && Objects.equals(getTitulo(), that.getTitulo())
+                && Objects.equals(getDescripcion(), that.getDescripcion())
+                && Objects.equals(getFecha(), that.getFecha())
+                && Objects.equals(getColaborador(), that.getColaborador())
+                && Objects.equals(getGrupo(), that.getGrupo())
+                && Objects.equals(getColaboradorId(), that.getColaboradorId())
+                && Objects.equals(getGrupoId(), that.getGrupoId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitulo(), getDescripcion(), getFecha(), getColaborador(), getGrupo());
+        return Objects.hash(getId(), getTitulo(), getDescripcion(), getFecha(), getColaborador(), getGrupo(), getColaboradorId(), getGrupoId());
     }
 }

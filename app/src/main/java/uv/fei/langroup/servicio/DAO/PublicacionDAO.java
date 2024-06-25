@@ -2,9 +2,6 @@ package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -16,6 +13,31 @@ import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.PublicacionServicio;
 
 public class PublicacionDAO {
+
+    public static void crearPublicacion(Publicacion nuevaPublicacion, final Callback<Publicacion> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        PublicacionServicio publicacionServicio = retrofit.create(PublicacionServicio.class);
+
+        Call<Publicacion> call = publicacionServicio.crearPublicacion(nuevaPublicacion);
+
+        call.enqueue(new Callback<Publicacion>() {
+            @Override
+            public void onResponse(Call<Publicacion> call, Response<Publicacion> response) {
+                if (response.isSuccessful()) {
+                    Publicacion publicacionCreada = response.body();
+                    callback.onResponse(call, Response.success(publicacionCreada));
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code() + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Publicacion> call, Throwable t) {
+                Log.d("crearPublicacion", "Error en la conexion: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
 
     public static void obtenerPublicacionesPorColaborador(String colaboradorId, Callback<ArrayList<Publicacion>> callback){
         Retrofit retrofit = APIClient.iniciarAPI();
