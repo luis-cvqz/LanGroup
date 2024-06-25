@@ -1,22 +1,25 @@
 package uv.fei.langroup.modelo.POJO;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Objects;
 
 public class Interaccion {
     private String id;
     private int valoracion;
     private String comentario;
     private Date fecha;
-    private String idColaborador;
-    private String idPublicacion;
+    private String colaboradorid;
+    private String publicacionid;
+
+    private Colaborador colaborador;
 
     public Interaccion(String id, int valoracion, String comentario, Date fecha, String idColaborador, String idPublicacion) {
         this.id = id;
         this.valoracion = valoracion;
         this.comentario = comentario;
         this.fecha = fecha;
-        this.idColaborador = idColaborador;
-        this.idPublicacion = idPublicacion;
+        this.colaboradorid = idColaborador;
+        this.publicacionid = idPublicacion;
     }
 
     public Interaccion() {
@@ -54,19 +57,40 @@ public class Interaccion {
         this.fecha = fecha;
     }
 
-    public String getIdColaborador() {
-        return idColaborador;
+    public String getColaboradorid() {
+        return colaboradorid;
     }
 
-    public void setIdColaborador(String idColaborador) {
-        this.idColaborador = idColaborador;
+    public void setColaboradorid(String colaboradorid) {
+        this.colaboradorid = colaboradorid;
     }
 
-    public String getIdPublicacion() {
-        return idPublicacion;
+    public String getPublicacionid() {
+        return publicacionid;
     }
 
-    public void setIdPublicacion(String idPublicacion) {
-        this.idPublicacion = idPublicacion;
+    public void setPublicacionid(String publicacionid) {
+        this.publicacionid = publicacionid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Interaccion)) return false;
+        Interaccion that = (Interaccion) o;
+        return getValoracion() == that.getValoracion() && Objects.equals(getId(), that.getId()) && Objects.equals(getComentario(), that.getComentario()) && Objects.equals(getFecha(), that.getFecha()) && Objects.equals(getColaboradorid(), that.getColaboradorid()) && Objects.equals(getPublicacionid(), that.getPublicacionid());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getValoracion(), getComentario(), getFecha(), getColaboradorid(), getPublicacionid());
+    }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
     }
 }

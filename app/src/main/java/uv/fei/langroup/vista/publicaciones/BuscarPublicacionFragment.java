@@ -24,6 +24,7 @@ import uv.fei.langroup.databinding.FragmentBuscarPublicacionBinding;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.modelo.POJO.Publicacion;
 import uv.fei.langroup.utilidades.SesionSingleton;
+import uv.fei.langroup.vista.InicioFragment;
 import uv.fei.langroup.vista.grupos.CrearGrupoFragment;
 import uv.fei.langroup.vistamodelo.MainViewModel;
 import uv.fei.langroup.vistamodelo.publicaciones.BuscarPublicacionViewModel;
@@ -88,6 +89,14 @@ public class BuscarPublicacionFragment extends Fragment {
         binding.eqRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         PublicacionAdapter adapter = new PublicacionAdapter();
         binding.eqRecycler.setAdapter(adapter);
+
+        adapter.setOnButtonComentariosClickListener(new PublicacionAdapter.OnButtonComentariosClickListener() {
+            @Override
+            public void onButtonComentariosClickListener(Publicacion publicacion, int position) {
+                mostrarComentarios(publicacion);
+            }
+        });
+
         adapter.setOnButtonEliminarClickListener(new PublicacionAdapter.OnButtonEliminarClickListener() {
             @Override
             public void onButtonEliminarClickListener(Publicacion publicacion, int position) {
@@ -100,9 +109,10 @@ public class BuscarPublicacionFragment extends Fragment {
                             if (esCodigoExitoso(codigo)) {
                                 showMessage("Publicación eliminada correctamente");
 
-                                List<Publicacion> currentList = new ArrayList<>(adapter.getCurrentList());
-                                currentList.remove(position);
-                                adapter.submitList(currentList);
+                                FragmentManager manager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                                FragmentTransaction replace = fragmentTransaction.replace(binding.frameLayout.getId(), new BuscarPublicacionFragment());
+                                fragmentTransaction.commit();
                             } else {
                                 showMessage("No hay conexión con el servidor. Intenta más tarde.");
                             }
@@ -184,6 +194,16 @@ public class BuscarPublicacionFragment extends Fragment {
     }
     private void showMessage(String msj){
         Toast.makeText(getContext(), msj, Toast.LENGTH_SHORT).show();
+    }
+
+    private void mostrarComentarios(Publicacion publicacion) {
+        AgregarInteraccionFragment fragment = AgregarInteraccionFragment.newInstance(publicacion.getId());
+
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        FragmentTransaction replace = fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private boolean esCodigoExitoso(int code) {
