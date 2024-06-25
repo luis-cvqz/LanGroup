@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp" >
+
+        <ImageView
+            android:id="@+id/image_view_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:foreground="#C3CBC8"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:layout_marginStart="-50dp"
+            android:layout_marginBottom="-10dp"
+            android:layout_alignParentStart="true"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/txvNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de Usuario"
+            android:textSize="18sp"
+            android:layout_marginStart="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/ratingBar"
+            />
+
+        <TextView
+            android:id="@+id/txvFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/txvNombreUsuario"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/txvComentario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hola, me gustó la publicación."
+            android:layout_below="@id/txvFecha"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+    </RelativeLayout>
+</layout>

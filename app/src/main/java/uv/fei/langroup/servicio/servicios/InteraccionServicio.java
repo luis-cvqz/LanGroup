@@ -13,11 +13,11 @@ import retrofit2.http.Path;
 import uv.fei.langroup.modelo.POJO.Interaccion;
 
 public interface InteraccionServicio {
-    @GET("interacciones/{publicacionid}")
-    Call<ArrayList<Interaccion>> obtenerInteraccionesDePublicacion(@Path("publicacionid") String publicacionId);
+    @GET("interacciones/{publicacion}")
+    Call<ArrayList<Interaccion>> obtenerInteraccionesDePublicacion(@Path("publicacion") String publicacionId);
 
     @POST("interacciones")
-    Call<Interaccion> crearInteraccion(@Body Interaccion interaccion);
+    Call<Void> crearInteraccion(@Body Interaccion interaccion);
 
     @PUT("interacciones/{id}")
     Call<Interaccion> actualizarInteraccion(@Path("id") String interaccionId, @Body Interaccion interaccion);

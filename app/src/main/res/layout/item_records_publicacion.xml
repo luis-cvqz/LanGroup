@@ -131,6 +131,7 @@
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/button_comentarios"
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_alignEnd="@+id/edit_text_descripcion_publicacion"

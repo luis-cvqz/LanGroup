@@ -151,4 +151,14 @@ public class InicioViewModel extends ViewModel {
             }
         });
     }
+
+    public void clearLiveData() {
+        publicaciones = null;
+        grupos = null;
+        codigoPublicacion = null;
+        codigoGrupo = null;
+        rolColaborador = null;
+        codigoRol = null;
+        codigoEliminarPublicacion = null;
+    }
 }

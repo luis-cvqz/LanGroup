@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,21 @@ public class PublicacionAdapter extends ListAdapter<Publicacion, PublicacionAdap
                 }
             }
         });
+
+        holder.buttonComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onButtonComentariosClickListener != null) {
+                    onButtonComentariosClickListener.onButtonComentariosClickListener(publicacion, position);
+                }
+            }
+        });
+    }
+
+    private OnButtonComentariosClickListener onButtonComentariosClickListener;
+
+    public void setOnButtonComentariosClickListener(OnButtonComentariosClickListener onButtonComentariosClickListener) {
+        this.onButtonComentariosClickListener = onButtonComentariosClickListener;
     }
 
     private OnButtonEliminarClickListener onButtonEliminarClickListener;
@@ -77,11 +93,13 @@ public class PublicacionAdapter extends ListAdapter<Publicacion, PublicacionAdap
     class PublicacionViewHolder extends RecyclerView.ViewHolder {
         private final ItemRecordsPublicacionBinding binding;
         private final ImageButton buttonEliminar;
+        private final Button buttonComentarios;
 
         public PublicacionViewHolder(@NonNull ItemRecordsPublicacionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             this.buttonEliminar = binding.buttonEliminar;
+            this.buttonComentarios = binding.buttonComentarios;
         }
 
         public void bind(Publicacion publicacion) {
@@ -100,5 +118,9 @@ public class PublicacionAdapter extends ListAdapter<Publicacion, PublicacionAdap
 
     public interface OnButtonEliminarClickListener {
         void onButtonEliminarClickListener(Publicacion publicacion, int position);
+    }
+
+    public interface OnButtonComentariosClickListener {
+        void onButtonComentariosClickListener(Publicacion publicacion, int position);
     }
 }
