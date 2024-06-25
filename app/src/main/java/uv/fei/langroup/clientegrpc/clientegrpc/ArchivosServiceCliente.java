@@ -1,6 +1,5 @@
 package uv.fei.langroup.clientegrpc.clientegrpc;
 
-import com.google.protobuf.ByteString;
 import com.proto.archivos.Archivos;
 import com.proto.archivos.Archivos.DescargarArchivoRequest;
 import com.proto.archivos.ArchivosServiceGrpc;
@@ -11,7 +10,6 @@ import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
@@ -36,7 +34,7 @@ public class ArchivosServiceCliente {
             @Override
             public void onNext(Archivos.DescargarArchivoResponse response) {
                 if (response.hasArchivo()) {
-                    archivoMultimedia.setArchivo(response.getArchivo().toByteArray());
+                    //archivoMultimedia.setArchivo(response.getArchivo().toByteArray());
                 }
 
                 if (response.hasNombre()){

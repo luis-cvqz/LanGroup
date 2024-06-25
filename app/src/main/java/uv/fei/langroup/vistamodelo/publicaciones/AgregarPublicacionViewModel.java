@@ -15,6 +15,7 @@ import retrofit2.Response;
 import uv.fei.langroup.modelo.POJO.ArchivoMultimedia;
 import uv.fei.langroup.modelo.POJO.Grupo;
 import uv.fei.langroup.modelo.POJO.Publicacion;
+import uv.fei.langroup.modelo.POJO.PublicacionConArchivo;
 import uv.fei.langroup.servicio.DAO.ArchivoMultimediaDAO;
 import uv.fei.langroup.servicio.DAO.GrupoDAO;
 import uv.fei.langroup.servicio.DAO.PublicacionDAO;
@@ -60,20 +61,42 @@ public class AgregarPublicacionViewModel extends ViewModel {
         });
     }
 
-    public void fetchTransaccionPublicacionArchivoMultimedia(Publicacion publicacion, ArchivoMultimedia archivoMultimedia) {
+    public void fetchTransaccionPublicacionArchivoMultimedia(Publicacion publicacion, File imagen) {
+        PublicacionDAO.crearPublicacionConImagen(imagen, publicacion, new Callback<PublicacionConArchivo>() {
+            @Override
+            public void onResponse(Call<PublicacionConArchivo> call, Response<PublicacionConArchivo> response) {
+                if (response.isSuccessful()) {
+                    codigoPublicacion.setValue(response.code());
+                } else {
+                    codigoPublicacion.setValue(response.code());
+                    Log.e("CrearPublicacion", "Código: " + response.code());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<PublicacionConArchivo> call, Throwable t) {
+                codigoPublicacion.setValue(500);
+                Log.e("InicioViewModel", "Error en la conexión: " + t.getMessage());
+            }
+        });
     }
 
     public void fetchCrearPublicacion(Publicacion publicacion) {
         PublicacionDAO.crearPublicacion(publicacion, new Callback<Publicacion>() {
             @Override
             public void onResponse(Call<Publicacion> call, Response<Publicacion> response) {
-
+                if (response.isSuccessful()) {
+                    codigoPublicacion.setValue(response.code());
+                } else {
+                    codigoPublicacion.setValue(response.code());
+                    Log.e("CrearPublicacion", "Código: " + response.code());
+                }
             }
 
             @Override
             public void onFailure(Call<Publicacion> call, Throwable t) {
-
+                codigoPublicacion.setValue(500);
+                Log.e("InicioViewModel", "Error en la conexión: " + t.getMessage());
             }
         });
     }

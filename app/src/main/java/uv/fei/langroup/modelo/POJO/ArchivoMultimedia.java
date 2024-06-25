@@ -1,15 +1,20 @@
 package uv.fei.langroup.modelo.POJO;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.File;
+
 public class ArchivoMultimedia {
     private String id;
     private String publicacionid;
     private String nombre;
     private String mime;
     private int tamanio;
+    @SerializedName("indb")
     private boolean enBaseDatos;
-    private byte[] archivo;
+    private File archivo;
 
-    public ArchivoMultimedia(String id, String publicacionid, String nombre, String mime, int tamanio, boolean enBaseDatos, byte[] archivo) {
+    public ArchivoMultimedia(String id, String publicacionid, String nombre, String mime, int tamanio, boolean enBaseDatos, File archivo) {
         this.id = id;
         this.publicacionid = publicacionid;
         this.nombre = nombre;
@@ -70,11 +75,11 @@ public class ArchivoMultimedia {
         this.enBaseDatos = enBaseDatos;
     }
 
-    public byte[] getArchivo() {
+    public File getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(byte[] archivo) {
+    public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
 }

@@ -101,6 +101,11 @@ public class AgregarPublicacionFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         crearPublicacion((Grupo) spinnerGrupos.getSelectedItem(), editTextTituloPublicacion.getText().toString(), editTextDescripcionPublicacion.getText().toString());
                         //crearArchivoMutimedia(imagenPublicacionURI);
+                        /*crearTransaccionPublicacionImagen(
+                                (Grupo) spinnerGrupos.getSelectedItem(),
+                                editTextTituloPublicacion.getText().toString(),
+                                editTextDescripcionPublicacion.getText().toString(),
+                                imagenPublicacionURI);*/
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
@@ -141,8 +146,8 @@ public class AgregarPublicacionFragment extends Fragment {
     }
 
     private void seleccionarImagen() {
-        //Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
         resultLauncher.launch(intent);
     }
 
@@ -159,8 +164,25 @@ public class AgregarPublicacionFragment extends Fragment {
         );
     }
 
-    private void crearTransaccionPublicacionImagen(Grupo grupo, String titulo, String descripcion, Uri imagen) {
+    private void crearTransaccionPublicacionImagen(Grupo grupo, String titulo, String descripcion, Uri imagenUri) {
+        Publicacion nuevaPublicacion = new Publicacion();
+        nuevaPublicacion.setGrupoId(grupo.getId());
+        nuevaPublicacion.setTitulo(titulo);
+        nuevaPublicacion.setDescripcion(descripcion);
+        nuevaPublicacion.setColaboradorId(SesionSingleton.getInstance().getColaborador().getColaboradorId());
 
+        File imagen = new File(getPathFromUri(imagenUri));
+
+        viewModel.fetchTransaccionPublicacionArchivoMultimedia(nuevaPublicacion, imagen);
+
+        viewModel.getCodigoPublicacion().observe(getViewLifecycleOwner(), codigo -> {
+            if (esCodigoExitoso(codigo)) {
+                mostrarToast("Publicación agregada correctamente.");
+                regresar();
+            } else {
+                mostrarToast("Ocurrió un problema al agregar la publicación.");
+            }
+        });
     }
 
     private void crearPublicacion(Grupo grupo, String titulo, String descripcion) {

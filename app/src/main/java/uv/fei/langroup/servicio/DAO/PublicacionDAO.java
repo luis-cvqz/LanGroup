@@ -2,13 +2,18 @@ package uv.fei.langroup.servicio.DAO;
 
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import uv.fei.langroup.modelo.POJO.Publicacion;
+import uv.fei.langroup.modelo.POJO.PublicacionConArchivo;
 import uv.fei.langroup.servicio.servicios.APIClient;
 import uv.fei.langroup.servicio.servicios.PublicacionServicio;
 
@@ -34,6 +39,44 @@ public class PublicacionDAO {
             @Override
             public void onFailure(Call<Publicacion> call, Throwable t) {
                 Log.d("crearPublicacion", "Error en la conexion: " + t.getMessage());
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public static void crearPublicacionConImagen(File imagen, Publicacion nuevaPublicacion, Callback<PublicacionConArchivo> callback) {
+        Retrofit retrofit = APIClient.iniciarAPI();
+        PublicacionServicio servicio = retrofit.create(PublicacionServicio.class);
+
+        String tituloPublicacion = nuevaPublicacion.getTitulo();
+        String descripcionPublicacion = nuevaPublicacion.getDescripcion();
+        String colaboradorId = nuevaPublicacion.getColaboradorId();
+        String grupoId = nuevaPublicacion.getGrupoId();
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imagen);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", imagen.getName(), requestFile);
+        //RequestBody id = RequestBody.create(MediaType.parse("text/plain"), publicacionid);
+        RequestBody titulo = RequestBody.create(MediaType.parse("text/plain"), tituloPublicacion);
+        RequestBody descripcion = RequestBody.create(MediaType.parse("text/plain"), descripcionPublicacion);
+        RequestBody colaboradorid = RequestBody.create(MediaType.parse("text/plain"), colaboradorId);
+        RequestBody grupoid = RequestBody.create(MediaType.parse("text/plain"), grupoId);
+
+        Call<PublicacionConArchivo> call = servicio.crearPublicacionConArchivo(body, titulo, descripcion, colaboradorid, grupoid);
+
+        call.enqueue(new Callback<PublicacionConArchivo>() {
+            @Override
+            public void onResponse(Call<PublicacionConArchivo> call, Response<PublicacionConArchivo> response) {
+                if (response.isSuccessful()) {
+                    PublicacionConArchivo publicacionConArchivo = response.body();
+                    callback.onResponse(call, Response.success(publicacionConArchivo));
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PublicacionConArchivo> call, Throwable t) {
+                Log.d("CrearArchivoMultimediaDAO", "Error al crear: " + t.getMessage());
                 callback.onFailure(call, t);
             }
         });

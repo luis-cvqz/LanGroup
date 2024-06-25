@@ -1,8 +1,5 @@
 package uv.fei.langroup.servicio.servicios;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import okhttp3.OkHttpClient;
@@ -21,7 +18,7 @@ public class APIClient {
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.100.98:3000/api/")
+                    .baseUrl("http://192.168.243.11:3000/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
