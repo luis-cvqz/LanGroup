@@ -1,4 +1,6 @@
 package uv.fei.langroup.modelo.POJO;
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Grupo {
@@ -85,5 +87,11 @@ public class Grupo {
 
     public void setIdiomaid(String idiomaid) {
         this.idiomaid = idiomaid;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nombre;
     }
 }
